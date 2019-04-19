@@ -1,0 +1,19 @@
+body {
+  padding: 2rem 0rem;
+}
+
+.avatar {
+  border: 0.3rem solid rgba(#fff, 0.3);
+  margin-top: -3rem;
+  margin-bottom: 1rem;
+  max-width: 9rem;
+}
+
+.volunteer-card {
+  margin-bottom: 3rem;
+}
+
+.contact-collapse {
+  padding: 0;
+  margin: 0;
+}
