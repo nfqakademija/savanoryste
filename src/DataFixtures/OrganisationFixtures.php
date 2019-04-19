@@ -3,11 +3,12 @@
 namespace App\DataFixtures;
 
 use App\Entity\Organisation;
+use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Faker\Factory;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
 
-class OrganisationFixtures extends Fixture
+class OrganisationFixtures extends Fixture implements OrderedFixtureInterface
 {
     public function generateDummyPhone()
     {
@@ -26,10 +27,16 @@ class OrganisationFixtures extends Fixture
             $organisation->setEmail($faker->companyEmail);
             $organisation->setPhone($this->generateDummyPhone());
             $organisation->setAddress($faker->address);
-
             $manager->persist($organisation);
+
+            $this->addReference('organisation-' . $i, $organisation);
         }
 
         $manager->flush();
+    }
+
+    public function getOrder()
+    {
+        return 100;
     }
 }
