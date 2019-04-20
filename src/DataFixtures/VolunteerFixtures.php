@@ -3,11 +3,12 @@
 namespace App\DataFixtures;
 
 use App\Entity\Volunteer;
+use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Faker\Factory;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
 
-class VolunteerFixtures extends Fixture
+class VolunteerFixtures extends Fixture implements OrderedFixtureInterface
 {
     public function generateDummyPhone()
     {
@@ -36,10 +37,16 @@ class VolunteerFixtures extends Fixture
             $volunteer->setEmail($faker->email);
             $volunteer->setPhone($this->generateDummyPhone());
             $volunteer->setJobType($this->generateJobType());
+            $this->addReference('volunteer-' . $i, $volunteer);
 
             $manager->persist($volunteer);
         }
 
         $manager->flush();
+    }
+
+    public function getOrder()
+    {
+        return 300;
     }
 }
