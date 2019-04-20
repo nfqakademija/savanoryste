@@ -44,7 +44,7 @@ class Volunteer
     private $job_type;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Event", mappedBy="event")
+     * @ORM\ManyToMany(targetEntity="App\Entity\Event", mappedBy="volunteers", fetch="LAZY")
      */
     private $events;
 
@@ -136,7 +136,7 @@ class Volunteer
     {
         if (!$this->events->contains($event)) {
             $this->events[] = $event;
-            $event->addEvent($this);
+            $event->addVolunteer($this);
         }
 
         return $this;
@@ -146,7 +146,7 @@ class Volunteer
     {
         if ($this->events->contains($event)) {
             $this->events->removeElement($event);
-            $event->removeEvent($this);
+            $event->removeVolunteer($this);
         }
 
         return $this;
@@ -182,4 +182,5 @@ class Volunteer
 
         return $this;
     }
+
 }

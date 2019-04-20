@@ -45,13 +45,22 @@ class Event
     private $organisation;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Volunteer", inversedBy="events")
+     * @ORM\ManyToMany(targetEntity="App\Entity\Volunteer", inversedBy="events", fetch="LAZY")
+     * @ORM\JoinTable(
+     *     name="event_volunteer",
+     *     joinColumns={
+     *          @ORM\JoinColumn(name="event_id", referencedColumnName="id")
+     *     },
+     *     inverseJoinColumns={
+     *          @ORM\JoinColumn(name="volunteer_id", referencedColumnName="id")
+     *     }
+     * )
      */
-    private $event;
+    private $volunteers;
 
     public function __construct()
     {
-        $this->event = new ArrayCollection();
+        $this->volunteers = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -122,26 +131,27 @@ class Event
     /**
      * @return Collection|Volunteer[]
      */
-    public function getEvent(): Collection
+    public function getVolunteers(): Collection
     {
-        return $this->event;
+        return $this->volunteers;
     }
 
-    public function addEvent(Volunteer $event): self
+    public function addVolunteer(Volunteer $volunteer): self
     {
-        if (!$this->event->contains($event)) {
-            $this->event[] = $event;
+        if (!$this->volunteers->contains($volunteer)) {
+            $this->volunteers[] = $volunteer;
         }
 
         return $this;
     }
 
-    public function removeEvent(Volunteer $event): self
+    public function removeVolunteer(Volunteer $volunteer): self
     {
-        if ($this->event->contains($event)) {
-            $this->event->removeElement($event);
+        if ($this->volunteers->contains($volunteer)) {
+            $this->volunteers->removeElement($volunteer);
         }
 
         return $this;
     }
+
 }

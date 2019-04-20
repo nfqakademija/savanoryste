@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Event;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\Query\Expr\Join;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
 /**
@@ -19,32 +20,18 @@ class EventRepository extends ServiceEntityRepository
         parent::__construct($registry, Event::class);
     }
 
-    // /**
-    //  * @return Event[] Returns an array of Event objects
-    //  */
-    /*
-    public function findByExampleField($value)
-    {
+    /**
+     * @param int $id
+     * @return mixed
+     */
+    public function getEventsByVolunteerId(int $id){
         return $this->createQueryBuilder('e')
-            ->andWhere('e.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('e.id', 'ASC')
-            ->setMaxResults(10)
+            ->select('e.id', 'e.title', 'e.start_date', 'e.end_date', 'e.description')
+            ->innerJoin('App\Entity\EventVolunteer', 'ev', Join::WITH, 'ev.event_id = e.id')
+            ->innerJoin('App\Entity\Volunteer', 'v', Join::WITH, 'ev.volunteer_id = v.id')
+            ->where('v.id = :id')
+            ->setParameter('id' , $id)
             ->getQuery()
-            ->getResult()
-        ;
+            ->getResult();
     }
-    */
-
-    /*
-    public function findOneBySomeField($value): ?Event
-    {
-        return $this->createQueryBuilder('e')
-            ->andWhere('e.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
 }

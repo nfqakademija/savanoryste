@@ -19,32 +19,12 @@ class VolunteerRepository extends ServiceEntityRepository
         parent::__construct($registry, Volunteer::class);
     }
 
-    // /**
-    //  * @return Volunteer[] Returns an array of Volunteer objects
-    //  */
-    /*
-    public function findByExampleField($value)
-    {
-        return $this->createQueryBuilder('v')
-            ->andWhere('v.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('v.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
 
-    /*
-    public function findOneBySomeField($value): ?Volunteer
-    {
+    public function AllVolunteers(){
         return $this->createQueryBuilder('v')
-            ->andWhere('v.exampleField = :val')
-            ->setParameter('val', $value)
+            ->select('v.id','v.firstname', 'v.lastname', 'v.phone', 'v.email', 'v.job_type')
             ->getQuery()
-            ->getOneOrNullResult()
-        ;
+            ->getResult();
     }
-    */
+
 }
