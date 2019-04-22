@@ -14,6 +14,10 @@ use Symfony\Bridge\Doctrine\RegistryInterface;
  */
 class EventVolunteerRepository extends ServiceEntityRepository
 {
+    /**
+     * EventVolunteerRepository constructor.
+     * @param RegistryInterface $registry
+     */
     public function __construct(RegistryInterface $registry)
     {
         parent::__construct($registry, EventVolunteer::class);

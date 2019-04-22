@@ -31,11 +31,18 @@ class EventVolunteer
         return $this->id;
     }
 
+    /**
+     * @return int|null
+     */
     public function getEventId(): ?int
     {
         return $this->event_id;
     }
 
+    /**
+     * @param int $event_id
+     * @return EventVolunteer
+     */
     public function setEventId(int $event_id): self
     {
         $this->event_id = $event_id;
@@ -43,11 +50,18 @@ class EventVolunteer
         return $this;
     }
 
+    /**
+     * @return int|null
+     */
     public function getVolunteerId(): ?int
     {
         return $this->volunteer_id;
     }
 
+    /**
+     * @param int $volunteer_id
+     * @return EventVolunteer
+     */
     public function setVolunteerId(int $volunteer_id): self
     {
         $this->volunteer_id = $volunteer_id;

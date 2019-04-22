@@ -48,16 +48,26 @@ class Organisation
         $this->events = new ArrayCollection();
     }
 
+    /**
+     * @return int|null
+     */
     public function getId(): ?int
     {
         return $this->id;
     }
 
+    /**
+     * @return null|string
+     */
     public function getName(): ?string
     {
         return $this->name;
     }
 
+    /**
+     * @param string $name
+     * @return Organisation
+     */
     public function setName(string $name): self
     {
         $this->name = $name;
@@ -65,11 +75,18 @@ class Organisation
         return $this;
     }
 
+    /**
+     * @return null|string
+     */
     public function getEmail(): ?string
     {
         return $this->email;
     }
 
+    /**
+     * @param string $email
+     * @return Organisation
+     */
     public function setEmail(string $email): self
     {
         $this->email = $email;
@@ -77,11 +94,18 @@ class Organisation
         return $this;
     }
 
+    /**
+     * @return int|null
+     */
     public function getPhone(): ?int
     {
         return $this->phone;
     }
 
+    /**
+     * @param int $phone
+     * @return Organisation
+     */
     public function setPhone(int $phone): self
     {
         $this->phone = $phone;
@@ -89,11 +113,18 @@ class Organisation
         return $this;
     }
 
+    /**
+     * @return null|string
+     */
     public function getAddress(): ?string
     {
         return $this->address;
     }
 
+    /**
+     * @param string $address
+     * @return Organisation
+     */
     public function setAddress(string $address): self
     {
         $this->address = $address;
@@ -109,6 +140,10 @@ class Organisation
         return $this->events;
     }
 
+    /**
+     * @param Event $event
+     * @return Organisation
+     */
     public function addEvent(Event $event): self
     {
         if (!$this->events->contains($event)) {
@@ -119,6 +154,10 @@ class Organisation
         return $this;
     }
 
+    /**
+     * @param Event $event
+     * @return Organisation
+     */
     public function removeEvent(Event $event): self
     {
         if ($this->events->contains($event)) {

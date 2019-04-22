@@ -15,6 +15,10 @@ use Symfony\Bridge\Doctrine\RegistryInterface;
  */
 class EventRepository extends ServiceEntityRepository
 {
+    /**
+     * EventRepository constructor.
+     * @param RegistryInterface $registry
+     */
     public function __construct(RegistryInterface $registry)
     {
         parent::__construct($registry, Event::class);
@@ -36,14 +40,7 @@ class EventRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    /**
-     * @return array|null
-     */
-    public function getAllEvents() :?array
-    {
-        return $this->createQueryBuilder('e')
-            ->select('e.id','e.title', 'e.start_date','e.end_date', 'e.description')
-            ->getQuery()
-            ->getResult();
-    }
+
+
+
 }

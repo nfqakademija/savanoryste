@@ -14,6 +14,10 @@ use Symfony\Bridge\Doctrine\RegistryInterface;
  */
 class VolunteerRepository extends ServiceEntityRepository
 {
+    /**
+     * VolunteerRepository constructor.
+     * @param RegistryInterface $registry
+     */
     public function __construct(RegistryInterface $registry)
     {
         parent::__construct($registry, Volunteer::class);
@@ -26,19 +30,6 @@ class VolunteerRepository extends ServiceEntityRepository
     public function AllVolunteers() :?array{
         return $this->createQueryBuilder('v')
             ->select('v.id','v.firstname', 'v.lastname', 'v.phone', 'v.email', 'v.job_type')
-            ->getQuery()
-            ->getResult();
-    }
-
-    /**
-     * @param int $id
-     * @return array|null
-     */
-    public function SingleVolunteer(int $id) :?array{
-        return $this->createQueryBuilder('v')
-            ->select('v.id','v.firstname', 'v.lastname', 'v.phone', 'v.email', 'v.job_type')
-            ->where('v.id = :id')
-            ->setParameter(':id', $id)
             ->getQuery()
             ->getResult();
     }

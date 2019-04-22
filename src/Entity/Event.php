@@ -45,16 +45,7 @@ class Event
     private $organisation;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Volunteer", inversedBy="events", fetch="LAZY")
-     * @ORM\JoinTable(
-     *     name="event_volunteer",
-     *     joinColumns={
-     *          @ORM\JoinColumn(name="event_id", referencedColumnName="id")
-     *     },
-     *     inverseJoinColumns={
-     *          @ORM\JoinColumn(name="volunteer_id", referencedColumnName="id")
-     *     }
-     * )
+     * @ORM\ManyToMany(targetEntity="App\Entity\Volunteer", mappedBy="events")
      */
     private $volunteers;
 
@@ -63,16 +54,26 @@ class Event
         $this->volunteers = new ArrayCollection();
     }
 
+    /**
+     * @return int|null
+     */
     public function getId(): ?int
     {
         return $this->id;
     }
 
+    /**
+     * @return null|string
+     */
     public function getTitle(): ?string
     {
         return $this->title;
     }
 
+    /**
+     * @param string $title
+     * @return Event
+     */
     public function setTitle(string $title): self
     {
         $this->title = $title;
@@ -80,11 +81,18 @@ class Event
         return $this;
     }
 
+    /**
+     * @return \DateTimeInterface|null
+     */
     public function getStartDate(): ?\DateTimeInterface
     {
         return $this->start_date;
     }
 
+    /**
+     * @param \DateTimeInterface $start_date
+     * @return Event
+     */
     public function setStartDate(\DateTimeInterface $start_date): self
     {
         $this->start_date = $start_date;
@@ -92,11 +100,18 @@ class Event
         return $this;
     }
 
+    /**
+     * @return \DateTimeInterface|null
+     */
     public function getEndDate(): ?\DateTimeInterface
     {
         return $this->end_date;
     }
 
+    /**
+     * @param \DateTimeInterface $end_date
+     * @return Event
+     */
     public function setEndDate(\DateTimeInterface $end_date): self
     {
         $this->end_date = $end_date;
@@ -104,11 +119,18 @@ class Event
         return $this;
     }
 
+    /**
+     * @return null|string
+     */
     public function getDescription(): ?string
     {
         return $this->description;
     }
 
+    /**
+     * @param string $description
+     * @return Event
+     */
     public function setDescription(string $description): self
     {
         $this->description = $description;
@@ -116,11 +138,18 @@ class Event
         return $this;
     }
 
+    /**
+     * @return Organisation|null
+     */
     public function getOrganisation(): ?Organisation
     {
         return $this->organisation;
     }
 
+    /**
+     * @param Organisation|null $organisation
+     * @return Event
+     */
     public function setOrganisation(?Organisation $organisation): self
     {
         $this->organisation = $organisation;
@@ -136,22 +165,33 @@ class Event
         return $this->volunteers;
     }
 
+    /**
+     * @param Volunteer $volunteer
+     * @return Event
+     */
     public function addVolunteer(Volunteer $volunteer): self
     {
         if (!$this->volunteers->contains($volunteer)) {
             $this->volunteers[] = $volunteer;
+            $volunteer->addEvent($this);
         }
 
         return $this;
     }
 
+    /**
+     * @param Volunteer $volunteer
+     * @return Event
+     */
     public function removeVolunteer(Volunteer $volunteer): self
     {
         if ($this->volunteers->contains($volunteer)) {
             $this->volunteers->removeElement($volunteer);
+            $volunteer->removeEvent($this);
         }
 
         return $this;
     }
+
 
 }
