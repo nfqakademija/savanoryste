@@ -1,7 +1,8 @@
-import { GET_VOLUNTEER_LIST } from '../actions/types';
+import { GET_VOLUNTEER_LIST, GET_VOLUNTEER } from '../actions/types';
 
 const initialState = {
-  volunteerList: []
+  volunteerList: [],
+  volunteer: {}
 };
 
 const volunteersReducer = (state = initialState, action) => {
@@ -9,6 +10,10 @@ const volunteersReducer = (state = initialState, action) => {
     case GET_VOLUNTEER_LIST:
       return {
         volunteerList: action.payload.Volunteer
+      };
+    case GET_VOLUNTEER:
+      return {
+        volunteer: action.payload
       };
     default:
       return state;

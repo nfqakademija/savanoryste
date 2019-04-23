@@ -11,3 +11,14 @@ export const getVolunteerList = () => dispatch => {
       });
     });
 };
+
+export const getVolunteerById = id => dispatch => {
+  axios
+    .get(`http://savanoryste.projektai.nfqakademija.lt/api/volunteer/${id}`)
+    .then(res => {
+      dispatch({
+        type: GET_VOLUNTEER_LIST,
+        payload: res.data
+      });
+    });
+};

@@ -3,7 +3,9 @@ import { connect } from 'react-redux';
 import Container from 'react-bootstrap/Container';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
+
 import VolunteerCard from './Volunteer/VolunteerCard';
+import VolunteerProfile from './Volunteer/VolunteerProfile';
 
 import { getVolunteerList } from '../actions/volunteersActions';
 
@@ -28,6 +30,8 @@ class App extends React.Component {
             </Col>
           ))}
         </Row>
+
+        <VolunteerProfile />
       </Container>
     );
   }
