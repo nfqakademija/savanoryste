@@ -23,7 +23,7 @@ class VolunteerCard extends React.Component {
 
   render() {
     const { open } = this.state;
-
+    const { volunteer } = this.props;
     return (
       <Card className="volunteer-card">
         <Card.Body className="text-center">
@@ -32,10 +32,10 @@ class VolunteerCard extends React.Component {
             src="https://s3.eu-central-1.amazonaws.com/bootstrapbaymisc/blog/24_days_bootstrap/robert.jpg"
           />
           <Card.Title variant="h4" className="card-title">
-            Vardenis Pavardenis
+            {`${volunteer.firstname} ${volunteer.lastname}`}
           </Card.Title>
           <Card.Subtitle className="card-subtitle mb-2 text-muted">
-            Kategorija, Kategorija, Kategorija
+            {volunteer.job_type}
           </Card.Subtitle>
           <p className="card-text">
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent
@@ -63,11 +63,11 @@ class VolunteerCard extends React.Component {
                 <Col>
                   <Row>
                     <FontAwesomeIcon icon={faEnvelope} />
-                    vardenis.parvedinis@gmail.com
+                    {volunteer.email}
                   </Row>
                   <Row>
                     <FontAwesomeIcon icon={faPhone} />
-                    +370 6730 6581
+                    {volunteer.phone}
                   </Row>
                   <Row>
                     <FontAwesomeIcon icon={faMapMarkerAlt} />
