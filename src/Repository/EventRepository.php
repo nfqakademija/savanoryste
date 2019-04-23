@@ -35,12 +35,8 @@ class EventRepository extends ServiceEntityRepository
             ->innerJoin('App\Entity\EventVolunteer', 'ev', Join::WITH, 'ev.event_id = e.id')
             ->innerJoin('App\Entity\Volunteer', 'v', Join::WITH, 'ev.volunteer_id = v.id')
             ->where('v.id = :id')
-            ->setParameter('id' , $id)
+            ->setParameter('id', $id)
             ->getQuery()
             ->getResult();
     }
-
-
-
-
 }

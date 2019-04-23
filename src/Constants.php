@@ -2,7 +2,8 @@
 
 namespace App;
 
-class Constants{
+class Constants
+{
 
     const VOLUNTEERS = 'Volunteer';
     const VOLUNTER_TABLE_COLUMN_NAMES = [
@@ -13,5 +14,4 @@ class Constants{
         'email',
         'job_type'
     ];
-
 }

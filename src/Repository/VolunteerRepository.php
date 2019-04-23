@@ -27,11 +27,11 @@ class VolunteerRepository extends ServiceEntityRepository
     /**
      * @return array|null
      */
-    public function AllVolunteers() :?array{
+    public function allVolunteers() :?array
+    {
         return $this->createQueryBuilder('v')
-            ->select('v.id','v.firstname', 'v.lastname', 'v.phone', 'v.email', 'v.job_type')
+            ->select('v.id', 'v.firstname', 'v.lastname', 'v.phone', 'v.email', 'v.job_type')
             ->getQuery()
             ->getResult();
     }
-
 }

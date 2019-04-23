@@ -11,7 +11,6 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Utils\Utils;
 
-
 /**
  * Class ApiController
  * @package App\Controller
@@ -24,8 +23,8 @@ class ApiController extends AbstractController
      */
     public function fetchAllVolunteers() :JsonResponse
     {
-        $volunteers = $this->getDoctrine()->getRepository(Volunteer::class)->AllVolunteers();
-        $structured = Utils::volunteerStructurize($volunteers,$this->getDoctrine()->getRepository(Event::class));
+        $volunteers = $this->getDoctrine()->getRepository(Volunteer::class)->allVolunteers();
+        $structured = Utils::volunteerStructurize($volunteers, $this->getDoctrine()->getRepository(Event::class));
 
         return new JsonResponse(
             $structured,
@@ -33,7 +32,6 @@ class ApiController extends AbstractController
             ['content-type' => 'application/json'],
             false
         );
-
     }
 
     /**
@@ -158,5 +156,4 @@ class ApiController extends AbstractController
             false
         );
     }
-
 }

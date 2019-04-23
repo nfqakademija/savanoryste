@@ -8,7 +8,8 @@ use App\Constants;
  * Class Utils
  * @package App\Utils
  */
-class Utils{
+class Utils
+{
 
     /**
      * embeds additional data into selected volunters list. e.x Events,Reviews
@@ -16,18 +17,20 @@ class Utils{
      * @param $repository - Object of $this->getDoctrine()->getRepository(Event::class)
      * @return array
      */
-    public static function volunteerStructurize(array $volunteers, Object $repository) :array {
+    public static function volunteerStructurize(array $volunteers, Object $repository) :array
+    {
         $structure = array(
             Constants::VOLUNTEERS => []
         );
 
         $columns = Constants::VOLUNTER_TABLE_COLUMN_NAMES;
-        for($i=0;$i<count($volunteers);$i++){
-            for($j=0;$j<count($columns);$j++){
+        for ($i=0; $i<count($volunteers); $i++) {
+            for ($j=0; $j<count($columns); $j++) {
                 $structure[Constants::VOLUNTEERS][$i][$columns[$j]] = $volunteers[$i][$columns[$j]];
             }
-            $structure[Constants::VOLUNTEERS][$i]['Events'] = $repository->getEventsByVolunteerId($volunteers[$i]['id']);
-
+            $structure[Constants::VOLUNTEERS][$i]['Events'] = $repository->getEventsByVolunteerId(
+                $volunteers[$i]['id']
+            );
         }
 
         return $structure;
@@ -41,7 +44,7 @@ class Utils{
     public static function buildEventStructure(array $event) :?array
     {
         $events = array();
-        foreach($event as $key => $value){
+        foreach ($event as $key => $value) {
             $events[$key] = [
                 'id'                => $value->getId(),
                 'organisation'      => [
@@ -66,10 +69,11 @@ class Utils{
      * @param int $volunteerId
      * @return array
      */
-    public static function buildSingleVolunteerStructure(array $volunteers, array $reviews, int $volunteerId) :?array{
+    public static function buildSingleVolunteerStructure(array $volunteers, array $reviews, int $volunteerId) :?array
+    {
         $counter = 1;
-        foreach($volunteers as $keyVol => $volunteer){
-            foreach($reviews as $keyRev => $review) {
+        foreach ($volunteers as $keyVol => $volunteer) {
+            foreach ($reviews as $keyRev => $review) {
                 $volunteers[$keyVol] = [
                     'id' => $volunteer->getId(),
                     'firstname' => $volunteer->getFirstName(),
@@ -84,7 +88,6 @@ class Utils{
                     ];
                     $counter++;
                 }
-
             }
         }
 
@@ -99,7 +102,7 @@ class Utils{
     public static function buildOrganisationStructure(array $organisations) :?array
     {
         $org = array();
-        foreach($organisations as $key => $organisation){
+        foreach ($organisations as $key => $organisation) {
             $org[$key] = [
                 'id'        => $organisation->getId(),
                 'name'      => $organisation->getName(),
@@ -119,7 +122,7 @@ class Utils{
     public static function buildReviewStructure(array $reviews) :?array
     {
         $rev = array();
-        foreach($reviews as $key => $review){
+        foreach ($reviews as $key => $review) {
             $rev[$key] = [
                 'id'            => $review->getId(),
                 'review_body'   => $review->getReviewBody(),
@@ -128,5 +131,4 @@ class Utils{
         }
         return $rev;
     }
-
 }
