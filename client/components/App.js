@@ -1,33 +1,12 @@
 import React from 'react';
-import VolunteerCard from './Volunteer/VolunteerCard';
-
+import Container from 'react-bootstrap/Container';
+import VolunteerProfile from './Volunteer/VolunteerProfile';
 import './App.css';
 
 const App = () => (
-  <div className="container">
-    <div className="row">
-      <div className="col-sm">
-        <VolunteerCard />
-      </div>
-      <div className="col-sm">
-        <VolunteerCard />
-      </div>
-      <div className="col-sm">
-        <VolunteerCard />
-      </div>
-    </div>
-    <div className="row">
-      <div className="col-sm">
-        <VolunteerCard />
-      </div>
-      <div className="col-sm">
-        <VolunteerCard />
-      </div>
-      <div className="col-sm">
-        <VolunteerCard />
-      </div>
-    </div>
-  </div>
+  <Container>
+    <VolunteerProfile />
+  </Container>
 );
 
 export default App;
