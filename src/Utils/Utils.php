@@ -84,7 +84,9 @@ class Utils
                 ];
                 if ($volunteerId == $review->getVolunteer()->getId()) {
                     $volunteers['Reviews'][$counter] = [
-                        'id'        => $review->getId()
+                        'id'            => $review->getId(),
+                        'review_body'   => $review->getReviewBody(),
+                        'review_rating' => $review->getReviewRating()
                     ];
                     $counter++;
                 }

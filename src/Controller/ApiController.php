@@ -29,7 +29,10 @@ class ApiController extends AbstractController
         return new JsonResponse(
             $structured,
             200,
-            ['content-type' => 'application/json'],
+            [
+                'content-type' => 'application/json',
+                'Access-Control-Allow-Origin'   => '*'
+            ],
             false
         );
     }
