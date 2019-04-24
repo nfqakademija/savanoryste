@@ -10,20 +10,26 @@ use Doctrine\Common\Persistence\ObjectManager;
 
 class VolunteerFixtures extends Fixture implements OrderedFixtureInterface
 {
-    public function generateDummyPhone()
+    private function generateDummyPhone()
     {
         $phone = '86'. mt_rand(1000000, 9999999);
 
         return $phone;
     }
 
-    public function generateJobType()
+    private function generateDescription()
     {
-        $jobs = array('anti-war', 'natural disasters', 'hunger', 'abuse against women',
-            'preventing illness', 'poverty', 'environmental');
-        $jobsRandom = array_rand($jobs);
-
-        return $jobs[$jobsRandom];
+        $descriptions = [
+            'Hard Working',
+            'Always on Time',
+            'Polite',
+            'Willing to put in extra effort',
+            'Have been volunteering for the past year',
+            'Experienced',
+            'Easy Out going'
+        ];
+        $descriptionsRandom = array_rand($descriptions);
+        return $descriptions[$descriptionsRandom];
     }
 
     public function load(ObjectManager $manager)
@@ -36,7 +42,9 @@ class VolunteerFixtures extends Fixture implements OrderedFixtureInterface
             $volunteer->setLastname($faker->lastName);
             $volunteer->setEmail($faker->email);
             $volunteer->setPhone($this->generateDummyPhone());
-            $volunteer->setJobType($this->generateJobType());
+            $volunteer->setCity($faker->city);
+            $volunteer->setCountry($faker->country);
+            $volunteer->setDescription($this->generateDescription());
             $this->addReference('volunteer-' . $i, $volunteer);
 
             $manager->persist($volunteer);
