@@ -1,9 +1,7 @@
 import React from 'react';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
-import Container from 'react-bootstrap/Container';
-import Col from 'react-bootstrap/Col';
-import Row from 'react-bootstrap/Row';
+import Badge from 'react-bootstrap/Badge';
 
 class VolunteerProfileCard extends React.Component {
   constructor(props) {
@@ -37,22 +35,17 @@ class VolunteerProfileCard extends React.Component {
             Book now
           </Button>
 
-          <Container>
-            <Row>
-              <Col>
-                <Row>Events</Row>
-                <Row>1000</Row>
-              </Col>
-              <Col>
-                <Row>Events</Row>
-                <Row>1000</Row>
-              </Col>
-              <Col>
-                <Row>Events</Row>
-                <Row>1000</Row>
-              </Col>
-            </Row>
-          </Container>
+          <div className="profile-card">
+            <h5>
+              Events attended <Badge variant="secondary">100</Badge>
+            </h5>
+            <h5>
+              Rating <Badge variant="secondary">4.5/5</Badge>
+            </h5>
+            <h5>
+              Reviews <Badge variant="secondary">26</Badge>
+            </h5>
+          </div>
         </Card.Body>
       </Card>
     );

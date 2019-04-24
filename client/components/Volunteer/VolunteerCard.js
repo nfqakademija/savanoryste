@@ -5,6 +5,7 @@ import Collapse from 'react-bootstrap/Collapse';
 import Container from 'react-bootstrap/Container';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
+import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faEnvelope,
@@ -50,10 +51,9 @@ class VolunteerCard extends React.Component {
           >
             Contact Info
           </Button>
-
-          <a href="#" className="btn btn-outline-info">
-            View Profile
-          </a>
+          <Link className="btn btn-outline-info" to="/profile">
+            View profile
+          </Link>
         </Card.Body>
 
         <Collapse in={open}>
