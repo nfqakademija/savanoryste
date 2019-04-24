@@ -1,10 +1,11 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { Switch, Route } from 'react-router-dom';
 import Container from 'react-bootstrap/Container';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
-
-import VolunteerCard from './Volunteer/VolunteerCard';
+import AppBar from './AppBar';
+import VolunteerList from './Volunteer/VolunteerList';
 import VolunteerProfile from './Volunteer/VolunteerProfile';
 
 import { getVolunteerList } from '../actions/volunteersActions';
@@ -14,25 +15,19 @@ import './App.css';
 class App extends React.Component {
   constructor(props) {
     super(props);
-
-    props.onGetVolunteerList();
   }
 
   render() {
-    const { volunteerList } = this.props;
-
     return (
-      <Container>
-        <Row>
-          {volunteerList.map(volunteer => (
-            <Col xs={12} sm={6} lg={4}>
-              <VolunteerCard volunteer={volunteer} />
-            </Col>
-          ))}
-        </Row>
-
-        <VolunteerProfile />
-      </Container>
+      <div>
+        <AppBar className="container" />
+        <Container className="volunteer-list">
+          <Switch>
+            <Route exact path="/" component={VolunteerList} />
+            <Route path="/profile" component={VolunteerProfile} />
+          </Switch>
+        </Container>
+      </div>
     );
   }
 }

@@ -1,7 +1,3 @@
-body {
-  padding: 2rem 0rem;
-}
-
 .avatar {
   border: 0.3rem solid rgba(#fff, 0.3);
   margin-top: -3rem;
@@ -20,4 +16,12 @@ body {
 
 .profile-info-container {
   margin: 20px;
+}
+
+.container {
+  margin: auto;
+}
+
+.volunteer-list {
+  margin-top: 40px;
 }
