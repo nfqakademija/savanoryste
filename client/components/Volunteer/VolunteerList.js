@@ -21,7 +21,7 @@ class VolunteerList extends React.Component {
       <Container>
         <Row>
           {volunteerList.map(volunteer => (
-            <Col xs={12} sm={6} lg={4}>
+            <Col xs={12} sm={8} lg={4}>
               <VolunteerCard volunteer={volunteer} />
             </Col>
           ))}

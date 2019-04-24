@@ -7,9 +7,9 @@ import Row from 'react-bootstrap/Row';
 import VolunteerProfileCard from './VolunteerProfileCard';
 
 const VolunteerProfile = () => (
-  <Container>
+  <Container style={{ margin: 'auto' }}>
     <Row>
-      <Col xs={8} sm={8} lg={4}>
+      <Col xs={12} sm={12} lg={4}>
         <VolunteerProfileCard />
       </Col>
       <Col xs={12} sm={12} lg={8}>
