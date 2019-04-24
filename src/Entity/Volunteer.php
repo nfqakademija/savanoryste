@@ -39,6 +39,11 @@ class Volunteer
     private $email;
 
     /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $job_type;
+
+    /**
      * @ORM\OneToMany(targetEntity="App\Entity\Review", mappedBy="volunteer")
      */
     private $reviews;
@@ -49,31 +54,10 @@ class Volunteer
      */
     private $events;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $city;
-
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $country;
-
-    /**
-     * @ORM\Column(type="text")
-     */
-    private $description;
-
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Job", mappedBy="volunteer")
-     */
-    private $jobs;
-
     public function __construct()
     {
         $this->reviews = new ArrayCollection();
         $this->events = new ArrayCollection();
-        $this->jobs = new ArrayCollection();
     }
 
     /**
@@ -161,6 +145,25 @@ class Volunteer
     }
 
     /**
+     * @return null|string
+     */
+    public function getJobType(): ?string
+    {
+        return $this->job_type;
+    }
+
+    /**
+     * @param string $job_type
+     * @return Volunteer
+     */
+    public function setJobType(string $job_type): self
+    {
+        $this->job_type = $job_type;
+
+        return $this;
+    }
+
+    /**
      * @return Collection|Review[]
      */
     public function getReviews(): Collection
@@ -232,72 +235,4 @@ class Volunteer
 
         return $this;
     }
-
-    public function getCity(): ?string
-    {
-        return $this->city;
-    }
-
-    public function setCity(string $city): self
-    {
-        $this->city = $city;
-
-        return $this;
-    }
-
-    public function getCountry(): ?string
-    {
-        return $this->country;
-    }
-
-    public function setCountry(string $country): self
-    {
-        $this->country = $country;
-
-        return $this;
-    }
-
-    public function getDescription(): ?string
-    {
-        return $this->description;
-    }
-
-    public function setDescription(string $description): self
-    {
-        $this->description = $description;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|Job[]
-     */
-    public function getJobs(): Collection
-    {
-        return $this->jobs;
-    }
-
-    public function addJob(Job $job): self
-    {
-        if (!$this->jobs->contains($job)) {
-            $this->jobs[] = $job;
-            $job->setVolunteer($this);
-        }
-
-        return $this;
-    }
-
-    public function removeJob(Job $job): self
-    {
-        if ($this->jobs->contains($job)) {
-            $this->jobs->removeElement($job);
-            // set the owning side to null (unless already changed)
-            if ($job->getVolunteer() === $this) {
-                $job->setVolunteer(null);
-            }
-        }
-
-        return $this;
-    }
-
 }

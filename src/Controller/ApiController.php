@@ -9,10 +9,7 @@ use App\Entity\Volunteer;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Serializer\Encoder\JsonEncoder;
-use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
-use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
-use Symfony\Component\Serializer\Serializer;
+use App\Utils\Utils;
 
 /**
  * Class ApiController
@@ -26,16 +23,17 @@ class ApiController extends AbstractController
      */
     public function fetchAllVolunteers() :JsonResponse
     {
-        $volunteers = $this->getDoctrine()->getRepository(Volunteer::class)->findAll();
-        $serialized = $this->getSerializer()->serialize($volunteers, 'json');
+        $volunteers = $this->getDoctrine()->getRepository(Volunteer::class)->allVolunteers();
+        $structured = Utils::volunteerStructurize($volunteers, $this->getDoctrine()->getRepository(Event::class));
 
-        return JsonResponse::fromJsonString(
-            $serialized,
+        return new JsonResponse(
+            $structured,
             200,
             [
                 'content-type' => 'application/json',
                 'Access-Control-Allow-Origin'   => '*'
-            ]
+            ],
+            false
         );
     }
 
@@ -46,16 +44,15 @@ class ApiController extends AbstractController
      */
     public function fetchSingleVolunteer(int $id):JsonResponse
     {
-        $volunteer = $this->getDoctrine()->getRepository(Volunteer::class)->find($id);
-        $serialized = $this->getSerializer()->serialize($volunteer, 'json');
+        $rawVolunteer = $this->getDoctrine()->getRepository(Volunteer::class)->findBy(['id'  => $id]);
+        $rawAllReviews = $this->getDoctrine()->getRepository(Review::class)->findAll();
+        $volunteer = Utils::buildSingleVolunteerStructure($rawVolunteer, $rawAllReviews, $id);
 
-        return JsonResponse::fromJsonString(
-            $serialized,
+        return new JsonResponse(
+            ['Volunteer' => $volunteer],
             200,
-            [
-                'content-type' => 'application/json',
-                'Access-Control-Allow-Origin'   => '*'
-            ]
+            ['content-type' => 'application/json'],
+            false
         );
     }
 
@@ -65,16 +62,14 @@ class ApiController extends AbstractController
      */
     public function fetchAllEvents() :JsonResponse
     {
-        $events = $this->getDoctrine()->getRepository(Event::class)->findAll();
-        $serialized = $this->getSerializer()->serialize($events, 'json');
+        $rawData = $this->getDoctrine()->getRepository(Event::class)->findAll();
+        $events = Utils::buildEventStructure($rawData);
 
-        return JsonResponse::fromJsonString(
-            $serialized,
+        return new JsonResponse(
+            ['Events' => $events],
             200,
-            [
-                'content-type' => 'application/json',
-                'Access-Control-Allow-Origin'   => '*'
-            ]
+            ['content-type' => 'application/json'],
+            false
         );
     }
 
@@ -85,16 +80,14 @@ class ApiController extends AbstractController
      */
     public function fetchSingleEvent(int $id) :JsonResponse
     {
-        $event = $this->getDoctrine()->getRepository(Event::class)->find($id);
-        $serialized = $this->getSerializer()->serialize($event, 'json');
+        $rawData = $this->getDoctrine()->getRepository(Event::class)->findBy(['id' => $id]);
+        $event = Utils::buildEventStructure($rawData);
 
-        return JsonResponse::fromJsonString(
-            $serialized,
+        return new JsonResponse(
+            $event,
             200,
-            [
-                'content-type' => 'application/json',
-                'Access-Control-Allow-Origin'   => '*'
-            ]
+            ['content-type' => 'application/json'],
+            false
         );
     }
 
@@ -103,16 +96,14 @@ class ApiController extends AbstractController
      */
     public function fetchAllOrganisations() :JsonResponse
     {
-        $organisations = $this->getDoctrine()->getRepository(Organisation::class)->findAll();
-        $serialized = $this->getSerializer()->serialize($organisations, 'json');
+        $rawData = $this->getDoctrine()->getRepository(Organisation::class)->findAll();
+        $organisations = Utils::buildOrganisationStructure($rawData);
 
-        return JsonResponse::fromJsonString(
-            $serialized,
+        return new JsonResponse(
+            ['Organisations' => $organisations],
             200,
-            [
-                'content-type' => 'application/json',
-                'Access-Control-Allow-Origin'   => '*'
-            ]
+            ['content-type' => 'application/json'],
+            false
         );
     }
 
@@ -123,16 +114,14 @@ class ApiController extends AbstractController
      */
     public function fetchSingleOrganisation(int $id) :JsonResponse
     {
-        $organisation = $this->getDoctrine()->getRepository(Organisation::class)->find($id);
-        $serialized = $this->getSerializer()->serialize($organisation, 'json');
+        $rawData = $this->getDoctrine()->getRepository(Organisation::class)->findBy(['id' => $id]);
+        $organisations = Utils::buildOrganisationStructure($rawData);
 
-        return JsonResponse::fromJsonString(
-            $serialized,
+        return new JsonResponse(
+            $organisations,
             200,
-            [
-                'content-type' => 'application/json',
-                'Access-Control-Allow-Origin'   => '*'
-            ]
+            ['content-type' => 'application/json'],
+            false
         );
     }
 
@@ -142,16 +131,14 @@ class ApiController extends AbstractController
      */
     public function fetchAllReviews() :JsonResponse
     {
-        $reviews = $this->getDoctrine()->getRepository(Review::class)->findAll();
-        $serialized = $this->getSerializer()->serialize($reviews, 'json');
+        $rawData = $this->getDoctrine()->getRepository(Review::class)->findAll();
+        $reviews = Utils::buildReviewStructure($rawData);
 
-        return JsonResponse::fromJsonString(
-            $serialized,
+        return new JsonResponse(
+            ['Reviews' => $reviews],
             200,
-            [
-                'content-type' => 'application/json',
-                'Access-Control-Allow-Origin'   => '*'
-            ]
+            ['content-type' => 'application/json'],
+            false
         );
     }
 
@@ -162,33 +149,14 @@ class ApiController extends AbstractController
      */
     public function fetchSingleReview(int $id) :JsonResponse
     {
-        $review = $this->getDoctrine()->getRepository(Organisation::class)->find($id);
-        $serialized = $this->getSerializer()->serialize($review, 'json');
+        $rawData = $this->getDoctrine()->getRepository(Review::class)->findBy(['id' => $id]);
+        $review = Utils::buildReviewStructure($rawData);
 
-        return JsonResponse::fromJsonString(
-            $serialized,
+        return new JsonResponse(
+            $review,
             200,
-            [
-                'content-type' => 'application/json',
-                'Access-Control-Allow-Origin'   => '*'
-            ]
+            ['content-type' => 'application/json'],
+            false
         );
-    }
-
-    /**
-     * @return Serializer
-     */
-    private function getSerializer() :Serializer
-    {
-        $encoder = new JsonEncoder();
-        $defaultContext = [
-            AbstractNormalizer::CIRCULAR_REFERENCE_HANDLER => function ($object, $format, $context) {
-                return $object->getId();
-            },
-        ];
-        $normalizer = new ObjectNormalizer(null, null, null, null, null, null, $defaultContext);
-
-        $serializer = new Serializer([$normalizer], [$encoder]);
-        return $serializer;
     }
 }

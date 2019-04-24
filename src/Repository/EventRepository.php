@@ -24,4 +24,19 @@ class EventRepository extends ServiceEntityRepository
         parent::__construct($registry, Event::class);
     }
 
+    /**
+     * @param int $id
+     * @return array|null
+     */
+    public function getEventsByVolunteerId(int $id) :?array
+    {
+        return $this->createQueryBuilder('e')
+            ->select('e.id', 'e.title', 'e.start_date', 'e.end_date', 'e.description')
+            ->innerJoin('App\Entity\EventVolunteer', 'ev', Join::WITH, 'ev.event_id = e.id')
+            ->innerJoin('App\Entity\Volunteer', 'v', Join::WITH, 'ev.volunteer_id = v.id')
+            ->where('v.id = :id')
+            ->setParameter('id', $id)
+            ->getQuery()
+            ->getResult();
+    }
 }
