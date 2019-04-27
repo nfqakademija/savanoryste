@@ -3,7 +3,11 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
+<<<<<<< HEAD:dummy-data.sql
 -- Generation Time: Apr 23, 2019 at 09:11 PM
+=======
+-- Generation Time: Apr 27, 2019 at 05:47 PM
+>>>>>>> dev:savanoryste.sql
 -- Server version: 5.7.25-0ubuntu0.18.04.2
 -- PHP Version: 7.2.15-0ubuntu0.18.04.2
 
@@ -17,7 +21,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `symfony`
+-- Database: `savanoryste`
 --
 
 -- --------------------------------------------------------
