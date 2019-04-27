@@ -29,13 +29,8 @@ class ApiController extends AbstractController
         $volunteers = $this->getDoctrine()->getRepository(Volunteer::class)->findAll();
         $serialized = $this->getSerializer()->serialize($volunteers, 'json');
 
-        return JsonResponse::fromJsonString(
-            $serialized,
-            200,
-            [
-                'content-type' => 'application/json',
-                'Access-Control-Allow-Origin'   => '*'
-            ]
+        return $this->Response(
+              $serialized
         );
     }
 
@@ -49,13 +44,8 @@ class ApiController extends AbstractController
         $volunteer = $this->getDoctrine()->getRepository(Volunteer::class)->find($id);
         $serialized = $this->getSerializer()->serialize($volunteer, 'json');
 
-        return JsonResponse::fromJsonString(
-            $serialized,
-            200,
-            [
-                'content-type' => 'application/json',
-                'Access-Control-Allow-Origin'   => '*'
-            ]
+        return $this->Response(
+            $serialized
         );
     }
 
@@ -68,13 +58,8 @@ class ApiController extends AbstractController
         $events = $this->getDoctrine()->getRepository(Event::class)->findAll();
         $serialized = $this->getSerializer()->serialize($events, 'json');
 
-        return JsonResponse::fromJsonString(
-            $serialized,
-            200,
-            [
-                'content-type' => 'application/json',
-                'Access-Control-Allow-Origin'   => '*'
-            ]
+        return $this->Response(
+            $serialized
         );
     }
 
@@ -88,13 +73,8 @@ class ApiController extends AbstractController
         $event = $this->getDoctrine()->getRepository(Event::class)->find($id);
         $serialized = $this->getSerializer()->serialize($event, 'json');
 
-        return JsonResponse::fromJsonString(
-            $serialized,
-            200,
-            [
-                'content-type' => 'application/json',
-                'Access-Control-Allow-Origin'   => '*'
-            ]
+        return $this->Response(
+            $serialized
         );
     }
 
@@ -106,13 +86,8 @@ class ApiController extends AbstractController
         $organisations = $this->getDoctrine()->getRepository(Organisation::class)->findAll();
         $serialized = $this->getSerializer()->serialize($organisations, 'json');
 
-        return JsonResponse::fromJsonString(
-            $serialized,
-            200,
-            [
-                'content-type' => 'application/json',
-                'Access-Control-Allow-Origin'   => '*'
-            ]
+        return $this->Response(
+            $serialized
         );
     }
 
@@ -126,13 +101,8 @@ class ApiController extends AbstractController
         $organisation = $this->getDoctrine()->getRepository(Organisation::class)->find($id);
         $serialized = $this->getSerializer()->serialize($organisation, 'json');
 
-        return JsonResponse::fromJsonString(
-            $serialized,
-            200,
-            [
-                'content-type' => 'application/json',
-                'Access-Control-Allow-Origin'   => '*'
-            ]
+        return $this->Response(
+            $serialized
         );
     }
 
@@ -145,13 +115,8 @@ class ApiController extends AbstractController
         $reviews = $this->getDoctrine()->getRepository(Review::class)->findAll();
         $serialized = $this->getSerializer()->serialize($reviews, 'json');
 
-        return JsonResponse::fromJsonString(
-            $serialized,
-            200,
-            [
-                'content-type' => 'application/json',
-                'Access-Control-Allow-Origin'   => '*'
-            ]
+        return $this->Response(
+            $serialized
         );
     }
 
@@ -165,13 +130,8 @@ class ApiController extends AbstractController
         $review = $this->getDoctrine()->getRepository(Organisation::class)->find($id);
         $serialized = $this->getSerializer()->serialize($review, 'json');
 
-        return JsonResponse::fromJsonString(
-            $serialized,
-            200,
-            [
-                'content-type' => 'application/json',
-                'Access-Control-Allow-Origin'   => '*'
-            ]
+        return $this->Response(
+            $serialized
         );
     }
 
@@ -190,5 +150,35 @@ class ApiController extends AbstractController
 
         $serializer = new Serializer([$normalizer], [$encoder]);
         return $serializer;
+    }
+
+    /**
+     * @param array $data
+     * @param int $code
+     * @param array|null $headers
+     * @return JsonResponse
+     */
+    private function Response(string $data, int $code = 200, array $headers = [] ) : JsonResponse
+    {
+        if($headers === []){
+            $headers = $this->defaultHeader();
+        }
+
+        return JsonResponse::fromJsonString(
+            $data,
+            $code,
+            $headers
+        );
+    }
+
+    /**
+     * @return array
+     */
+    private function defaultHeader() :array
+    {
+        return [
+            'content-type' => 'application/json',
+            'Access-Control-Allow-Origin'   => '*'
+        ];
     }
 }
