@@ -16,6 +16,17 @@ security:
             security: false
         main:
             anonymous: true
+            form_login:
+                login_path: login
+                check_path: login
+                provider: app_user_provider
+            logout:
+                path: /logout
+                target: /
+            guard:
+                authenticators:
+                    - App\Security\UserAuthenticator
+
 
             # activate different ways to authenticate
 
