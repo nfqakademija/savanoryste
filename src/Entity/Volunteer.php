@@ -69,6 +69,11 @@ class Volunteer
      */
     private $jobs;
 
+    /**
+     * @ORM\OneToOne(targetEntity="App\Entity\User", cascade={"persist", "remove"})
+     */
+    private $User;
+
     public function __construct()
     {
         $this->reviews = new ArrayCollection();
@@ -296,6 +301,18 @@ class Volunteer
                 $job->setVolunteer(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->User;
+    }
+
+    public function setUser(?User $User): self
+    {
+        $this->User = $User;
 
         return $this;
     }
