@@ -43,6 +43,11 @@ class Organisation
      */
     private $events;
 
+    /**
+     * @ORM\OneToOne(targetEntity="App\Entity\User", cascade={"persist", "remove"})
+     */
+    private $User;
+
     public function __construct()
     {
         $this->events = new ArrayCollection();
@@ -167,6 +172,18 @@ class Organisation
                 $event->setOrganisation(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->User;
+    }
+
+    public function setUser(?User $User): self
+    {
+        $this->User = $User;
 
         return $this;
     }
