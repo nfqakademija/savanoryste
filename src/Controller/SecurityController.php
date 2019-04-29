@@ -3,66 +3,87 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use App\Form\UserType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Form\Extension\Core\Type\HiddenType;
-use Symfony\Component\Form\Extension\Core\Type\PasswordType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 
+/**
+ * Class SecurityController
+ * @package App\Controller
+ */
 class SecurityController extends AbstractController
 {
     /**
      * @Route("/login", name="app_login", methods={"GET", "POST"})
+     * @param AuthenticationUtils $authenticationUtils
+     * @return Response
      */
     public function login(AuthenticationUtils $authenticationUtils): Response
     {
-        // get the login error if there is one
         $error = $authenticationUtils->getLastAuthenticationError();
-        // last username entered by the user
         $lastUsername = $authenticationUtils->getLastUsername();
 
+        $form = $this->createForm(UserType::class);
+
         return $this->render('security/login.html.twig', [
-            'last_username' => $lastUsername, 'error' => $error
+            'last_username'     => $lastUsername,
+            'error'             => $error,
+            'loginForm'         => $form->createView()
         ]);
     }
 
     /**
+     * @param Request $request
+     * @param UserPasswordEncoderInterface $encoder
+     * @param string $type
      * @return Response
-     * @Route("/register", name="Register", methods={"GET", "POST"})
+     * @Route("/register/{type}", name="Register", methods={"GET", "POST"})
      */
-    public function register(Request $request, UserPasswordEncoderInterface $encoder) :Response
+    public function register(Request $request, UserPasswordEncoderInterface $encoder, string $type = 'Volunteer', ValidatorInterface $validator) :Response
     {
         $user = new User();
 
-        $form = $this->createFormBuilder($user)
-            ->add('username', TextType::class)
-            ->add('password', PasswordType::class)
-            ->add('Submit', SubmitType::class)
-            ->getForm();
-
+        $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
 
         if($form->isSubmitted() && $form->isValid()){
+            $errors = $validator->validate($user);
+
+            if(count($errors) > 0){
+                return new Response($errors, Response::HTTP_BAD_REQUEST);
+            }
             $user = $form->getData();
+
+            $isUsernameTaken = $this->getDoctrine()->getRepository(User::class)->isUsernameTaken($form->getData()->getUsername());
+            if($isUsernameTaken){
+                $this->addFlash('error', 'Vartotojo vardas užimtas');
+                return $this->redirectToRoute('Register');
+            }
+
             $user->setPassword(
                 $encoder->encodePassword($user, $form->getData()->getPassword())
             );
-            $user->setRoles(['Volunteer']);
+
+            if ($type != 'Volunteer'){
+                $user->setRoles(['Organisation']);
+            }
+            $user->setRoles([$type]);
 
             $em = $this->getDoctrine()->getManager();
             $em->persist($user);
             $em->flush();
+
             $this->addFlash('success','Registracija pavyko.Sveiki, '.$user->getUsername());
             return $this->redirectToRoute('home');
         }
 
         return $this->render('security/register.html.twig',[
-            'form'      => $form->createView()
+            'registerForm'      => $form->createView()
         ]);
 
     }
@@ -76,8 +97,4 @@ class SecurityController extends AbstractController
         // Log Out
     }
 
-    private function sanitizeInput(?string $input) :string
-    {
-        return htmlspecialchars($input, ENT_QUOTES, 'UTF-8');
-    }
 }
