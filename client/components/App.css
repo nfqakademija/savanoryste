@@ -59,29 +59,14 @@ body {
   border-radius: 5px;
 }
 
-.organisation-box {
-  border-style: solid;
-  border-width: 1px;
-}
-
-.organisation-box-text {
-  font-size: 10px;
-  text-align: right;
-}
-
-.volunteer-box {
-  border-style: solid;
-  border-width: 1px;
-}
-
-.whatever{
+.checkbox-label{
   background-color: #f1f1f1;
   display: inline-block;
   width: 45%;
   height: 25px;
 }
 
-.whatever:hover {
+.checkbox-label:hover {
   background-color: #c2c2c2;
   display: inline-block;
   width: 45%;
@@ -97,7 +82,7 @@ body {
   to {background-color: #1883B7;}
 }
 
-.role-checkbox input[type=checkbox]:checked + .whatever{
+.role-checkbox input[type=checkbox]:checked + .checkbox-label{
   animation-name: example;
   animation-duration: .5s;
   animation-fill-mode: forwards;
