@@ -316,5 +316,4 @@ class Volunteer
 
         return $this;
     }
-
 }

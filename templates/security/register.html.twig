@@ -12,6 +12,12 @@
 
     {{ form_start(registerForm, {'action': path('Register'), 'method': 'POST'}) }}
         {{ form_widget(registerForm) }}
+        <div>
+            <label for="user_password_repeat" class="required">Pakartokite slaptažodį</label>
+            <input type="password" id="user_password" name="password_repeat"
+                   required="required" class="form-control"
+                   oninvalid="setCustomValidity('Pakartokite slaptažodį')" oninput="setCustomValidity('')" />
+        </div>
 
         <div id="checkboxGroup" class="checkbox mb-3">
             <label for="role"> Pasirinkite role:<br>
