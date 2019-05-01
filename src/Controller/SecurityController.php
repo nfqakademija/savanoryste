@@ -42,9 +42,9 @@ class SecurityController extends AbstractController
      * @param UserPasswordEncoderInterface $encoder
      * @param string $type
      * @return Response
-     * @Route("/register/{type}", name="Register", methods={"GET", "POST"})
+     * @Route("/register", name="Register", methods={"GET", "POST"})
      */
-    public function register(Request $request, UserPasswordEncoderInterface $encoder, ValidatorInterface $validator, string $type = 'volunteer') :Response
+    public function register(Request $request, UserPasswordEncoderInterface $encoder, ValidatorInterface $validator) :Response
     {
         $user = new User();
 
@@ -65,11 +65,17 @@ class SecurityController extends AbstractController
                 return $this->redirectToRoute('Register');
             }
 
+            if(!$this->isRoleSelected($request)){
+                $this->addFlash('error', 'Pasirinkite role');
+                return $this->redirectToRoute('Register');
+            }
+
             $user->setPassword(
                 $encoder->encodePassword($user, $form->getData()->getPassword())
             );
 
-            $user->setRoles([$this->getRole(strtolower($type))]);
+            $user->setRoles([$this->getRole($request)]);
+
             $em = $this->getDoctrine()->getManager();
             $em->persist($user);
             $em->flush();
@@ -85,23 +91,6 @@ class SecurityController extends AbstractController
     }
 
     /**
-     * @param String $type
-     * @return null|string
-     */
-    private function getRole(String $type) :?string
-    {
-        switch ($type){
-            case 'volunteer':
-                return 'ROLE_VOLUNTEER';
-            case 'organisation':
-                return 'ROLE_ORGANISATION';
-            default:
-                return 'ROLE_VOLUNTEER';
-        }
-    }
-
-
-    /**
      * @Route("/logout", name="logout", methods={"GET"})
      */
     public function logout()
@@ -113,4 +102,30 @@ class SecurityController extends AbstractController
          */
     }
 
+    /**
+     * @param String $type
+     * @return null|string
+     */
+    private function getRole(Request $request) :?string
+    {
+        if($request->request->get('ROLE_VOLUNTEER') == 'on'){
+            return 'ROLE_VOLUNTEER';
+        }else if($request->request->get('ROLE_ORGANISATION') == 'on'){
+            return 'ROLE_ORGANISATION';
+        }
+        return null;
+    }
+
+    /**
+     * @param Request $request
+     * @return bool
+     */
+    private function isRoleSelected(Request $request) :bool
+    {
+        if($request->request->get('ROLE_VOLUNTEER') == 'on' || $request->request->get('ROLE_ORGANISATION') == 'on')
+        {
+            return true;
+        }
+        return false;
+    }
 }
