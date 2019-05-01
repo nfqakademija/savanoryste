@@ -8,8 +8,8 @@
         <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
     {% endif %}
 
-    <div class="d-flex justify-content-center mt-5">
-        <div class = "login-box col-3">
+    <div class="d-flex justify-content-md-center justify-content-sm-start mt-5">
+        <div class = "col-md-3 col-sm-12 login-box">
 
             <div class="d-flex justify-content-center">
                 <img src = "http://cherrytreemachines.co.uk/wp-content/uploads/2017/04/example-logo.jpg" class = "m-3" height="64" width="128">
@@ -18,13 +18,17 @@
                 <div class = "form-group">
                     {{ form_widget(loginForm) }}
                 </div>
-            {{ form_end(loginForm) }}
+
                 <input type="hidden" name="_csrf_token" value="{{ csrf_token('login') }}">
 
                 <button class="btn btn-primary btn-lg btn-block form-rounded mb-2 mt-4" type="submit" id="user_Submit">Prisijungti</button>
+            {{ form_end(loginForm) }}
 
             <div class = "mb-3">
-                <a href = "#">Pamiršai slaptažodį?</a>
+                <div class = "justify-content-around">
+                    <a href = "#">Pamiršai slaptažodį?</a>
+                    <a href = "/register" style = "float: right">Dar neturi paskyros?</a>
+                </div>
             </div>
 
         </div>

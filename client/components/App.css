@@ -1,3 +1,6 @@
+body {
+  background-color: #f8f8f8;
+}
 .avatar {
   border: 0.3rem solid rgba(#fff, 0.3);
   margin-top: -3rem;
@@ -39,6 +42,7 @@
   border-color: #f1f1f1;
   background-color: #ffffff;
 
+
 }
 
 .label-text {
@@ -55,11 +59,9 @@
   border-radius: 5px;
 }
 
-.fa-building {
-  font-size: 25px;
-}
 .organisation-box {
   border-style: solid;
+  border-width: 1px;
 }
 
 .organisation-box-text {
@@ -69,4 +71,38 @@
 
 .volunteer-box {
   border-style: solid;
+  border-width: 1px;
+}
+
+.whatever{
+  background-color: #f1f1f1;
+  display: inline-block;
+  width: 45%;
+  height: 25px;
+}
+
+.whatever:hover {
+  background-color: #c2c2c2;
+  display: inline-block;
+  width: 45%;
+  height: 25px;
+}
+
+.role-checkbox input[type=checkbox]{
+  display: none;
+}
+
+@keyframes example {
+  from {background-color: #f1f1f1;}
+  to {background-color: #1883B7;}
+}
+
+.role-checkbox input[type=checkbox]:checked + .whatever{
+  animation-name: example;
+  animation-duration: .5s;
+  animation-fill-mode: forwards;
+}
+
+#form-data {
+    display: none;
 }
