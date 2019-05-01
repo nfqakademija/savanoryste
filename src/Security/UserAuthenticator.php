@@ -97,7 +97,7 @@ class UserAuthenticator extends AbstractFormLoginAuthenticator
     public function checkCredentials($credentials, UserInterface $user)
     {
         $isPasswordValid = $this->passwordEncoder->isPasswordValid($user, $credentials['password']);
-        if (!$isPasswordValid){
+        if (!$isPasswordValid) {
             throw new CustomUserMessageAuthenticationException('Prisijungimo duomenys neteisingi');
         }
 
