@@ -44,7 +44,7 @@ class SecurityController extends AbstractController
      * @return Response
      * @Route("/register/{type}", name="Register", methods={"GET", "POST"})
      */
-    public function register(Request $request, UserPasswordEncoderInterface $encoder, string $type = 'Volunteer', ValidatorInterface $validator) :Response
+    public function register(Request $request, UserPasswordEncoderInterface $encoder, ValidatorInterface $validator, string $type = 'volunteer') :Response
     {
         $user = new User();
 
@@ -69,11 +69,7 @@ class SecurityController extends AbstractController
                 $encoder->encodePassword($user, $form->getData()->getPassword())
             );
 
-            if ($type != 'Volunteer'){
-                $user->setRoles(['Organisation']);
-            }
-            $user->setRoles([$type]);
-
+            $user->setRoles([$this->getRole(strtolower($type))]);
             $em = $this->getDoctrine()->getManager();
             $em->persist($user);
             $em->flush();
@@ -88,13 +84,33 @@ class SecurityController extends AbstractController
 
     }
 
+    /**
+     * @param String $type
+     * @return null|string
+     */
+    private function getRole(String $type) :?string
+    {
+        switch ($type){
+            case 'volunteer':
+                return 'ROLE_VOLUNTEER';
+            case 'organisation':
+                return 'ROLE_ORGANISATION';
+            default:
+                return 'ROLE_VOLUNTEER';
+        }
+    }
+
 
     /**
      * @Route("/logout", name="logout", methods={"GET"})
      */
     public function logout()
     {
-        // Log Out
+        /*
+         * No need for method implementation
+         * Guard Authenticator automatically handles it
+         * Only need to map its route in /config/packages/security.yaml
+         */
     }
 
 }

@@ -127,7 +127,7 @@ class ApiController extends AbstractController
      */
     public function fetchSingleReview(int $id) :JsonResponse
     {
-        $review = $this->getDoctrine()->getRepository(Organisation::class)->find($id);
+        $review = $this->getDoctrine()->getRepository(Review::class)->find($id);
         $serialized = $this->getSerializer()->serialize($review, 'json');
 
         return $this->Response(
