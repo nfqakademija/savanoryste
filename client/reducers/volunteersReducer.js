@@ -9,7 +9,7 @@ const volunteersReducer = (state = initialState, action) => {
   switch (action.type) {
     case GET_VOLUNTEER_LIST:
       return {
-        volunteerList: action.payload.Volunteer
+        volunteerList: action.payload
       };
     case GET_VOLUNTEER:
       return {
