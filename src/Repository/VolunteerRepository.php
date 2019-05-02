@@ -22,5 +22,4 @@ class VolunteerRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Volunteer::class);
     }
-
 }

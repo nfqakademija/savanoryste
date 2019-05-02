@@ -36,14 +36,12 @@ class UserAuthenticator extends AbstractFormLoginAuthenticator
      * UserAuthenticator constructor.
      * @param EntityManagerInterface $entityManager
      * @param UrlGeneratorInterface $urlGenerator
-     * @param CsrfTokenManagerInterface $csrfTokenManager
      * @param UserPasswordEncoderInterface $passwordEncoder
      */
-    public function __construct(EntityManagerInterface $entityManager, UrlGeneratorInterface $urlGenerator, CsrfTokenManagerInterface $csrfTokenManager, UserPasswordEncoderInterface $passwordEncoder)
+    public function __construct(EntityManagerInterface $entityManager, UrlGeneratorInterface $urlGenerator, UserPasswordEncoderInterface $passwordEncoder)
     {
         $this->entityManager = $entityManager;
         $this->urlGenerator = $urlGenerator;
-        $this->csrfTokenManager = $csrfTokenManager;
         $this->passwordEncoder = $passwordEncoder;
     }
 
@@ -65,8 +63,7 @@ class UserAuthenticator extends AbstractFormLoginAuthenticator
     {
         $credentials = [
             'username' => $request->request->get('user')['username'],
-            'password' => $request->request->get('user')['password'],
-            'csrf_token' => $request->request->get('_csrf_token'),
+            'password' => $request->request->get('user')['password']
         ];
         $request->getSession()->set(
             Security::LAST_USERNAME,
@@ -83,15 +80,9 @@ class UserAuthenticator extends AbstractFormLoginAuthenticator
      */
     public function getUser($credentials, UserProviderInterface $userProvider)
     {
-        $token = new CsrfToken('login', $credentials['csrf_token']);
-        if (!$this->csrfTokenManager->isTokenValid($token)) {
-            throw new InvalidCsrfTokenException();
-        }
-
         $user = $this->entityManager->getRepository(User::class)->findOneBy(['username' => $credentials['username']]);
 
         if (!$user) {
-            // fail authentication with a custom error
             throw new CustomUserMessageAuthenticationException('Naudotojas nerastas');
         }
 
@@ -106,7 +97,7 @@ class UserAuthenticator extends AbstractFormLoginAuthenticator
     public function checkCredentials($credentials, UserInterface $user)
     {
         $isPasswordValid = $this->passwordEncoder->isPasswordValid($user, $credentials['password']);
-        if (!$isPasswordValid){
+        if (!$isPasswordValid) {
             throw new CustomUserMessageAuthenticationException('Prisijungimo duomenys neteisingi');
         }
 
