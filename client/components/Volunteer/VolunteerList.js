@@ -4,23 +4,22 @@ import Container from 'react-bootstrap/Container';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import VolunteerCard from './VolunteerCard';
-import { getVolunteerList } from '../../actions/volunteersActions';
+
 import '../App.css';
 
 class VolunteerList extends React.Component {
   constructor(props) {
     super(props);
 
-    props.onGetVolunteerList();
+    props.getVolunteers();
   }
 
   render() {
-    const { volunteerList } = this.props;
-
+    const { volunteers } = this.props;
     return (
       <Container>
         <Row>
-          {volunteerList.map(volunteer => (
+          {volunteers.map(volunteer => (
             <Col xs={12} sm={8} lg={4}>
               <VolunteerCard volunteer={volunteer} />
             </Col>
@@ -32,11 +31,12 @@ class VolunteerList extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  volunteerList: state.volunteers.volunteerList
+  volunteers: state.volunteers.volunteers,
+  loading: state.volunteers.loading
 });
 
 const mapDispatchToProps = dispatch => ({
-  onGetVolunteerList: () => dispatch(getVolunteerList())
+  getVolunteers: () => dispatch({ type: 'VOLUNTEERS_CALL_REQUEST' })
 });
 
 export default connect(
