@@ -5,19 +5,19 @@ namespace App\Form;
 use App\Entity\User;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
+use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
- * Class UserType
+ * Class RegisterType
  * @package App\Form
  */
-class UserType extends AbstractType
+class RegisterType extends AbstractType
 {
     /**
-     * @param FormBuilderInterface $builder
-     * @param array $options
+     * {@inheritdoc}
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -30,18 +30,23 @@ class UserType extends AbstractType
                 ],
                 'label' => 'Vartotojo vardas',
             ])
-            ->add('password', PasswordType::class, [
-                'attr' => [
+            ->add('password', RepeatedType::class, [
+                'type' => PasswordType::class,
+                'invalid_message' => 'Slaptažodžiai nesutapo',
+                'options' => ['attr' => [
                     'class' => 'form-control',
                     'oninvalid' => "setCustomValidity('Įveskite slaptažodį')",
                     'oninput' => "setCustomValidity('')"
-                ],
-                'label' => 'Slaptažodis'])
+                ]],
+                'required' => true,
+                'first_options'  => ['label' => 'Slaptažodis'],
+                'second_options' => ['label' => 'Pakartokite slaptažodį']
+            ])
         ;
     }
 
     /**
-     * @param OptionsResolver $resolver
+     * {@inheritdoc}
      */
     public function configureOptions(OptionsResolver $resolver)
     {
