@@ -5,8 +5,6 @@ namespace App\Controller;
 use App\Entity\User;
 use App\Form\LoginType;
 use App\Form\RegisterType;
-use App\Form\UserType;
-use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -14,6 +12,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
+use App\Constants\RoleConstants;
 
 /**
  * Class SecurityController
@@ -109,9 +108,9 @@ class SecurityController extends AbstractController
     private function getRole(Request $request) :?string
     {
         if ($request->request->get('ROLE_VOLUNTEER') === 'on') {
-            return 'ROLE_VOLUNTEER';
+            return RoleConstants::ROLE_VOLUNTEER;
         } elseif ($request->request->get('ROLE_ORGANISATION') === 'on') {
-            return 'ROLE_ORGANISATION';
+            return RoleConstants::ROLE_ORGANISATION;
         }
         return null;
     }

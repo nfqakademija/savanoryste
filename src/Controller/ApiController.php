@@ -6,6 +6,7 @@ use App\Entity\Event;
 use App\Entity\Organisation;
 use App\Entity\Review;
 use App\Entity\Volunteer;
+use PhpParser\Node\Expr\Cast\Object_;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
@@ -26,12 +27,7 @@ class ApiController extends AbstractController
      */
     public function fetchAllVolunteers() :JsonResponse
     {
-        $volunteers = $this->getDoctrine()->getRepository(Volunteer::class)->findAll();
-        $serialized = $this->getSerializer()->serialize($volunteers, 'json');
-
-        return $this->response(
-            $serialized
-        );
+        return $this->jsonResponse( $this->getDoctrine()->getRepository(Volunteer::class)->findAll() );
     }
 
     /**
@@ -41,12 +37,7 @@ class ApiController extends AbstractController
      */
     public function fetchSingleVolunteer(int $id):JsonResponse
     {
-        $volunteer = $this->getDoctrine()->getRepository(Volunteer::class)->find($id);
-        $serialized = $this->getSerializer()->serialize($volunteer, 'json');
-
-        return $this->response(
-            $serialized
-        );
+        return $this->jsonResponse( $this->getDoctrine()->getRepository(Volunteer::class)->findBy(['id' => $id]) );
     }
 
     /**
@@ -55,12 +46,7 @@ class ApiController extends AbstractController
      */
     public function fetchAllEvents() :JsonResponse
     {
-        $events = $this->getDoctrine()->getRepository(Event::class)->findAll();
-        $serialized = $this->getSerializer()->serialize($events, 'json');
-
-        return $this->response(
-            $serialized
-        );
+        return $this->jsonResponse( $this->getDoctrine()->getRepository(Event::class)->findAll() );
     }
 
     /**
@@ -70,12 +56,7 @@ class ApiController extends AbstractController
      */
     public function fetchSingleEvent(int $id) :JsonResponse
     {
-        $event = $this->getDoctrine()->getRepository(Event::class)->find($id);
-        $serialized = $this->getSerializer()->serialize($event, 'json');
-
-        return $this->response(
-            $serialized
-        );
+        return $this->jsonResponse( $this->getDoctrine()->getRepository(Event::class)->findBy(['id' => $id]) );
     }
 
     /**
@@ -83,12 +64,7 @@ class ApiController extends AbstractController
      */
     public function fetchAllOrganisations() :JsonResponse
     {
-        $organisations = $this->getDoctrine()->getRepository(Organisation::class)->findAll();
-        $serialized = $this->getSerializer()->serialize($organisations, 'json');
-
-        return $this->response(
-            $serialized
-        );
+        return $this->jsonResponse( $this->getDoctrine()->getRepository(Organisation::class)->findAll() );
     }
 
     /**
@@ -98,12 +74,7 @@ class ApiController extends AbstractController
      */
     public function fetchSingleOrganisation(int $id) :JsonResponse
     {
-        $organisation = $this->getDoctrine()->getRepository(Organisation::class)->find($id);
-        $serialized = $this->getSerializer()->serialize($organisation, 'json');
-
-        return $this->response(
-            $serialized
-        );
+        return $this->jsonResponse($this->getDoctrine()->getRepository(Organisation::class)->findBy(['id' => $id]));
     }
 
     /**
@@ -112,12 +83,7 @@ class ApiController extends AbstractController
      */
     public function fetchAllReviews() :JsonResponse
     {
-        $reviews = $this->getDoctrine()->getRepository(Review::class)->findAll();
-        $serialized = $this->getSerializer()->serialize($reviews, 'json');
-
-        return $this->response(
-            $serialized
-        );
+        return $this->jsonResponse( $this->getDoctrine()->getRepository(Review::class)->findAll() );
     }
 
     /**
@@ -127,12 +93,7 @@ class ApiController extends AbstractController
      */
     public function fetchSingleReview(int $id) :JsonResponse
     {
-        $review = $this->getDoctrine()->getRepository(Review::class)->find($id);
-        $serialized = $this->getSerializer()->serialize($review, 'json');
-
-        return $this->response(
-            $serialized
-        );
+        return $this->jsonResponse( $this->getDoctrine()->getRepository(Review::class)->findBy(['id' => $id]) );
     }
 
     /**
@@ -150,6 +111,20 @@ class ApiController extends AbstractController
 
         $serializer = new Serializer([$normalizer], [$encoder]);
         return $serializer;
+    }
+
+
+    /**
+     * @param array $toSerialize
+     * @return JsonResponse
+     */
+    private function jsonResponse(array $toSerialize) :JsonResponse
+    {
+        $serialized = $this->getSerializer()->serialize($toSerialize, 'json');
+
+        return $this->response(
+            $serialized
+        );
     }
 
     /**
