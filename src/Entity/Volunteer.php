@@ -5,6 +5,7 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\VolunteerRepository")
@@ -73,6 +74,13 @@ class Volunteer
      * @ORM\OneToOne(targetEntity="App\Entity\User", cascade={"persist", "remove"})
      */
     private $User;
+
+    /**
+     * @ORM\Column(type="string", length=255, options={"default":"VolunteerPic.jpeg"})
+     * @Assert\NotBlank(message="Įkelkite profilio nuotrauka")
+     * @Assert\File(mimeTypes={ "image/jpeg", "image/png" })
+     */
+    private $ProfilePic;
 
     public function __construct()
     {
@@ -313,6 +321,18 @@ class Volunteer
     public function setUser(?User $User): self
     {
         $this->User = $User;
+
+        return $this;
+    }
+
+    public function getProfilePic(): ?string
+    {
+        return $this->ProfilePic;
+    }
+
+    public function setProfilePic(string $ProfilePic): self
+    {
+        $this->ProfilePic = $ProfilePic;
 
         return $this;
     }
