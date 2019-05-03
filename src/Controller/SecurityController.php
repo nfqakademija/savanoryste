@@ -3,7 +3,10 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use App\Form\LoginType;
+use App\Form\RegisterType;
 use App\Form\UserType;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -28,7 +31,7 @@ class SecurityController extends AbstractController
         $error = $authenticationUtils->getLastAuthenticationError();
         $lastUsername = $authenticationUtils->getLastUsername();
 
-        $form = $this->createForm(UserType::class);
+        $form = $this->createForm(LoginType::class);
 
         return $this->render('security/login.html.twig', [
             'last_username'     => $lastUsername,
@@ -48,15 +51,10 @@ class SecurityController extends AbstractController
     {
         $user = new User();
 
-        $form = $this->createForm(UserType::class, $user);
+        $form = $this->createForm(RegisterType::class, $user);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $errors = $validator->validate($user);
-
-            if (count($errors) > 0) {
-                return new Response($errors, Response::HTTP_BAD_REQUEST);
-            }
             $user = $form->getData();
 
             $isUsernameTaken = $this->getDoctrine()->getRepository(User::class)->isUsernameTaken($form->getData()->getUsername());
@@ -87,7 +85,8 @@ class SecurityController extends AbstractController
         }
 
         return $this->render('security/register.html.twig', [
-            'registerForm'      => $form->createView()
+            'registerForm'      => $form->createView(),
+            'validatorErrors'   => null
         ]);
     }
 
