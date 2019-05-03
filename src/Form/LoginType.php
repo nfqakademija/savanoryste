@@ -23,20 +23,26 @@ class LoginType extends AbstractType
         $builder
             ->add('username', TextType::class, [
                 'attr' => [
-                    'class' => 'form-control',
+                    'class' => 'form-control form-rounded',
                     'oninvalid' => "setCustomValidity('Įveskite vartotojo vardą')",
                     'oninput' => "setCustomValidity('')"
                 ],
-                'label' => 'Vartotojo vardas',
+                'label' => 'Vartotojo vardas:',
+                'label_attr' => [
+                    'class' => 'label-text',
+                ],
             ])
             ->add('password', PasswordType::class, [
                 'attr' => [
-                    'class' => 'form-control',
+                    'class' => 'form-control form-rounded',
                     'oninvalid' => "setCustomValidity('Įveskite slaptažodį')",
                     'oninput' => "setCustomValidity('')"
                 ],
-                'label' => 'Slaptažodis'])
-        ;
+                'label' => 'Slaptažodis:',
+                'label_attr' => [
+                    'class' => 'label-text',
+                ],
+            ]);
     }
 
     /**
