@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20190428112300 extends AbstractMigration
+final class Version20190503134300 extends AbstractMigration
 {
     public function getDescription() : string
     {
@@ -25,12 +25,8 @@ final class Version20190428112300 extends AbstractMigration
         $this->addSql('ALTER TABLE job CHANGE volunteer_id volunteer_id INT DEFAULT NULL');
         $this->addSql('ALTER TABLE user CHANGE roles roles JSON NOT NULL');
         $this->addSql('ALTER TABLE event CHANGE organisation_id organisation_id INT DEFAULT NULL');
-        $this->addSql('ALTER TABLE organisation ADD user_id INT DEFAULT NULL');
-        $this->addSql('ALTER TABLE organisation ADD CONSTRAINT FK_E6E132B4A76ED395 FOREIGN KEY (user_id) REFERENCES user (id)');
-        $this->addSql('CREATE UNIQUE INDEX UNIQ_E6E132B4A76ED395 ON organisation (user_id)');
-        $this->addSql('ALTER TABLE volunteer ADD user_id INT DEFAULT NULL');
-        $this->addSql('ALTER TABLE volunteer ADD CONSTRAINT FK_5140DEDBA76ED395 FOREIGN KEY (user_id) REFERENCES user (id)');
-        $this->addSql('CREATE UNIQUE INDEX UNIQ_5140DEDBA76ED395 ON volunteer (user_id)');
+        $this->addSql('ALTER TABLE organisation ADD profile_pic VARCHAR(255) DEFAULT \'OrganisationPic.jpeg\' NOT NULL, CHANGE user_id user_id INT DEFAULT NULL');
+        $this->addSql('ALTER TABLE volunteer ADD profile_pic VARCHAR(255) DEFAULT \'VolunteerPic.jpeg\' NOT NULL, CHANGE user_id user_id INT DEFAULT NULL');
         $this->addSql('ALTER TABLE review CHANGE volunteer_id volunteer_id INT DEFAULT NULL');
     }
 
@@ -41,13 +37,9 @@ final class Version20190428112300 extends AbstractMigration
 
         $this->addSql('ALTER TABLE event CHANGE organisation_id organisation_id INT DEFAULT NULL');
         $this->addSql('ALTER TABLE job CHANGE volunteer_id volunteer_id INT DEFAULT NULL');
-        $this->addSql('ALTER TABLE organisation DROP FOREIGN KEY FK_E6E132B4A76ED395');
-        $this->addSql('DROP INDEX UNIQ_E6E132B4A76ED395 ON organisation');
-        $this->addSql('ALTER TABLE organisation DROP user_id');
+        $this->addSql('ALTER TABLE organisation DROP profile_pic, CHANGE user_id user_id INT DEFAULT NULL');
         $this->addSql('ALTER TABLE review CHANGE volunteer_id volunteer_id INT DEFAULT NULL');
         $this->addSql('ALTER TABLE user CHANGE roles roles LONGTEXT NOT NULL COLLATE utf8mb4_bin');
-        $this->addSql('ALTER TABLE volunteer DROP FOREIGN KEY FK_5140DEDBA76ED395');
-        $this->addSql('DROP INDEX UNIQ_5140DEDBA76ED395 ON volunteer');
-        $this->addSql('ALTER TABLE volunteer DROP user_id');
+        $this->addSql('ALTER TABLE volunteer DROP profile_pic, CHANGE user_id user_id INT DEFAULT NULL');
     }
 }
