@@ -13,7 +13,7 @@ const App = () => (
     <Container className="volunteer-list">
       <Switch>
         <Route exact path="/" component={VolunteerList} />
-        <Route path="/profile" component={VolunteerProfile} />
+        <Route path="/profile/:id" component={VolunteerProfile} />
       </Switch>
     </Container>
   </div>

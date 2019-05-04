@@ -5,13 +5,14 @@ namespace App\Controller;
 use App\Entity\User;
 use App\Form\LoginType;
 use App\Form\RegisterType;
+use App\Security\UserAuthenticator;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Symfony\Component\Security\Guard\GuardAuthenticatorHandler;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
-use Symfony\Component\Validator\Validator\ValidatorInterface;
 use App\Constants\RoleConstants;
 
 /**
@@ -46,7 +47,7 @@ class SecurityController extends AbstractController
      * @return Response
      * @Route("/register", name="Register", methods={"GET", "POST"})
      */
-    public function register(Request $request, UserPasswordEncoderInterface $encoder, ValidatorInterface $validator) :Response
+    public function register(Request $request, UserPasswordEncoderInterface $encoder, GuardAuthenticatorHandler $guardHandler, UserAuthenticator $authenticator) :Response
     {
         $user = new User();
 
@@ -79,8 +80,13 @@ class SecurityController extends AbstractController
             $em->persist($user);
             $em->flush();
 
-            $this->addFlash('success', 'Registracija pavyko.Sveiki, '.$user->getUsername());
-            return $this->redirectToRoute('home');
+            $this->addFlash('success', 'Sveiki, ' .$user->getUsername());
+            return $guardHandler->authenticateUserAndHandleSuccess(
+                $user,          // the User object you just created
+                $request,
+                $authenticator, // authenticator whose onAuthenticationSuccess you want to use
+                'main'          // the name of your firewall in security.yaml
+            );
         }
 
         return $this->render('security/register.html.twig', [
