@@ -57,17 +57,8 @@ class SecurityController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $user = $form->getData();
 
-            $isUsernameTaken = $this->getDoctrine()->getRepository(User::class)->isUsernameTaken($form->getData()->getUsername());
-            if ($isUsernameTaken) {
-                return $this->redirectOnError('Register', 'Vartotojo vardas užimtas');
-            }
-
             if (!$this->isRoleSelected($request)) {
                 return $this->redirectOnError('Register', 'Pasirinkite role');
-            }
-
-            if (!$this->hasPasswordMatched($request)) {
-                return $this->redirectOnError('Register', 'Slaptažodžiai nesutapo. Prašome įvesti dar karta');
             }
 
             $user->setPassword(
@@ -80,12 +71,11 @@ class SecurityController extends AbstractController
             $em->persist($user);
             $em->flush();
 
-            $this->addFlash('success', 'Sveiki, ' .$user->getUsername());
             return $guardHandler->authenticateUserAndHandleSuccess(
-                $user,          // the User object you just created
+                $user,
                 $request,
-                $authenticator, // authenticator whose onAuthenticationSuccess you want to use
-                'main'          // the name of your firewall in security.yaml
+                $authenticator,
+                'main' // firewall name
             );
         }
 

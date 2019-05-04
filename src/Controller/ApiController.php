@@ -31,6 +31,14 @@ class ApiController extends AbstractController
     }
 
     /**
+     * @return JsonResponse
+     * @Route("/api/volunteers/{start}/{count}", name="fetchVolunteerRange", requirements={"start"="\d+", "count"="\d+"})
+     */
+    public function fetchVolunteerInterval(int $start, int $count){
+        return $this->jsonResponse( $this->getDoctrine()->getRepository(Volunteer::class)->findBy([],null,$count,$start));
+    }
+
+    /**
      * @Route("api/volunteer/{id}", name="fetchSingleVolunteer", methods={"GET"}, requirements={"id"="\d+"})
      * @param int $id
      * @return JsonResponse
@@ -118,7 +126,7 @@ class ApiController extends AbstractController
      * @param array $toSerialize
      * @return JsonResponse
      */
-    private function jsonResponse(array $toSerialize) :JsonResponse
+    private function jsonResponse( $toSerialize) :JsonResponse
     {
         $serialized = $this->getSerializer()->serialize($toSerialize, 'json');
 
