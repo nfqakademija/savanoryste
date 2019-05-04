@@ -4,3 +4,34 @@ $('#checkboxGroup input[type=checkbox]').change(function() {
             $(this)).prop('checked', false);
     }
 });
+
+function checkCheckBoxes(theForm) {
+	// if (theForm.ROLE_VOLUNTEER.checked == false && theForm.ROLE_VOLUNTEER.checked == false) 
+	// {
+	// 	$( ".role-checkbox" ).fadeOut(100).fadeIn(100); 
+	// 	return false;
+	// } else { 	
+	// 	return true;
+	// }
+}
+
+$(document).ready(function()
+{  
+    var errorMessage = $('span.form-error-message').length;
+    if (errorMessage > 0){    
+        $('#form-data').slideDown('fast'); 
+    } else {
+        $('#form-data').slideUp('fast'); 
+    } 
+    
+    var animation = false;
+    $('#checkboxGroup').change(function(){
+        if(!errorMessage) {
+          $('#form-data').slideToggle();
+        } 
+    });
+
+    
+    
+
+});
