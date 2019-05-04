@@ -46,7 +46,7 @@ class VolunteerProfileCard extends React.Component {
             </h5>
             <h5>
               Reviews{' '}
-              <Badge variant="secondary">{volunteer.events.length}</Badge>
+              <Badge variant="secondary">{volunteer.reviews.length}</Badge>
             </h5>
           </div>
         </Card.Body>
