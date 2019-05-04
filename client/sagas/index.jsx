@@ -1,7 +1,7 @@
 import { all } from 'redux-saga/effects';
 
-import { watcherSaga } from './volunteersSagas';
+import { watcherSaga, volunteerWatcherSaga } from './volunteersSagas';
 
 export default function* rootSaga() {
-  yield all([watcherSaga()]);
+  yield all([watcherSaga(), volunteerWatcherSaga()]);
 }

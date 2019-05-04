@@ -14,6 +14,7 @@ class VolunteerProfileCard extends React.Component {
 
   render() {
     const { open } = this.state;
+    const { volunteer } = this.props;
 
     return (
       <Card className="volunteer-card">
@@ -23,7 +24,7 @@ class VolunteerProfileCard extends React.Component {
             src="https://s3.eu-central-1.amazonaws.com/bootstrapbaymisc/blog/24_days_bootstrap/robert.jpg"
           />
           <Card.Title variant="h4" className="card-title">
-            Vardenis Pavardenis
+            {volunteer.firstname + ' ' + volunteer.lastname}
           </Card.Title>
 
           <Button
@@ -37,13 +38,15 @@ class VolunteerProfileCard extends React.Component {
 
           <div className="profile-card">
             <h5>
-              Events attended <Badge variant="secondary">100</Badge>
+              Events attended{' '}
+              <Badge variant="secondary">{volunteer.events.length}</Badge>
             </h5>
             <h5>
               Rating <Badge variant="secondary">4.5/5</Badge>
             </h5>
             <h5>
-              Reviews <Badge variant="secondary">26</Badge>
+              Reviews{' '}
+              <Badge variant="secondary">{volunteer.events.length}</Badge>
             </h5>
           </div>
         </Card.Body>

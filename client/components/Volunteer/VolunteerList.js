@@ -5,6 +5,8 @@ import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import VolunteerCard from './VolunteerCard';
 
+import { getVolunteers } from '../../actions/volunteersActions';
+
 import '../App.css';
 
 class VolunteerList extends React.Component {
@@ -36,7 +38,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  getVolunteers: () => dispatch({ type: 'VOLUNTEERS_CALL_REQUEST' })
+  getVolunteers: () => dispatch(getVolunteers())
 });
 
 export default connect(

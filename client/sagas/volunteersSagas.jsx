@@ -25,3 +25,26 @@ function* workerSaga() {
     yield put({ type: 'VOLUNTEERS_CALL_FAILURE', error });
   }
 }
+
+export function* volunteerWatcherSaga() {
+  yield takeLatest('VOLUNTEER_CALL_REQUEST', volunteerWorkerSaga);
+}
+
+// function that makes the api request and returns a Promise for response
+function fetchVolunteer(id) {
+  return axios.get(endpoints.volunteer(id));
+}
+
+// worker saga: makes the api call when watcher saga sees the action
+function* volunteerWorkerSaga(action) {
+  try {
+    const response = yield call(fetchVolunteer, action.id);
+
+    const volunteer = response.data;
+    // dispatch a success action to the store with the new dog
+    yield put({ type: 'VOLUNTEER_CALL_SUCCESS', volunteer });
+  } catch (error) {
+    // dispatch a failure action to the store with the error
+    yield put({ type: 'VOLUNTEER_CALL_FAILURE', error });
+  }
+}
