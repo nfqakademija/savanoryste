@@ -4,6 +4,8 @@ namespace App\Security;
 
 use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
+use http\Env\Response;
+use Symfony\Component\HttpFoundation\Cookie;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
@@ -62,8 +64,8 @@ class UserAuthenticator extends AbstractFormLoginAuthenticator
     public function getCredentials(Request $request)
     {
         $credentials = [
-            'username' => $request->request->get('user')['username'],
-            'password' => $request->request->get('user')['password']
+            'username' => $request->request->get('login')['username'],
+            'password' => $request->request->get('login')['password']
         ];
         $request->getSession()->set(
             Security::LAST_USERNAME,
@@ -112,11 +114,17 @@ class UserAuthenticator extends AbstractFormLoginAuthenticator
      */
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, $providerKey)
     {
+        $lastId = $this->entityManager->getRepository(User::class)->findOneBy(
+            ['username' => $request->getSession()->get('_security.last_username')]
+        )->getId();
+
         if ($targetPath = $this->getTargetPath($request->getSession(), $providerKey)) {
             return new RedirectResponse($targetPath);
         }
 
-        return new RedirectResponse($this->urlGenerator->generate('home'));
+        $response = new RedirectResponse('/profile/'.$lastId);
+        $response->headers->setCookie(new Cookie('id', $lastId));
+        return $response->send();
     }
 
     /**
