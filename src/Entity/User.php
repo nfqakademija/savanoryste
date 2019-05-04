@@ -3,12 +3,17 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
-use Symfony\Component\Security\Core\Validator\Constraints\UserPassword;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
+ * @UniqueEntity(
+ *     fields={"username"},
+ *     message="Vartotojo vardas užimtas"
+ * )
  */
 class User implements UserInterface
 {
@@ -33,6 +38,9 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="json")
+     * @Assert\All({
+     *     @Assert\NotBlank
+     * })
      */
     private $roles = [];
 
