@@ -9,7 +9,8 @@ body {
 }
 
 .volunteer-card {
-  margin-bottom: 3rem;
+  margin-bottom: 1rem;
+  margin-top: 2rem;
 }
 
 .contact-collapse {
@@ -41,8 +42,6 @@ body {
   border-width: 2px;
   border-color: #f1f1f1;
   background-color: #ffffff;
-
-
 }
 
 .label-text {
@@ -50,7 +49,6 @@ body {
   text-transform: uppercase;
   letter-spacing: 1px;
   font-size: 12px;
-
 }
 
 .form-rounded {
@@ -59,7 +57,7 @@ body {
   border-radius: 5px;
 }
 
-.checkbox-label{
+.checkbox-label {
   background-color: #f1f1f1;
   display: inline-block;
   width: 45%;
@@ -73,21 +71,25 @@ body {
   height: 25px;
 }
 
-.role-checkbox input[type=checkbox]{
+.role-checkbox input[type='checkbox'] {
   display: none;
 }
 
 @keyframes example {
-  from {background-color: #f1f1f1;}
-  to {background-color: #1883B7;}
+  from {
+    background-color: #f1f1f1;
+  }
+  to {
+    background-color: #1883b7;
+  }
 }
 
-.role-checkbox input[type=checkbox]:checked + .checkbox-label{
+.role-checkbox input[type='checkbox']:checked + .checkbox-label {
   animation-name: example;
-  animation-duration: .5s;
+  animation-duration: 0.5s;
   animation-fill-mode: forwards;
 }
 
 #form-data {
-    display: none;
+  display: none;
 }
