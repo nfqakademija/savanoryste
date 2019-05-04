@@ -51,7 +51,10 @@ class VolunteerCard extends React.Component {
           >
             Contact Info
           </Button>
-          <Link className="btn btn-outline-info" to="/profile">
+          <Link
+            className="btn btn-outline-info"
+            to={`/profile/${volunteer.id}`}
+          >
             View profile
           </Link>
         </Card.Body>
