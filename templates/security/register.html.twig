@@ -11,7 +11,7 @@
     {% endfor %}
 
     <div class="d-flex justify-content-md-center justify-content-sm-start mt-5">
-        <div class = "col-md-3 col-sm-12 login-box">
+        <div class = "col-md-4 col-sm-12 login-box">
 
             <div class="d-flex justify-content-center">
                 <img src = "http://cherrytreemachines.co.uk/wp-content/uploads/2017/04/example-logo.jpg" class = "m-3" height="64" width="128">
@@ -39,18 +39,9 @@
                 </div>
             </div>
             <div id = "form-data">
-                <div class = "form-group">
+
                     {{ form_widget(registerForm) }}
-                </div>
 
-                <hr>
-
-                <div class = "form-group">
-                    <label for="user_password_repeat" class="label-text required">Pakartokite slaptažodį:</label>
-                    <input type="password" id="user_password" name="password_repeat"
-                           required="required" class="form-control form-rounded"
-                           oninvalid="setCustomValidity('Pakartokite slaptažodį:')" oninput="setCustomValidity('')" />
-                </div>
 
                 <input type="hidden" name="_csrf_token" value="{{ csrf_token('login') }}">
 
