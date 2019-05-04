@@ -36,13 +36,9 @@ class VolunteerCard extends React.Component {
             {`${volunteer.firstname} ${volunteer.lastname}`}
           </Card.Title>
           <Card.Subtitle className="card-subtitle mb-2 text-muted">
-            {volunteer.job_type}
+            {volunteer.jobs.map(job => job.jobType)}
           </Card.Subtitle>
-          <p className="card-text">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent
-            pellentesque dui eget pharetra ornare. Sed scelerisque facilisis leo
-            non efficitur.
-          </p>
+          <p className="card-text">{volunteer.description}</p>
           <Button
             onClick={() => this.setState({ open: !open })}
             aria-controls="example-collapse-text"
@@ -74,7 +70,7 @@ class VolunteerCard extends React.Component {
                   </Row>
                   <Row>
                     <FontAwesomeIcon icon={faMapMarkerAlt} />
-                    Vilnius
+                    {`${volunteer.city}, ${volunteer.country}`}
                   </Row>
                 </Col>
               </Container>

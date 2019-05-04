@@ -8,14 +8,14 @@ export function* watcherSaga() {
 }
 
 // function that makes the api request and returns a Promise for response
-function fetchVolunteers() {
-  return axios.get(endpoints.volunteerList());
+function fetchVolunteers(action) {
+  return axios.get(endpoints.volunteerList(action.count, action.start));
 }
 
 // worker saga: makes the api call when watcher saga sees the action
-function* workerSaga() {
+function* workerSaga(action) {
   try {
-    const response = yield call(fetchVolunteers);
+    const response = yield call(fetchVolunteers, action);
     const volunteers = response.data;
 
     // dispatch a success action to the store with the new dog

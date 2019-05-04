@@ -1,5 +1,7 @@
-export const getVolunteers = () => ({
-  type: 'VOLUNTEERS_CALL_REQUEST'
+export const getVolunteers = (count, start) => ({
+  type: 'VOLUNTEERS_CALL_REQUEST',
+  count,
+  start
 });
 
 export const getVolunteer = id => ({
