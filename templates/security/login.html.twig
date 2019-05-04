@@ -9,15 +9,16 @@
     {% endif %}
 
     <div class="d-flex justify-content-md-center justify-content-sm-start mt-5">
-        <div class = "col-md-3 col-sm-12 login-box">
+        <div class = "col-md-4 col-sm-12 login-box">
 
             <div class="d-flex justify-content-center">
                 <img src = "http://cherrytreemachines.co.uk/wp-content/uploads/2017/04/example-logo.jpg" class = "m-3" height="64" width="128">
             </div>
             {{ form_start(loginForm, {'action': path('app_login'), 'method': 'POST'}) }}
-                <div class = "form-group">
-                    {{ form_widget(loginForm) }}
-                </div>
+
+
+                {{ form_widget(loginForm) }}
+
 
                 <input type="hidden" name="_csrf_token" value="{{ csrf_token('login') }}">
 
