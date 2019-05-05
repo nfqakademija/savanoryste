@@ -24,32 +24,32 @@ class RegisterType extends AbstractType
         $builder
             ->add('username', TextType::class, [
                 'attr' => [
-                    'class' => 'col-md-12 form-control form-rounded',
+                    'class' => 'form-control form-rounded',
                     'oninvalid' => "setCustomValidity('Įveskite vartotojo vardą')",
                     'oninput' => "setCustomValidity('')"
                 ],
                 'label' => 'Vartotojo vardas',
                 'label_attr' => [
-                    'class' => 'col-md-12 label-text',
+                    'class' => 'label-text',
                 ],
             ])
             ->add('password', RepeatedType::class, [
                 'type' => PasswordType::class,
                 'invalid_message' => 'Slaptažodžiai nesutapo',
                 'options' => ['attr' => [
-                    'class' => 'col-md-12 form-control form-rounded',
+                    'class' => 'form-control form-rounded',
                     'oninvalid' => "setCustomValidity('Įveskite slaptažodį')",
                     'oninput' => "setCustomValidity('')"
                 ]],
                 'required' => true,
                 'first_options'  => ['label' => 'Slaptažodis',
                     'label_attr' => [
-                        'class' => 'col-md-12 label-text',
+                        'class' => 'label-text',
                         ],
                     ],
                 'second_options' => ['label' => 'Pakartokite slaptažodį',
                     'label_attr' => [
-                        'class' => 'col-md-12 label-text',
+                        'class' => 'label-text',
                         ],
                     ]
             ])

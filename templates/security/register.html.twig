@@ -11,12 +11,13 @@
     {% endfor %}
 
     <div class="d-flex justify-content-md-center justify-content-sm-start mt-5">
-        <div class = "col-md-4 col-sm-12 login-box">
+        <div class = "col-md-6 col-sm-12 login-box">
 
             <div class="d-flex justify-content-center">
                 <img src = "http://cherrytreemachines.co.uk/wp-content/uploads/2017/04/example-logo.jpg" class = "m-3" height="64" width="128">
             </div>
-            {{ form_start(registerForm, {'action': path('Register'), 'attr': {'onsubmit':'return checkCheckBoxes(this);'} ,'method': 'POST'}) }}
+
+            {{ form_start(registerForm, {'action': path('Register'), 'method': 'POST'}) }}
 
             <div class = "form-group">
                 <div class="role-checkbox justify-content-center">
@@ -27,23 +28,20 @@
                         </div>
 
                         <input type="checkbox" name="ROLE_VOLUNTEER" id="r1" />
-                        <label class="checkbox-label" for="r1">
-                            <p class = "label-text text-center mt-1">Savanoris</p>
-                        </label>
+                            <label class="checkbox-label" for="r1">
+                                <p class = "label-text text-center mt-1">Savanoris</p>
+                            </label>
 
                         <input type="checkbox" name="ROLE_ORGANISATION" id="r2" />
-                        <label class="checkbox-label" for="r2">
-                            <p class = "label-text text-center mt-1">Organizacija</p>
-                        </label>
+                            <label class="checkbox-label" for="r2">
+                                <p class = "label-text text-center mt-1">Organizacija</p>
+                            </label>
                     </div>
                 </div>
             </div>
             <div id = "form-data">
 
-                    {{ form_widget(registerForm) }}
-
-
-                <input type="hidden" name="_csrf_token" value="{{ csrf_token('login') }}">
+                {{ form_widget(registerForm) }}
 
                 <button class="btn btn-primary btn-lg btn-block form-rounded mb-4 mt-4" type="submit" id="user_Submit">Pateikti</button>
             </div>

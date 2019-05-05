@@ -5,16 +5,6 @@ $('#checkboxGroup input[type=checkbox]').change(function() {
     }
 });
 
-function checkCheckBoxes(theForm) {
-	// if (theForm.ROLE_VOLUNTEER.checked == false && theForm.ROLE_VOLUNTEER.checked == false) 
-	// {
-	// 	$( ".role-checkbox" ).fadeOut(100).fadeIn(100); 
-	// 	return false;
-	// } else { 	
-	// 	return true;
-	// }
-}
-
 $(document).ready(function()
 {  
     var errorMessage = $('span.form-error-message').length;
