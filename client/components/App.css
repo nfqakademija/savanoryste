@@ -142,3 +142,6 @@ body {
 .Card-profile-button {
   align-self: flex-end;
 }
+.react-bootstrap-daterangepicker-container {
+  display: block !important;
+}

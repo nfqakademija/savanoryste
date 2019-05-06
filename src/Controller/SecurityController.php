@@ -71,6 +71,7 @@ class SecurityController extends AbstractController
             $em->persist($user);
             $em->flush();
 
+
             return $guardHandler->authenticateUserAndHandleSuccess(
                 $user,
                 $request,
@@ -121,15 +122,6 @@ class SecurityController extends AbstractController
             return true;
         }
         return false;
-    }
-
-    /**
-     * @param Request $request
-     * @return bool
-     */
-    private function hasPasswordMatched(Request $request) :bool
-    {
-        return ($request->request->get('user')['password'] === $request->request->get('password_repeat')) ? true : false;
     }
 
     /**

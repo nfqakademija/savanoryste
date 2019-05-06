@@ -115,7 +115,7 @@ class UserAuthenticator extends AbstractFormLoginAuthenticator
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, $providerKey)
     {
         $lastId = $this->entityManager->getRepository(User::class)->findOneBy(
-            ['username' => $request->getSession()->get('_security.last_username')]
+            ['username' => $request->request->get('register')['username']]
         )->getId();
 
         if ($targetPath = $this->getTargetPath($request->getSession(), $providerKey)) {
