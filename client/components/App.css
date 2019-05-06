@@ -93,3 +93,7 @@ body {
 #form-data {
   display: none;
 }
+
+.react-bootstrap-daterangepicker-container {
+  display:block !important;
+}
