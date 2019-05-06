@@ -71,6 +71,7 @@ class SecurityController extends AbstractController
             $em->persist($user);
             $em->flush();
 
+
             return $guardHandler->authenticateUserAndHandleSuccess(
                 $user,
                 $request,
