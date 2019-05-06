@@ -71,16 +71,16 @@ class Volunteer
     private $jobs;
 
     /**
-     * @ORM\OneToOne(targetEntity="App\Entity\User", cascade={"persist", "remove"})
-     */
-    private $User;
-
-    /**
      * @ORM\Column(type="string", length=255, options={"default":"VolunteerPic.jpeg"})
      * @Assert\NotBlank(message="Įkelkite profilio nuotrauka")
      * @Assert\File(mimeTypes={ "image/jpeg", "image/png" })
      */
     private $ProfilePic;
+
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $user_id;
 
     public function __construct()
     {
@@ -313,18 +313,6 @@ class Volunteer
         return $this;
     }
 
-    public function getUser(): ?User
-    {
-        return $this->User;
-    }
-
-    public function setUser(?User $User): self
-    {
-        $this->User = $User;
-
-        return $this;
-    }
-
     public function getProfilePic(): ?string
     {
         return $this->ProfilePic;
@@ -333,6 +321,18 @@ class Volunteer
     public function setProfilePic(string $ProfilePic): self
     {
         $this->ProfilePic = $ProfilePic;
+
+        return $this;
+    }
+
+    public function getUserId(): ?int
+    {
+        return $this->user_id;
+    }
+
+    public function setUserId(?int $user_id): self
+    {
+        $this->user_id = $user_id;
 
         return $this;
     }

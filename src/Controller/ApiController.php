@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Event;
 use App\Entity\Organisation;
 use App\Entity\Review;
+use App\Entity\User;
 use App\Entity\Volunteer;
 use PhpParser\Node\Expr\Cast\Object_;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -49,6 +50,16 @@ class ApiController extends AbstractController
     }
 
     /**
+     * @param int $id
+     * @return JsonResponse
+     * @Route("/api/user/volunteer/{userId}", name="fetchSingleVolunteerByUserId", methods={"GET"}, requirements={"userId"="\d+"})
+     */
+    public function fetchSingleVolunteerByUserId(int $userId) :JsonResponse
+    {
+        return $this->jsonResponse( $this->getDoctrine()->getRepository(Volunteer::class)->findBy(['user_id' => $userId]) );
+    }
+
+    /**
      * @Route("api/events", name="fetchAllEvents", methods={"GET"})
      * @return JsonResponse
      */
@@ -83,6 +94,16 @@ class ApiController extends AbstractController
     public function fetchSingleOrganisation(int $id) :JsonResponse
     {
         return $this->jsonResponse($this->getDoctrine()->getRepository(Organisation::class)->findBy(['id' => $id]));
+    }
+
+    /**
+     * @param int $id
+     * @return JsonResponse
+     * @Route("/api/user/organisation/{userId}", name="fetchSingleVolunteerByUserId", methods={"GET"}, requirements={"userId"="\d+"})
+     */
+    public function fetchSingleOrganisationByUserId(int $userId) :JsonResponse
+    {
+        return $this->jsonResponse( $this->getDoctrine()->getRepository(Organisation::class)->findBy(['user_id' => $userId]) );
     }
 
     /**
