@@ -99,7 +99,7 @@ class ApiController extends AbstractController
     /**
      * @param int $id
      * @return JsonResponse
-     * @Route("/api/user/organisation/{userId}", name="fetchSingleVolunteerByUserId", methods={"GET"}, requirements={"userId"="\d+"})
+     * @Route("/api/user/organisation/{userId}", name="fetchSingleOrganisationByUserId", methods={"GET"}, requirements={"userId"="\d+"})
      */
     public function fetchSingleOrganisationByUserId(int $userId) :JsonResponse
     {
