@@ -35,7 +35,8 @@ class ApiController extends AbstractController
      * @return JsonResponse
      * @Route("/api/volunteers/{start}/{count}", name="fetchVolunteerRange", requirements={"start"="\d+", "count"="\d+"})
      */
-    public function fetchVolunteerInterval(int $start, int $count){
+    public function fetchVolunteerInterval(int $start, int $count)
+    {
         return $this->jsonResponse( $this->getDoctrine()->getRepository(Volunteer::class)->findBy([],null,$count,$start));
     }
 

@@ -7,6 +7,7 @@ use App\Form\LoginType;
 use App\Form\RegisterType;
 use App\Security\UserAuthenticator;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -14,12 +15,13 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Security\Guard\GuardAuthenticatorHandler;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use App\Constants\RoleConstants;
+use Symfony\Component\Security\Http\Logout\LogoutSuccessHandlerInterface;
 
 /**
  * Class SecurityController
  * @package App\Controller
  */
-class SecurityController extends AbstractController
+class SecurityController extends AbstractController implements LogoutSuccessHandlerInterface
 {
     /**
      * @Route("/login", name="app_login", methods={"GET", "POST"})
@@ -70,7 +72,6 @@ class SecurityController extends AbstractController
             $em = $this->getDoctrine()->getManager();
             $em->persist($user);
             $em->flush();
-
 
             return $guardHandler->authenticateUserAndHandleSuccess(
                 $user,
@@ -135,5 +136,27 @@ class SecurityController extends AbstractController
     {
         $this->addFlash($msgType, $msg);
         return $this->redirectToRoute($route, [], $code);
+    }
+
+    /**
+     * Creates a Response object to send upon a successful logout.
+     *
+     * @param Request $request
+     * @return Response never null
+     */
+    public function onLogoutSuccess(Request $request)
+    {
+        $this->clearCookie('userId');
+        $this->clearCookie('role');
+        return new RedirectResponse('/', Response::HTTP_TEMPORARY_REDIRECT);
+    }
+
+
+    /**
+     * @param string $cookieName
+     */
+    private function clearCookie(string $cookieName) :void
+    {
+        setcookie($cookieName, '', time() - 3600);
     }
 }

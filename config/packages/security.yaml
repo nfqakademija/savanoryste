@@ -23,9 +23,11 @@ security:
             logout:
                 path: logout
                 target: /
+                success_handler:  App\Controller\SecurityController
             remember_me:
                 secret:   '%kernel.secret%'
-                lifetime: 2592000 # 30 days in seconds
+                lifetime: 604800 # 1 week in seconds
+                path:     /
             guard:
                 authenticators:
                     - App\Security\UserAuthenticator
