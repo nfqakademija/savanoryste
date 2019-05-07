@@ -31,7 +31,6 @@ class UserAuthenticator extends AbstractFormLoginAuthenticator
 
     private $entityManager;
     private $urlGenerator;
-    private $csrfTokenManager;
     private $passwordEncoder;
 
     /**
