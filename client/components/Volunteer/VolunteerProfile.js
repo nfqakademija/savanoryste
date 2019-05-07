@@ -6,6 +6,7 @@ import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import VolunteerProfileCard from './VolunteerProfileCard';
 import VolunteerProfileInfo from './VolunteerProfileInfo';
+import VolunteerReviewCard from './VolunteerReviewCard';
 import { connect } from 'react-redux';
 
 import { getVolunteer } from '../../actions/volunteersActions';
@@ -30,6 +31,17 @@ class VolunteerProfile extends React.Component {
           </Col>
           <Col xs={12} sm={12} lg={8}>
             <VolunteerProfileInfo volunteer={volunteer} />
+          </Col>
+        </Row>
+        <Row style={{ marginTop: '10px' }}>
+          <Col>
+            <h3>Latest review</h3>
+            <VolunteerReviewCard />
+          </Col>
+          <Col>
+            <h3>Latest event attended</h3>
+
+            <VolunteerReviewCard />
           </Col>
         </Row>
       </Container>

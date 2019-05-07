@@ -114,16 +114,17 @@ class UserAuthenticator extends AbstractFormLoginAuthenticator
      */
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, $providerKey)
     {
-        $lastId = $this->entityManager->getRepository(User::class)->findOneBy(
-            ['username' => $request->request->get('register')['username']]
-        )->getId();
+        $user = $this->entityManager->getRepository(User::class)->findOneBy(
+            ['username' => $request->request->get($this->getCurrentRequestUri($request))['username']]
+        );
 
         if ($targetPath = $this->getTargetPath($request->getSession(), $providerKey)) {
             return new RedirectResponse($targetPath);
         }
 
-        $response = new RedirectResponse('/profile/'.$lastId);
-        $response->headers->setCookie(new Cookie('id', $lastId));
+        $response = new RedirectResponse('/profile/'. $user->getId());
+        $response->headers->setCookie(new Cookie('userId', $user->getId()));
+        $response->headers->setCookie(new Cookie('role', $user->getRoles()[0]));
         return $response->send();
     }
 
@@ -133,5 +134,15 @@ class UserAuthenticator extends AbstractFormLoginAuthenticator
     protected function getLoginUrl()
     {
         return $this->urlGenerator->generate('app_login');
+    }
+
+
+    /**
+     * @param Request $request
+     * @return string
+     */
+    private function getCurrentRequestUri(Request $request) :string
+    {
+        return ltrim($request->server->get('REQUEST_URI'),'/');
     }
 }
