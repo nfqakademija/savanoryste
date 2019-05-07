@@ -2,6 +2,7 @@ import React from 'react';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import Badge from 'react-bootstrap/Badge';
+import { Link } from 'react-router-dom';
 
 class VolunteerProfileCard extends React.Component {
   constructor(props) {
@@ -17,39 +18,40 @@ class VolunteerProfileCard extends React.Component {
     const { volunteer } = this.props;
 
     return (
-      <Card className="volunteer-card">
-        <Card.Body className="text-center">
-          <Card.Img
-            className="avatar rounded-circle"
-            src="https://s3.eu-central-1.amazonaws.com/bootstrapbaymisc/blog/24_days_bootstrap/robert.jpg"
-          />
-          <Card.Title variant="h4" className="card-title">
-            {volunteer.firstname + ' ' + volunteer.lastname}
-          </Card.Title>
-
-          <Button
-            onClick={() => this.setState({ open: !open })}
-            aria-controls="example-collapse-text"
-            aria-expanded={open}
-            className="btn btn-info"
-          >
-            Book now
-          </Button>
-
-          <div className="profile-card">
-            <h5>
-              Events attended{' '}
-              <Badge variant="secondary">{volunteer.events.length}</Badge>
-            </h5>
-            <h5>
-              Rating <Badge variant="secondary">4.5/5</Badge>
-            </h5>
-            <h5>
-              Reviews{' '}
-              <Badge variant="secondary">{volunteer.reviews.length}</Badge>
-            </h5>
-          </div>
-        </Card.Body>
+      <Card>
+        <Card.Img src="https://images.pexels.com/photos/532220/pexels-photo-532220.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500" />
+        <Card.ImgOverlay>
+          <Card.Body className="Card-profile-wrapper">
+            <Card.Title className="Card-profile-name">
+              {volunteer.firstname + ' ' + volunteer.lastname}
+            </Card.Title>
+            <div className="Card-profile-buttons">
+              <Button className="Card-profile-button btn btn-info" block>
+                {`Choose ${volunteer.firstname + ' ' + volunteer.lastname}`}
+              </Button>
+              <Button
+                className="Card-button-transparent Card-profile-button btn btn-info"
+                block
+                href="/"
+              >
+                Cancel
+              </Button>
+            </div>
+            {/* <div className="profile-card">
+              <h5>
+                Events attended{' '}
+                <Badge variant="secondary">{volunteer.events.length}</Badge>
+              </h5>
+              <h5>
+                Rating <Badge variant="secondary">4.5/5</Badge>
+              </h5>
+              <h5>
+                Reviews{' '}
+                <Badge variant="secondary">{volunteer.reviews.length}</Badge>
+              </h5>
+            </div> */}
+          </Card.Body>
+        </Card.ImgOverlay>
       </Card>
     );
   }
