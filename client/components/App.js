@@ -5,6 +5,7 @@ import AppBar from './AppBar';
 import VolunteerList from './Volunteer/VolunteerList';
 import VolunteerProfile from './Volunteer/VolunteerProfile';
 import EventForm from './Event/EventForm';
+import OrganisationForm from './Organisation/OrganisationForm';
 
 import './App.css';
 
@@ -16,6 +17,7 @@ const App = () => (
         <Route exact path="/" component={VolunteerList} />
         <Route path="/profile/:id" component={VolunteerProfile} />
         <Route path="/event" component={EventForm} />
+        <Route path="/organisation" component={OrganisationForm} />
       </Switch>
     </Container>
   </div>
