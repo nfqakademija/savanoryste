@@ -114,16 +114,17 @@ class UserAuthenticator extends AbstractFormLoginAuthenticator
      */
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, $providerKey)
     {
-        $lastId = $this->entityManager->getRepository(User::class)->findOneBy(
+        $user = $this->entityManager->getRepository(User::class)->findOneBy(
             ['username' => $request->request->get($this->getCurrentRequestUri($request))['username']]
-        )->getId();
+        );
 
         if ($targetPath = $this->getTargetPath($request->getSession(), $providerKey)) {
             return new RedirectResponse($targetPath);
         }
 
-        $response = new RedirectResponse('/profile/'.$lastId);
-        $response->headers->setCookie(new Cookie('id', $lastId));
+        $response = new RedirectResponse('/profile/'. $user->getId());
+        $response->headers->setCookie(new Cookie('userId', $user->getId()));
+        $response->headers->setCookie(new Cookie('role', $user->getRoles()[0]));
         return $response->send();
     }
 
