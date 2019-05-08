@@ -20,7 +20,7 @@ $(document).ready(function()
         // var checkboxChecked = $(":checkbox:checked").map(idSelector).get() ;
         // var checkboxNotChecked = $(":checkbox:not(:checked)").map(idSelector).get() ;
         
-        if(count == 0) {
+        if(!errorMessage && count == 0) {
           $('#form-data').slideToggle();
           document.getElementById("form-data").style.display = "block";
           count = 1;
