@@ -2,19 +2,30 @@ import React from 'react';
 import Navbar from 'react-bootstrap/Navbar';
 import Nav from 'react-bootstrap/Nav';
 import { Link } from 'react-router-dom';
+import './App.css';
 
 const AppBar = () => (
-  <Navbar bg="light" expand="lg">
-    <Navbar.Brand href="#home">Savanorystė</Navbar.Brand>
+  <Navbar expand="sm" className="Navbar">
+    <Link to="/" className="Navbar-brand">
+      Volunteers
+    </Link>
     <Navbar.Toggle aria-controls="basic-navbar-nav" />
     <Navbar.Collapse id="basic-navbar-nav">
       <Nav className="mr-auto">
-        <Nav.Link>
-          <Link to="/">Home</Link>
-        </Nav.Link>
-        <Nav.Link>
-          <Link to="/profile">Profile</Link>
-        </Nav.Link>
+        <Link to="/event" className="Navbar-link">
+          Event
+        </Link>
+
+        <a href="/login" className="Navbar-link">
+          Login
+        </a>
+
+        <a href="/register" className="Navbar-link">
+          Register
+        </a>
+        <a href="/logout" className="Navbar-link">
+          Logout
+        </a>
       </Nav>
     </Navbar.Collapse>
   </Navbar>
