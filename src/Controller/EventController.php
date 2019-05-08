@@ -27,6 +27,7 @@ class EventController extends AbstractController
         if($this->areFieldsEmpty($request)){
             return $this->respond(Response::HTTP_TEMPORARY_REDIRECT);
         }
+
         $event->setTitle($this->sanitizeInput($request->request->get('title')));
         $event->setDescription($this->sanitizeInput($request->request->get('description')));
         $event->setStartDate(new \DateTime($this->sanitizeInput($request->request->get('startDate'))));

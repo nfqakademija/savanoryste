@@ -15,6 +15,9 @@ const AppBar = () => (
         <Link to="/event" className="Navbar-link">
           Event
         </Link>
+        <Link to="/organisation" className="Navbar-link">
+          Organisation
+        </Link>
 
         <a href="/login" className="Navbar-link">
           Login

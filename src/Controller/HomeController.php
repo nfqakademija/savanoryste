@@ -3,7 +3,6 @@
 namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
@@ -13,7 +12,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class HomeController extends AbstractController
 {
     /**
-    @Route("/{reactRouting}", name="index", requirements={"reactRouting"="^(?!api|login|register|logout).+"}, defaults={"reactRouting": null})
+    @Route("/{reactRouting}", name="index", requirements={"reactRouting"="^(?!api|login|register|logout|invite).+"}, defaults={"reactRouting": null})
      */
     public function index()
     {
