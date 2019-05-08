@@ -1,17 +1,7 @@
 import React from 'react';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
-import Collapse from 'react-bootstrap/Collapse';
-import Container from 'react-bootstrap/Container';
-import Col from 'react-bootstrap/Col';
-import Row from 'react-bootstrap/Row';
 import { Link } from 'react-router-dom';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {
-  faEnvelope,
-  faPhone,
-  faMapMarkerAlt
-} from '@fortawesome/free-solid-svg-icons';
 
 class VolunteerCard extends React.Component {
   constructor(props) {
@@ -39,44 +29,23 @@ class VolunteerCard extends React.Component {
             <Card.Subtitle className="card-subtitle mb-2 text-muted">
               Category
             </Card.Subtitle>
-            <Card.Text>{volunteer.jobs.map(job => job.jobType)}</Card.Text>
+            <Card.Text style={{ textTransform: 'capitalize' }}>
+              {volunteer.jobs.map(job => job.jobType)}
+            </Card.Text>
             <Card.Subtitle className="card-subtitle mb-2 text-muted">
               Languages
             </Card.Subtitle>
             <Card.Text>English</Card.Text>
             <div className="button-wrapper">
-              <Button
-                className="Card-button Card-button-transparent btn-outline-info"
-                href={`/profile/${volunteer.id}`}
+              <Link
+                className="Card-button"
+                to={`/profile/${volunteer.id}`} //Iskelt
               >
                 See profile
-              </Button>
+              </Link>
               <Button className="Card-button btn btn-info">Choose</Button>
             </div>
           </Card.Body>
-
-          <Collapse in={open}>
-            <div className="contact-collapse">
-              <Card.Footer>
-                <Container>
-                  <Col>
-                    <Row>
-                      <FontAwesomeIcon icon={faEnvelope} />
-                      {volunteer.email}
-                    </Row>
-                    <Row>
-                      <FontAwesomeIcon icon={faPhone} />
-                      {volunteer.phone}
-                    </Row>
-                    <Row>
-                      <FontAwesomeIcon icon={faMapMarkerAlt} />
-                      {`${volunteer.city}, ${volunteer.country}`}
-                    </Row>
-                  </Col>
-                </Container>
-              </Card.Footer>
-            </div>
-          </Collapse>
         </Card>
       </div>
     );
