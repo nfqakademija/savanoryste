@@ -12,8 +12,6 @@ import '../App.css';
 class VolunteerList extends React.Component {
   constructor(props) {
     super(props);
-
-    // props.getVolunteers();
   }
 
   componentDidMount() {
@@ -28,7 +26,6 @@ class VolunteerList extends React.Component {
 
   render() {
     const { volunteers } = this.props;
-    console.log(volunteers);
     return (
       <InfiniteScroll
         dataLength={this.props.volunteers.length}

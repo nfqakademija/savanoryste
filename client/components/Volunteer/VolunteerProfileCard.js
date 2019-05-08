@@ -1,8 +1,6 @@
 import React from 'react';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
-import Badge from 'react-bootstrap/Badge';
-import { Link } from 'react-router-dom';
 
 class VolunteerProfileCard extends React.Component {
   constructor(props) {
@@ -34,22 +32,9 @@ class VolunteerProfileCard extends React.Component {
                 block
                 href="/"
               >
-                Cancel
+                Back
               </Button>
             </div>
-            {/* <div className="profile-card">
-              <h5>
-                Events attended{' '}
-                <Badge variant="secondary">{volunteer.events.length}</Badge>
-              </h5>
-              <h5>
-                Rating <Badge variant="secondary">4.5/5</Badge>
-              </h5>
-              <h5>
-                Reviews{' '}
-                <Badge variant="secondary">{volunteer.reviews.length}</Badge>
-              </h5>
-            </div> */}
           </Card.Body>
         </Card.ImgOverlay>
       </Card>
