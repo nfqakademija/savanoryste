@@ -3,10 +3,12 @@
 namespace App\Controller;
 
 use App\Entity\Event;
+use App\Entity\Job;
 use App\Entity\Organisation;
 use App\Entity\Review;
 use App\Entity\User;
 use App\Entity\Volunteer;
+use App\Entity\VolunteerEvent;
 use PhpParser\Node\Expr\Cast\Object_;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -28,16 +30,18 @@ class ApiController extends AbstractController
      */
     public function fetchAllVolunteers() :JsonResponse
     {
-        return $this->jsonResponse( $this->getDoctrine()->getRepository(Volunteer::class)->findAll() );
+        return $this->jsonResponse($this->getDoctrine()->getRepository(Volunteer::class)->findAll());
     }
 
     /**
+     * @param int $start
+     * @param int $count
      * @return JsonResponse
      * @Route("/api/volunteers/{start}/{count}", name="fetchVolunteerRange", requirements={"start"="\d+", "count"="\d+"})
      */
     public function fetchVolunteerInterval(int $start, int $count)
     {
-        return $this->jsonResponse( $this->getDoctrine()->getRepository(Volunteer::class)->findBy([],null,$count,$start));
+        return $this->jsonResponse($this->getDoctrine()->getRepository(Volunteer::class)->findBy([],null,$count,$start));
     }
 
     /**
@@ -47,17 +51,45 @@ class ApiController extends AbstractController
      */
     public function fetchSingleVolunteer(int $id):JsonResponse
     {
-        return $this->jsonResponse( $this->getDoctrine()->getRepository(Volunteer::class)->findBy(['id' => $id]) );
+        return $this->jsonResponse($this->getDoctrine()->getRepository(Volunteer::class)->findBy(['id' => $id]));
     }
 
     /**
-     * @param int $id
+     * @param int $userId
      * @return JsonResponse
      * @Route("/api/user/volunteer/{userId}", name="fetchSingleVolunteerByUserId", methods={"GET"}, requirements={"userId"="\d+"})
      */
     public function fetchSingleVolunteerByUserId(int $userId) :JsonResponse
     {
-        return $this->jsonResponse( $this->getDoctrine()->getRepository(Volunteer::class)->findBy(['user_id' => $userId]) );
+        return $this->jsonResponse($this->getDoctrine()->getRepository(Volunteer::class)->findBy(['user_id' => $userId]));
+    }
+
+
+    /**
+     * @Route("/api/volunteers/filter/job-type/{type}", name="fetchVolunteerByJobType", methods={"GET"}, requirements={"type"="[a-zA-Z]+"})
+     * @param string $type
+     * @return JsonResponse
+     */
+    public function volunteerFilterByJobType(string $type = '') : JsonResponse
+    {
+        return $this->jsonResponse($this->getDoctrine()->getRepository(Job::class)->findBy(['job_type' => $type]));
+    }
+
+    /**
+     * @Route("/api/volunteers/filter/rating")
+     */
+    public function volunteerFilterByReviewRating() :JsonResponse
+    {
+        return $this->jsonResponse($this->getDoctrine()->getRepository(Review::class)->filterByRating());
+    }
+
+    /**
+     * @return JsonResponse
+     * @Route("/api/volunteers/filter/event-count")
+     */
+    public function volunteerFilterByAttendanceCount() :JsonResponse
+    {
+        return $this->jsonResponse($this->getDoctrine()->getRepository(Volunteer::class)->filterByEventTotalCount());
     }
 
     /**
@@ -66,7 +98,7 @@ class ApiController extends AbstractController
      */
     public function fetchAllEvents() :JsonResponse
     {
-        return $this->jsonResponse( $this->getDoctrine()->getRepository(Event::class)->findAll() );
+        return $this->jsonResponse($this->getDoctrine()->getRepository(Event::class)->findAll());
     }
 
     /**
@@ -76,7 +108,7 @@ class ApiController extends AbstractController
      */
     public function fetchSingleEvent(int $id) :JsonResponse
     {
-        return $this->jsonResponse( $this->getDoctrine()->getRepository(Event::class)->findBy(['id' => $id]) );
+        return $this->jsonResponse($this->getDoctrine()->getRepository(Event::class)->findBy(['id' => $id]));
     }
 
     /**
@@ -84,7 +116,7 @@ class ApiController extends AbstractController
      */
     public function fetchAllOrganisations() :JsonResponse
     {
-        return $this->jsonResponse( $this->getDoctrine()->getRepository(Organisation::class)->findAll() );
+        return $this->jsonResponse($this->getDoctrine()->getRepository(Organisation::class)->findAll());
     }
 
     /**
@@ -98,13 +130,13 @@ class ApiController extends AbstractController
     }
 
     /**
-     * @param int $id
+     * @param int $userId
      * @return JsonResponse
      * @Route("/api/user/organisation/{userId}", name="fetchSingleOrganisationByUserId", methods={"GET"}, requirements={"userId"="\d+"})
      */
     public function fetchSingleOrganisationByUserId(int $userId) :JsonResponse
     {
-        return $this->jsonResponse( $this->getDoctrine()->getRepository(Organisation::class)->findBy(['user_id' => $userId]) );
+        return $this->jsonResponse($this->getDoctrine()->getRepository(Organisation::class)->findBy(['user_id' => $userId]));
     }
 
     /**
@@ -113,7 +145,7 @@ class ApiController extends AbstractController
      */
     public function fetchAllReviews() :JsonResponse
     {
-        return $this->jsonResponse( $this->getDoctrine()->getRepository(Review::class)->findAll() );
+        return $this->jsonResponse($this->getDoctrine()->getRepository(Review::class)->findAll());
     }
 
     /**
@@ -123,7 +155,7 @@ class ApiController extends AbstractController
      */
     public function fetchSingleReview(int $id) :JsonResponse
     {
-        return $this->jsonResponse( $this->getDoctrine()->getRepository(Review::class)->findBy(['id' => $id]) );
+        return $this->jsonResponse($this->getDoctrine()->getRepository(Review::class)->findBy(['id' => $id]));
     }
 
     /**

@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Volunteer;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\Query\Expr\Join;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
 /**
@@ -22,4 +23,21 @@ class VolunteerRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Volunteer::class);
     }
+
+
+    /**
+     * @return array|null
+     */
+    public function filterByEventTotalCount() :?array
+    {
+        return $this->getEntityManager()->getRepository(Volunteer::class,'v')
+            ->createQueryBuilder('e')
+            ->addSelect('COUNT(v.id) AS attendance_count')
+            ->innerJoin('e.events', 'v')
+            ->groupBy('e')
+            ->orderBy('attendance_count','DESC')
+            ->getQuery()
+            ->getResult();
+    }
+
 }
