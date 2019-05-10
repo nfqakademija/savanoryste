@@ -21,7 +21,6 @@ class VolunteerProfileInfo extends React.Component {
 
   render() {
     const { volunteer } = this.props;
-    console.log(volunteer);
 
     return (
       <Container>
