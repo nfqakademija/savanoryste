@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Event;
 use App\Entity\Job;
+use App\Entity\JobType;
 use App\Entity\Organisation;
 use App\Entity\Review;
 use App\Entity\User;
@@ -66,13 +67,13 @@ class ApiController extends AbstractController
 
 
     /**
-     * @Route("/api/volunteers/filter/job-type/{type}", name="fetchVolunteerByJobType", methods={"GET"}, requirements={"type"="[a-zA-Z]+"})
+     * @Route("/api/volunteers/filter/job-type/{type}", name="fetchVolunteerByJobType", methods={"GET"})
      * @param string $type
      * @return JsonResponse
      */
     public function volunteerFilterByJobType(string $type = '') : JsonResponse
     {
-        return $this->jsonResponse($this->getDoctrine()->getRepository(Job::class)->findBy(['job_type' => $type]));
+        return $this->jsonResponse($this->getDoctrine()->getRepository(Job::class)->filterByJobType(urldecode($type)));
     }
 
     /**
