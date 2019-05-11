@@ -2,35 +2,24 @@ import React from 'react';
 import Navbar from 'react-bootstrap/Navbar';
 import Nav from 'react-bootstrap/Nav';
 import { Link } from 'react-router-dom';
+import Container from 'react-bootstrap/Container';
+import Col from 'react-bootstrap/Col';
 import './App.css';
 
 const AppBar = () => (
   <Navbar expand="sm" className="Navbar">
     <Link to="/" className="Navbar-brand">
-      Volunteers
+      Savanorystė
     </Link>
-    <Navbar.Toggle aria-controls="basic-navbar-nav" />
-    <Navbar.Collapse id="basic-navbar-nav">
-      <Nav className="mr-auto">
-        <Link to="/event" className="Navbar-link">
-          Event
-        </Link>
-        <Link to="/organisation" className="Navbar-link">
-          Organisation
-        </Link>
+    <div>
+      <a href="/login" className="Navbar-link">
+        Prisijungti
+      </a>
 
-        <a href="/login" className="Navbar-link">
-          Login
-        </a>
-
-        <a href="/register" className="Navbar-link">
-          Register
-        </a>
-        <a href="/logout" className="Navbar-link">
-          Logout
-        </a>
-      </Nav>
-    </Navbar.Collapse>
+      <a href="/register" className="Navbar-link">
+        Registruotis
+      </a>
+    </div>
   </Navbar>
 );
 

@@ -158,6 +158,8 @@ body {
 .Navbar {
   background-color: #5bc0de;
   margin-bottom: 10px;
+  display: flex;
+  justify-content: space-between;
 }
 
 .Navbar-brand {
@@ -169,7 +171,6 @@ body {
   color: #fff;
   letter-spacing: 3px;
 }
-
 .Navbar-brand:hover {
   text-decoration: none;
   color: #fff;
