@@ -30,7 +30,7 @@ class VolunteerCard extends React.Component {
               Category
             </Card.Subtitle>
             <Card.Text style={{ textTransform: 'capitalize' }}>
-              {volunteer.jobs.map(job => job.jobType)}
+              {volunteer.jobs.map(job => `${job.jobType.jobType} `)}
             </Card.Text>
             <Card.Subtitle className="card-subtitle mb-2 text-muted">
               Languages
