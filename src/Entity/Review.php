@@ -33,6 +33,11 @@ class Review
     private $volunteer;
 
     /**
+     * @ORM\Column(type="integer")
+     */
+    private $volunteer_id;
+
+    /**
      * @return int|null
      */
     public function getId(): ?int
@@ -93,6 +98,18 @@ class Review
     public function setVolunteer(?Volunteer $volunteer): self
     {
         $this->volunteer = $volunteer;
+
+        return $this;
+    }
+
+    public function getVolunteerId(): ?int
+    {
+        return $this->volunteer_id;
+    }
+
+    public function setVolunteerId(int $volunteer_id): self
+    {
+        $this->volunteer_id = $volunteer_id;
 
         return $this;
     }

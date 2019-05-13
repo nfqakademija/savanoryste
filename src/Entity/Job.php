@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\JobRepository")
@@ -17,30 +19,20 @@ class Job
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $job_type;
-
-    /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Volunteer", inversedBy="jobs")
      */
     private $volunteer;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\JobType", inversedBy="jobs")
+     */
+    private $job_type;
+
+
+
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function getJobType(): ?string
-    {
-        return $this->job_type;
-    }
-
-    public function setJobType(string $job_type): self
-    {
-        $this->job_type = $job_type;
-
-        return $this;
     }
 
     public function getVolunteer(): ?Volunteer
@@ -54,4 +46,17 @@ class Job
 
         return $this;
     }
+
+    public function getJobType(): ?JobType
+    {
+        return $this->job_type;
+    }
+
+    public function setJobType(?JobType $job_type): self
+    {
+        $this->job_type = $job_type;
+
+        return $this;
+    }
+
 }
