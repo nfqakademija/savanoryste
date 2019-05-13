@@ -5,22 +5,26 @@ import { Link } from 'react-router-dom';
 import Container from 'react-bootstrap/Container';
 import Col from 'react-bootstrap/Col';
 import './App.css';
+import Cookies from 'js-cookie';
 
-const AppBar = () => (
-  <Navbar expand="sm" className="Navbar">
-    <Link to="/" className="Navbar-brand">
-      Savanorystė
-    </Link>
-    <div>
-      <a href="/login" className="Navbar-link">
-        Prisijungti
-      </a>
+const AppBar = props => {
+  return (
+    <Navbar expand="sm" className="Navbar">
+      <Link to="/" className="Navbar-brand">
+        Savanorystė
+        {console.log(Cookies.get())}
+      </Link>
+      <div>
+        <a href="/login" className="Navbar-link">
+          Prisijungti
+        </a>
 
-      <a href="/register" className="Navbar-link">
-        Registruotis
-      </a>
-    </div>
-  </Navbar>
-);
+        <a href="/register" className="Navbar-link">
+          Registruotis
+        </a>
+      </div>
+    </Navbar>
+  );
+};
 
 export default AppBar;
