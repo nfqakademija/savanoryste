@@ -4,9 +4,12 @@ import Tabs from 'react-bootstrap/Tabs';
 import Container from 'react-bootstrap/Container';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
+import { Link } from 'react-router-dom';
+import VolunteerProfileEdit from './VolunteerProfileEdit';
 import VolunteerProfileCard from './VolunteerProfileCard';
 import VolunteerProfileInfo from './VolunteerProfileInfo';
 import VolunteerReviewCard from './VolunteerReviewCard';
+import Button from 'react-bootstrap/Button';
 import { connect } from 'react-redux';
 
 import { getVolunteer } from '../../actions/volunteersActions';
@@ -15,22 +18,36 @@ class VolunteerProfile extends React.Component {
   constructor(props) {
     super(props);
     props.getVolunteer(props.match.params.id);
+
+    this.state = {
+      isEditing: false
+    };
   }
+
+  onEditClick = () => {
+    this.setState({ isEditing: !this.state.isEditing });
+  };
 
   render() {
     const { volunteer, loading } = this.props;
+    const { isEditing } = this.state;
 
     return Object.entries(volunteer).length === 0 &&
       volunteer.constructor === Object ? (
       <h1>Loading</h1>
     ) : (
       <Container style={{ margin: 'auto' }}>
+        <Button onClick={this.onEditClick}>Edit</Button>
         <Row>
           <Col xs={12} sm={12} lg={4}>
             <VolunteerProfileCard volunteer={volunteer} />
           </Col>
           <Col xs={12} sm={12} lg={8}>
-            <VolunteerProfileInfo volunteer={volunteer} />
+            {!isEditing ? (
+              <VolunteerProfileInfo volunteer={volunteer} />
+            ) : (
+              <VolunteerProfileEdit volunteer={volunteer} />
+            )}
           </Col>
         </Row>
         <Row style={{ marginTop: '10px' }}>
