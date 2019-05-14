@@ -122,8 +122,8 @@ class UserAuthenticator extends AbstractFormLoginAuthenticator
         }
 
         $response = new RedirectResponse('/profile/'. $user->getId());
-        $response->headers->setCookie(new Cookie('userId', $user->getId()));
-        $response->headers->setCookie(new Cookie('role', $user->getRoles()[0]));
+        $response->headers->setCookie(new Cookie('userId', $user->getId(), time() + 3600, '/', null, false, false));
+        $response->headers->setCookie(new Cookie('role', $user->getRoles()[0],time() + 3600, '/', null, false, false));
         return $response->send();
     }
 
