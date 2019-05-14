@@ -12,17 +12,26 @@ const AppBar = props => {
     <Navbar expand="sm" className="Navbar">
       <Link to="/" className="Navbar-brand">
         Savanorystė
-        {console.log(Cookies.get())}
+        {console.log(Cookies.get('userId'))}
       </Link>
-      <div>
-        <a href="/login" className="Navbar-link">
-          Prisijungti
-        </a>
 
-        <a href="/register" className="Navbar-link">
-          Registruotis
-        </a>
-      </div>
+      {Cookies.get('userId') === undefined ? (
+        <div>
+          <a href="/login" className="Navbar-link">
+            Prisijungti
+          </a>
+
+          <a href="/register" className="Navbar-link">
+            Registruotis
+          </a>
+        </div>
+      ) : (
+        <div>
+          <a href="/logout" className="Navbar-link">
+            Atsijungti
+          </a>
+        </div>
+      )}
     </Navbar>
   );
 };
