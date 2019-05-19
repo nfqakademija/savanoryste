@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Interfaces\BlankInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -10,7 +11,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 /**
  * @ORM\Entity(repositoryClass="App\Repository\OrganisationRepository")
  */
-class Organisation
+class Organisation implements BlankInterface
 {
     /**
      * @ORM\Id()
@@ -21,21 +22,45 @@ class Organisation
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank()
+     * @Assert\Length(
+     *      min = 2,
+     *      max = 100,
+     *      minMessage = "Įmonės pavadinimas turi būti ne trumpesnis nei {{ limit }} simboliai",
+     *      maxMessage = "Įmonės pavadinimas negali būti ilgesnis nei {{ limit }} simbolių"
+     * )
      */
     private $name;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank()
+     * @Assert\Email(
+     *     message="El.paštas netaisingas"
+     * )
      */
     private $email;
 
     /**
      * @ORM\Column(type="integer")
+     * @Assert\NotBlank()
+     * @Assert\Regex(
+     *     pattern="/[0-9]{8}/",
+     *     match=false,
+     *     message="Įveskite pilna numerį"
+     * )
      */
     private $phone;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank()
+     * @Assert\Length(
+     *      min = 2,
+     *      max = 20,
+     *      minMessage = "Įmonės pavadinimas turi būti ne trumpesnis nei {{ limit }} simboliai",
+     *      maxMessage = "Įmonės pavadinimas negali būti ilgesnis nei {{ limit }} simbolių"
+     * )
      */
     private $address;
 
@@ -45,16 +70,9 @@ class Organisation
     private $events;
 
     /**
-     * @ORM\Column(type="string", length=255, options={"default":"OrganisationPic.jpeg"})
-     * @Assert\NotBlank(message="Įkelkite profilio nuotrauka")
-     * @Assert\File(mimeTypes={ "image/jpeg", "image/png" })
+     * @ORM\Column(type="string", length=255, nullable=true, options={"default":"OrganisationPic.jpeg"})
      */
-    private $ProfilePic;
-
-    /**
-     * @ORM\Column(type="integer", nullable=true)
-     */
-    private $user_id;
+    private $ProfilePic = 'OrganisationPic.jpeg';
 
     public function __construct()
     {
@@ -189,22 +207,22 @@ class Organisation
         return $this->ProfilePic;
     }
 
-    public function setProfilePic(string $ProfilePic): self
+    public function setProfilePic(?string $ProfilePic): self
     {
         $this->ProfilePic = $ProfilePic;
 
         return $this;
     }
 
-    public function getUserId(): ?int
+    /**
+     * @param object $organisation
+     * @return mixed
+     */
+    public function createEmpty(object $organisation) :void
     {
-        return $this->user_id;
-    }
-
-    public function setUserId(?int $user_id): self
-    {
-        $this->user_id = $user_id;
-
-        return $this;
+        $organisation->setName('');
+        $organisation->setEmail('');
+        $organisation->setPhone(0);
+        $organisation->setAddress('');
     }
 }

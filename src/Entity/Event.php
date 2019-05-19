@@ -5,6 +5,7 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\EventRepository")
@@ -20,6 +21,13 @@ class Event
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank()
+     * @Assert\Length(
+     *      min = 2,
+     *      max = 100,
+     *      minMessage = "Renginio pavadinimas turi būti ne trumpesnis nei {{ limit }} simboliai",
+     *      maxMessage = "Renginio pavadinimas negali būti ilgesnis nei {{ limit }} simbolių"
+     * )
      */
     private $title;
 
@@ -35,6 +43,13 @@ class Event
 
     /**
      * @ORM\Column(type="text")
+     * @Assert\NotBlank()
+     * @Assert\Length(
+     *      min = 2,
+     *      max = 500,
+     *      minMessage = "Aprašymas turi būti ne trumpesnis nei {{ limit }} simboliai",
+     *      maxMessage = "Aprašymas negali būti ilgesnis nei {{ limit }} simbolių"
+     * )
      */
     private $description;
 

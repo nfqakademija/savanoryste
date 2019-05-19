@@ -2,7 +2,9 @@
 
 namespace App\Controller;
 
+use App\Entity\Organisation;
 use App\Entity\User;
+use App\Entity\Volunteer;
 use App\Form\LoginType;
 use App\Form\RegisterType;
 use App\Security\UserAuthenticator;
@@ -57,6 +59,11 @@ class SecurityController extends AbstractController implements LogoutSuccessHand
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $profile = $this->createProfileByRole($request);
+            $em->persist($profile);
+            $em->flush();
+
             $user = $form->getData();
 
             if (!$this->isRoleSelected($request)) {
@@ -68,8 +75,8 @@ class SecurityController extends AbstractController implements LogoutSuccessHand
             );
 
             $user->setRoles([$this->getRole($request)]);
+            $user->setProfileId($profile->getId());
 
-            $em = $this->getDoctrine()->getManager();
             $em->persist($user);
             $em->flush();
 
@@ -100,14 +107,36 @@ class SecurityController extends AbstractController implements LogoutSuccessHand
     }
 
     /**
+     * @param Request $request
+     * @return null|object
+     */
+    private function createProfileByRole(Request $request) :?object
+    {
+        // TODO MOVE IF LOGIC TO SEPARATE METHOD
+        if($request->request->get(RoleConstants::ROLE_VOLUNTEER) === 'on')
+        {
+            $volunteer = new Volunteer();
+            $volunteer->createEmpty($volunteer);
+            return $volunteer;
+        }else if($request->request->get(RoleConstants::ROLE_ORGANISATION) === 'on')
+        {
+            $organisation = new Organisation();
+            $organisation->createEmpty($organisation);
+            return $organisation;
+        }
+
+        return null;
+    }
+
+    /**
      * @param String $type
      * @return null|string
      */
     private function getRole(Request $request) :?string
     {
-        if ($request->request->get('ROLE_VOLUNTEER') === 'on') {
+        if ($request->request->get(RoleConstants::ROLE_VOLUNTEER) === 'on') {
             return RoleConstants::ROLE_VOLUNTEER;
-        } elseif ($request->request->get('ROLE_ORGANISATION') === 'on') {
+        } elseif ($request->request->get(RoleConstants::ROLE_ORGANISATION) === 'on') {
             return RoleConstants::ROLE_ORGANISATION;
         }
         return null;
@@ -119,7 +148,7 @@ class SecurityController extends AbstractController implements LogoutSuccessHand
      */
     private function isRoleSelected(Request $request) :bool
     {
-        if ($request->request->get('ROLE_VOLUNTEER') === 'on' || $request->request->get('ROLE_ORGANISATION') === 'on') {
+        if ($request->request->get(RoleConstants::ROLE_VOLUNTEER) === 'on' || $request->request->get(RoleConstants::ROLE_ORGANISATION) === 'on') {
             return true;
         }
         return false;
