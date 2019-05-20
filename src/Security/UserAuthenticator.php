@@ -2,9 +2,9 @@
 
 namespace App\Security;
 
+use App\Constants\RoleConstants;
 use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
-use http\Env\Response;
 use Symfony\Component\HttpFoundation\Cookie;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -12,7 +12,6 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Exception\CustomUserMessageAuthenticationException;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
-use Symfony\Component\Security\Core\Exception\InvalidCsrfTokenException;
 use Symfony\Component\Security\Core\Security;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
@@ -32,18 +31,21 @@ class UserAuthenticator extends AbstractFormLoginAuthenticator
     private $entityManager;
     private $urlGenerator;
     private $passwordEncoder;
+    private $csrfTokenManager;
 
     /**
      * UserAuthenticator constructor.
+     * @param CsrfTokenManagerInterface $csrfTokenManager
      * @param EntityManagerInterface $entityManager
      * @param UrlGeneratorInterface $urlGenerator
      * @param UserPasswordEncoderInterface $passwordEncoder
      */
-    public function __construct(EntityManagerInterface $entityManager, UrlGeneratorInterface $urlGenerator, UserPasswordEncoderInterface $passwordEncoder)
+    public function __construct(CsrfTokenManagerInterface $csrfTokenManager, EntityManagerInterface $entityManager, UrlGeneratorInterface $urlGenerator, UserPasswordEncoderInterface $passwordEncoder)
     {
         $this->entityManager = $entityManager;
         $this->urlGenerator = $urlGenerator;
         $this->passwordEncoder = $passwordEncoder;
+        $this->csrfTokenManager = $csrfTokenManager;
     }
 
     /**
@@ -64,8 +66,10 @@ class UserAuthenticator extends AbstractFormLoginAuthenticator
     {
         $credentials = [
             'username' => $request->request->get('login')['username'],
-            'password' => $request->request->get('login')['password']
+            'password' => $request->request->get('login')['password'],
+            'csrf_token' => $request->request->get('login')['_token']
         ];
+
         $request->getSession()->set(
             Security::LAST_USERNAME,
             $credentials['username']
@@ -81,7 +85,14 @@ class UserAuthenticator extends AbstractFormLoginAuthenticator
      */
     public function getUser($credentials, UserProviderInterface $userProvider)
     {
-        $user = $this->entityManager->getRepository(User::class)->findOneBy(['username' => $credentials['username']]);
+        $token = new CsrfToken('login_auth', $credentials['csrf_token']);
+        if (!$this->csrfTokenManager->isTokenValid($token)) {
+            throw new CustomUserMessageAuthenticationException('Token nesutapo. Bandykite dar karta');
+        }
+
+        $user = $this->entityManager->getRepository(User::class)->findOneBy(
+            ['username' => $credentials['username']]
+        );
 
         if (!$user) {
             throw new CustomUserMessageAuthenticationException('Naudotojas nerastas');
@@ -121,10 +132,29 @@ class UserAuthenticator extends AbstractFormLoginAuthenticator
             return new RedirectResponse($targetPath);
         }
 
-        $response = new RedirectResponse('/profile/'. $user->getId());
-        $response->headers->setCookie(new Cookie('userId', $user->getId(), time() + 3600, '/', null, false, false));
-        $response->headers->setCookie(new Cookie('role', $user->getRoles()[0],time() + 3600, '/', null, false, false));
+        $response = $this->generateRedirectResponse($user->getRoles(), $user->getProfileId(), $user);
         return $response->send();
+    }
+
+    /**
+     * @param array $roles
+     * @param int $profileId
+     * @param User $user
+     * @return RedirectResponse
+     */
+    private function generateRedirectResponse(array $roles, int $profileId, User $user) :RedirectResponse
+    {
+        if(in_array(RoleConstants::ROLE_ORGANISATION, $roles,true)){
+            $response = new RedirectResponse('/profile/organisation/'. $profileId);
+        }else if(in_array(RoleConstants::ROLE_VOLUNTEER, $roles,true)){
+            $response = new RedirectResponse('/profile/'. $profileId);
+        }else{
+            $response = new RedirectResponse('/');
+        }
+
+        $response->headers->setCookie(new Cookie('userId', $user->getId(), time() + 3600, '/', null, false, false));
+        $response->headers->setCookie(new Cookie('role', $roles[0],time() + 3600, '/', null, false, false));
+        return $response;
     }
 
     /**

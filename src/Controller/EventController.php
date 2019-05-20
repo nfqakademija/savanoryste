@@ -3,7 +3,10 @@
 namespace App\Controller;
 
 use App\Entity\Event;
+use App\Form\EventType;
+use App\Interfaces\RepoInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -12,75 +15,74 @@ use Symfony\Component\Routing\Annotation\Route;
  * Class EventController
  * @package App\Controller
  */
-class EventController extends AbstractController
+class EventController extends AbstractController implements RepoInterface
 {
 
+    private $timeZoneLT;
+
+    public function __construct()
+    {
+        $this->timeZoneLT = new \DateTimeZone('Europe/Vilnius');
+    }
+
     /**
-     * @Route("/event/new", name="event")
+     * @Route("/event/store/{eventId}", name="event", methods={"POST"}, requirements={"eventId"="\d+"})
      * @param Request $request
+     * @param int $eventId
      * @return Response
      */
-    public function new(Request $request) :Response
+    public function store(Request $request, int $eventId = 0) :Response
     {
-        $event = new Event();
-
-        if($this->areFieldsEmpty($request)){
-            return $this->respond(Response::HTTP_TEMPORARY_REDIRECT);
-        }
-
-        $event->setTitle($this->sanitizeInput($request->request->get('title')));
-        $event->setDescription($this->sanitizeInput($request->request->get('description')));
-        $event->setStartDate(new \DateTime($this->sanitizeInput($request->request->get('startDate'))));
-        $event->setEndDate(new \DateTime($this->sanitizeInput($request->request->get('endDate'))));
-        $event->setOrganisation(null);
-
         $em = $this->getDoctrine()->getManager();
-        $em->persist($event);
-        $em->flush();
-
-        return $this->respond(Response::HTTP_OK);
-    }
-
-    /**
-     * @param int $status
-     * @return Response
-     */
-    private function respond(int $status) :Response
-    {
-        $response = new Response();
-        $response->setStatusCode($status);
-        $response->headers->set('Location', '/event');
-        return $response->send();
-    }
-
-    /**
-     * @param string $inputValue
-     * @return string
-     */
-    private function sanitizeInput(string $inputValue) :string
-    {
-        return htmlspecialchars($inputValue, ENT_QUOTES, 'UTF-8');
-    }
-
-
-    /**
-     * @param Request $request
-     * @return bool
-     */
-    private function areFieldsEmpty(Request $request): bool
-    {
-        $fields = $request->request;
-        switch ($request->request){
-            case empty($fields->get('title')):
-                return true;
-            case empty($fields->get('description')):
-                return true;
-            case empty($fields->get('startDate')):
-                return true;
-            case empty($fields->get('endDate')):
-                return true;
-            default:
-                return false;
+        $event = ($eventId === 0) ? new Event() : $em->getRepository(Event::class)->find($eventId);
+        if($event === NULL){
+            return new Response('Neteisingas renginio ID', Response::HTTP_BAD_REQUEST);
         }
+        $form = $this->createForm(EventType::class, $event);
+
+        $event->setStartDate(
+            new \DateTime($request->request->get('event')['start_date'],$this->timeZoneLT)
+        );
+        $event->setEndDate(
+            new \DateTime($request->request->get('event')['end_date'], $this->timeZoneLT)
+        );
+
+        $form->handleRequest($request);
+       // dd($event);
+        if($form->isSubmitted() && $form->isValid()){
+
+            $em->persist($event);
+            $em->flush();
+            return new Response(Response::HTTP_OK);
+        }
+       // dd($form->getErrors(true)[0]->getMessage());
+        return new Response(Response::HTTP_BAD_REQUEST);
+    }
+
+    /**
+     * @Route("api/events", name="fetchAllEvents", methods={"GET"})
+     * @return JsonResponse
+     */
+    public function fetchAllEvents() :JsonResponse
+    {
+        return ApiController::jsonResponse($this->getRepo()->findAll());
+    }
+
+    /**
+     * @Route("api/event/{id}", name="fetchSingleEvent", methods={"GET"}, requirements={"id"="\d+"})
+     * @param int $id
+     * @return JsonResponse
+     */
+    public function fetchSingleEvent(int $id) :JsonResponse
+    {
+        return ApiController::jsonResponse($this->getRepo()->findBy(['id' => $id]));
+    }
+
+    /**
+     * @return null|object
+     */
+    public function getRepo(): ?object
+    {
+        return $this->getDoctrine()->getManager()->getRepository(Event::class);
     }
 }
