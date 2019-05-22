@@ -1,7 +1,8 @@
 import React from 'react';
-import Button from 'react-bootstrap/Button';
-import Card from 'react-bootstrap/Card';
+// import Button from 'react-bootstrap/Button';
+// import Card from 'react-bootstrap/Card';
 import { Link } from 'react-router-dom';
+import './VolunteerCard.css';
 
 class VolunteerCard extends React.Component {
   constructor(props) {
@@ -16,38 +17,36 @@ class VolunteerCard extends React.Component {
     const { open } = this.state;
     const { volunteer } = this.props;
     return (
-      <div className="u-topBottomMargin">
-        <Card className="Card">
-          <Card.Body className="text-center">
-            <Card.Img
-              className="Card Card-avatar rounded-circle"
-              src="https://s3.eu-central-1.amazonaws.com/bootstrapbaymisc/blog/24_days_bootstrap/robert.jpg"
-            />
-            <Card.Title variant="h4" className="Card Card-fullName">
-              {`${volunteer.firstname} ${volunteer.lastname}`}
-            </Card.Title>
-            <Card.Subtitle className="card-subtitle mb-2 text-muted">
-              Category
-            </Card.Subtitle>
-            <Card.Text style={{ textTransform: 'capitalize' }}>
-              {volunteer.jobs.map(job => `${job.jobType.jobType} `)}
-            </Card.Text>
-            <Card.Subtitle className="card-subtitle mb-2 text-muted">
-              Languages
-            </Card.Subtitle>
-            <Card.Text>English</Card.Text>
-            <div className="button-wrapper">
-              <Link
-                className="Card-button"
-                to={`/profile/${volunteer.id}`} //Iskelt
-              >
-                See profile
-              </Link>
-              <Button className="Card-button btn btn-info">Choose</Button>
+      <Link to={`/profile/${volunteer.id}`} className="Cardd-button">
+        <div className="cardd">
+          <div
+            className="cardd-header"
+            style={{
+              backgroundImage:
+                'url(https://s3.eu-central-1.amazonaws.com/bootstrapbaymisc/blog/24_days_bootstrap/robert.jpg)'
+            }}
+          >
+            <div className="cardd-header-slanted-edge">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 200">
+                <path className="polygon" d="M-20,200,1000,0V200Z" />
+              </svg>
             </div>
-          </Card.Body>
-        </Card>
-      </div>
+          </div>
+
+          <div className="cardd-body">
+            <h2 className="name">
+              {`${volunteer.firstname} ${volunteer.lastname}`}
+            </h2>
+            <h4 className="job-title">
+              {volunteer.jobs.map(job => `${job.jobType.jobType}`).join(', ')}
+            </h4>
+            <div className="bio">
+              Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+              Dignissimos, aperiam.
+            </div>
+          </div>
+        </div>
+      </Link>
     );
   }
 }
