@@ -3,6 +3,7 @@ import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Button from 'react-bootstrap/Button';
+import InputGroup from 'react-bootstrap/InputGroup';
 const VolunteerProfileEdit = props => {
   const { volunteer } = props;
   return (
@@ -13,8 +14,9 @@ const VolunteerProfileEdit = props => {
           <Col>
             <Form.Group controlId="formBasicEmail">
               <Form.Label>First Name</Form.Label>
+
               <Form.Control
-                type="email"
+                type="text"
                 placeholder="Enter first name"
                 defaultValue={volunteer.firstname}
               />
@@ -24,7 +26,7 @@ const VolunteerProfileEdit = props => {
             <Form.Group controlId="formBasicEmail">
               <Form.Label>Last Name</Form.Label>
               <Form.Control
-                type="email"
+                type="text"
                 placeholder="Enter last name"
                 defaultValue={volunteer.lastname}
               />
@@ -34,11 +36,16 @@ const VolunteerProfileEdit = props => {
 
         <Form.Group controlId="formBasicEmail">
           <Form.Label>Phone</Form.Label>
-          <Form.Control
-            type="email"
-            placeholder="Enter phone number"
-            defaultValue={volunteer.phone}
-          />
+          <InputGroup>
+            <InputGroup.Prepend>
+              <InputGroup.Text id="basic-addon1">+370</InputGroup.Text>
+            </InputGroup.Prepend>
+            <Form.Control
+              type="tel"
+              placeholder="Enter phone number"
+              defaultValue={volunteer.phone}
+            />
+          </InputGroup>
         </Form.Group>
         <Form.Group controlId="formBasicEmail">
           <Form.Label>Email address</Form.Label>
@@ -53,7 +60,7 @@ const VolunteerProfileEdit = props => {
             <Form.Group controlId="formBasicEmail">
               <Form.Label>City</Form.Label>
               <Form.Control
-                type="email"
+                type="text"
                 placeholder="Enter city"
                 defaultValue={volunteer.city}
               />
@@ -63,7 +70,7 @@ const VolunteerProfileEdit = props => {
             <Form.Group controlId="formBasicEmail">
               <Form.Label>Country</Form.Label>
               <Form.Control
-                type="email"
+                type="text"
                 placeholder="Enter country"
                 defaultValue={volunteer.country}
               />
