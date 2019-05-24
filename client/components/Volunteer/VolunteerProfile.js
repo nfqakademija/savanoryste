@@ -52,7 +52,7 @@ class VolunteerProfile extends React.Component {
           </Col>
         </Row>
         <Row style={{ marginTop: '10px' }}>
-          <Col>
+          <Col lg={4}>
             <h3>Latest review</h3>
             <VolunteerReviewCard />
           </Col>
