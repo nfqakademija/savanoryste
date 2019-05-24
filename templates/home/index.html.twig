@@ -8,5 +8,169 @@
             {{ message }}
         </div>
     {% endfor %}
-    <div id="root" />
+    
+    <div id = "content">
+    <header class="header text-white text-center">
+        <div class = "col-md-5 col-sm-12 header-group">
+            <div class = "header-text">
+                <h2 class = "font-weight-bold">Keiskime pasaulį kartu!</h2>
+                <h3>Aš esu:</h3>
+            </div>
+            <div class = "col-md-12 col-sm-12 header-button p-5">
+                <button type="button" class="btn btn-primary btn-block label-text p-3 form-rounded" id = "button-volunteer">Savanoris</button>
+                <button type="button" class="btn btn-light btn-block label-text p-3 form-rounded" id = "button-organisation">Organizacija</button>
+            </div>
+        </div>
+    </header>
+
+    
+    <div class = "row stats col-md-12 text-center">
+        <div class = "col-md-6">
+            <i class="fas fa-users"></i>
+            <h2 class = "font-weight-bold">Mūsų jau yra:</h2>
+            <h1 class="counter" data-from="0" data-to="1500" data-refresh-interval="50"></h1>
+        </div>
+
+        <div class = "col-md-6">
+            <i class = "fas fa-hands-helping"></i>
+            <h2 class = "font-weight-bold">Ieško pagalbos:</h2>
+            <h1 class="counter" data-from="0" data-to="347" data-refresh-interval="50"></h1>
+        </div>
+    </div>
+
+    <div class = "row">
+        <div class = "col-md-12 text-center">
+            <h2 class = "heading-text">Kaip tai veikia?</h2>
+        </div>
+    </div>
+
+    <div class = "row about-group justify-content-center">
+        <div class = "col-md-3">
+            <div class="card border mb-3">
+                <div class="card-body text-center">
+                  <img src = "user.png" height="100px">
+                  <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class = "col-md-3 middle-card">
+            <div class="card border mb-3">
+                <div class="card-body text-center">
+                  <img src = "worker.png" height="100px">
+                  <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class = "col-md-3">
+            <div class="card border mb-3">
+                <div class="card-body text-center">
+                    <img src = "charity.png" height="100px">
+                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class = "row">
+        <div class = "col-md-12 text-center">
+            <h2 class = "heading-text">Registracija</h2>
+        </div>
+    </div>
+
+    <div class = "row landing-register justify-content-center">
+        <div class = "col-md-3">
+            <div class = "col-md-1 text-transform">
+            <h3 id = "box">Pasirinkimas</h3>
+            </div>
+            <div class = "col-md-2 role-choose-box">
+            <div class = "role-choose" id = "role-organisation"><img src = "group.png" width="100px" height="100px"></div>
+            <div class = "role-choose" id = "role-volunteer"><img src = "charity.png" width="100px" height="100px"></div>
+            </div>
+        </div>
+        
+        <div class = "col-md-6">
+            <form action="/register" method="post">
+                <div class = "row form-group">
+                    <label class = "label-text">Vartotojo vardas</label>
+                    <input type = "text" class = "form-control form-rounded" id="register_username" name="register[username]" required="required"></input>
+                </div>
+
+                <div class = "row form-group">
+                    <label class = "label-text">Slaptažodis</label>
+                    <input type = "text" class = "form-control form-rounded" d="register_password_first" name="register[password][first]" required="required"></input>
+                </div>
+
+                <div class = "row form-group">
+                    <label class = "label-text">Pakartokite slaptažodį</label>
+                    <input type = "text" class = "form-control form-rounded"></input>
+                </div>
+
+                <div class = "row form-group">
+                    <button class = "btn btn-primary btn-block">Registruotis</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class = "footer">
+        <div class = "row">
+            <div class = "col-md-12 mt-5">
+                <ul class="nav form-inline justify-content-center mr-auto">
+                    <li class="nav-item">
+                        <a class="label-text text-white m-2" href="/register">Registracija<span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="label-text text-white m-2" href="/login">Prisijungimas</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="label-text text-white m-2" href="#">D.U.K</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class = "row">
+            <div class = "col-md-12">
+                <p class = "text-center text-white m-2">© Savanortystė. 2019.</p>
+            </div>
+        </div>
+        <div class = "row">
+            <div class = "col-md-12 text-center">
+                <i class="fab fa-facebook-square text-white m-2"></i>
+                <i class="fab fa-twitter-square text-white m-2"></i>
+                <i class="fab fa-instagram text-white m-2"></i>
+            </div>
+        </div>
+    </div>
+    </div>
+
+      
+    <!-- <div id="root" /> -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-countto/1.2.0/jquery.countTo.js"></script>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
+    <script> 
+        $('.counter').countTo();
+
+        $("#button-volunteer, #button-organisation").click(function() {
+            $('html, body').animate({
+                scrollTop: $(".landing-register").offset().top
+            }, 2000);
+        });
+        
+        $('#role-organisation, #role-volunteer').click(function(){
+            var checkDiv = $(this);
+            if (checkDiv.attr("id") == "role-organisation") {
+                $("#box").text("Organizacija");
+            } else {
+                $("#box").text("Savanoris");
+            }
+            
+            $(this).css('opacity', function(i,o){
+                return parseFloat(o).toFixed(1) === '0.1' ? 1 : 0.1;
+            });
+        });
+    </script>
 {% endblock %}
+
