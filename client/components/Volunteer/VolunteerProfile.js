@@ -11,6 +11,7 @@ import VolunteerProfileInfo from './VolunteerProfileInfo';
 import VolunteerReviewCard from './VolunteerReviewCard';
 import Button from 'react-bootstrap/Button';
 import { connect } from 'react-redux';
+import EventCard from '../Event/EventCard';
 
 import { getVolunteer } from '../../actions/volunteersActions';
 
@@ -51,14 +52,14 @@ class VolunteerProfile extends React.Component {
           </Col>
         </Row>
         <Row style={{ marginTop: '10px' }}>
-          <Col>
+          <Col lg={4}>
             <h3>Latest review</h3>
             <VolunteerReviewCard />
           </Col>
           <Col>
             <h3>Latest event attended</h3>
 
-            <VolunteerReviewCard />
+            <EventCard />
           </Col>
         </Row>
       </Container>

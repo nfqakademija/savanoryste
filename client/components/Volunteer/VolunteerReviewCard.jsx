@@ -6,45 +6,21 @@ import Card from 'react-bootstrap/Card';
 import Image from 'react-bootstrap/Image';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faQuoteLeft, faStar } from '@fortawesome/free-solid-svg-icons';
+import './VolunteerReviewCard.css';
 
 const VolunteerReviewCard = () => (
-  <Card
-    border="secondary"
-    style={{ paddingTop: '10px', paddingBottom: '10px' }}
-  >
-    <Container>
-      <Row>
-        <Col>
-          <FontAwesomeIcon icon={faQuoteLeft} />
-          <p style={{ textAlign: 'justify' }}>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer
-            tortor ante, scelerisque ac ultricies et, varius ut nisi. Orci
-            varius natoque penatibus et magnis dis parturient montes, nascetur
-            ridiculus mus.
-          </p>
-        </Col>
-      </Row>
-      <Row>
-        <Col xs={3}>
-          <Image src="https://via.placeholder.com/100" roundedCircle />
-        </Col>
-        <Col style={{ alignSelf: 'center' }}>
-          <Row>Vardenis Pavardenis</Row>
-          <Row>VGTU</Row>
-        </Col>
-        <Col style={{ alignSelf: 'center' }}>
-          <Row>
-            <span>
-              <FontAwesomeIcon icon={faStar} />
-              <FontAwesomeIcon icon={faStar} />
-              <FontAwesomeIcon icon={faStar} />
-              <FontAwesomeIcon icon={faStar} />
-            </span>
-          </Row>
-        </Col>
-      </Row>
-    </Container>
-  </Card>
+  <figure className="snip1157">
+    <blockquote>
+      Calvin: You know sometimes when I'm talking, my words can't keep up with
+      my thoughts... I wonder why we think faster than we speak.
+    </blockquote>
+
+    <div className="author">
+      <h5>
+        Pelican Steve <span> LIttleSnippets.net</span>
+      </h5>
+    </div>
+  </figure>
 );
 
 export default VolunteerReviewCard;
