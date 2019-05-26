@@ -99,13 +99,15 @@
 
                 <div class = "row form-group">
                     <label class = "label-text">Slaptažodis</label>
-                    <input type = "text" class = "form-control form-rounded" d="register_password_first" name="register[password][first]" required="required"></input>
+                    <input type = "password" class = "form-control form-rounded" id="register_password_first" name="register[password][first]" required="required"></input>
                 </div>
 
                 <div class = "row form-group">
                     <label class = "label-text">Pakartokite slaptažodį</label>
-                    <input type = "text" class = "form-control form-rounded"></input>
+                    <input type="password" id="register_password_second" name="register[password][second]" required="required" class="form-rounded form-control" oninvalid="setCustomValidity('Įveskite slaptažodį')" oninput="setCustomValidity('')">
                 </div>
+
+                <input type="hidden" id="register__token" name="register[_token]" value=" {{csrf_token('_token')}} ">
 
                 <div class = "row form-group">
                     <button class = "btn btn-primary btn-block">Registruotis</button>
