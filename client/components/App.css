@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 @import 'LandingPage.css';
+=======
+@import url('https://fonts.googleapis.com/css?family=Noto+Sans|700');
+>>>>>>> master
 
 body {
   background-color: #f8f8f8;
@@ -24,8 +28,21 @@ body {
 }
 
 .Card-button {
-  width: 45%;
-  border-color: #46b8da;
+  display: flex;
+  justify-content: center;
+  margin: 0;
+  align-items: center;
+  width: 100%;
+  height: 50px;
+  border: 1px solid #46b8da;
+  background-color: #46b8da;
+}
+
+.Cardd-button {
+}
+
+.Cardd-button:hover {
+  text-decoration: none;
 }
 
 .Card-profile-name {
@@ -49,7 +66,7 @@ body {
 }
 
 .container {
-  margin: auto;
+  width: 100%;
 }
 
 .volunteer-list {
@@ -146,4 +163,37 @@ body {
 }
 .react-bootstrap-daterangepicker-container {
   display: block !important;
+}
+
+.Navbar {
+  background-color: #5bc0de;
+  margin-bottom: 10px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.Navbar-brand {
+  text-transform: uppercase;
+  text-decoration: none;
+  font-family: 'Noto Sans', sans-serif;
+  font-weight: 900;
+  font-size: 1.5rem;
+  color: #fff;
+  letter-spacing: 3px;
+}
+.Navbar-brand:hover {
+  text-decoration: none;
+  color: #fff;
+}
+
+.Navbar-link {
+  font-size: 1rem;
+  font-weight: 400;
+  padding: 0 5px 0 5px;
+  color: #fff;
+}
+
+.Navbar-link:hover {
+  text-decoration: none;
+  color: #e0e1e2;
 }

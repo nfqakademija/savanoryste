@@ -2,11 +2,14 @@
 
 namespace App\Controller;
 
+use App\Entity\Organisation;
 use App\Entity\User;
+use App\Entity\Volunteer;
 use App\Form\LoginType;
 use App\Form\RegisterType;
 use App\Security\UserAuthenticator;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -14,12 +17,13 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Security\Guard\GuardAuthenticatorHandler;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use App\Constants\RoleConstants;
+use Symfony\Component\Security\Http\Logout\LogoutSuccessHandlerInterface;
 
 /**
  * Class SecurityController
  * @package App\Controller
  */
-class SecurityController extends AbstractController
+class SecurityController extends AbstractController implements LogoutSuccessHandlerInterface
 {
     /**
      * @Route("/login", name="app_login", methods={"GET", "POST"})
@@ -55,6 +59,11 @@ class SecurityController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $profile = $this->createProfileByRole($request);
+            $em->persist($profile);
+            $em->flush();
+
             $user = $form->getData();
 
             if (!$this->isRoleSelected($request)) {
@@ -66,11 +75,10 @@ class SecurityController extends AbstractController
             );
 
             $user->setRoles([$this->getRole($request)]);
+            $user->setProfileId($profile->getId());
 
-            $em = $this->getDoctrine()->getManager();
             $em->persist($user);
             $em->flush();
-
 
             return $guardHandler->authenticateUserAndHandleSuccess(
                 $user,
@@ -99,14 +107,36 @@ class SecurityController extends AbstractController
     }
 
     /**
+     * @param Request $request
+     * @return null|object
+     */
+    private function createProfileByRole(Request $request) :?object
+    {
+        // TODO MOVE IF LOGIC TO SEPARATE METHOD
+        if($request->request->get(RoleConstants::ROLE_VOLUNTEER) === 'on')
+        {
+            $volunteer = new Volunteer();
+            $volunteer->createEmpty($volunteer);
+            return $volunteer;
+        }else if($request->request->get(RoleConstants::ROLE_ORGANISATION) === 'on')
+        {
+            $organisation = new Organisation();
+            $organisation->createEmpty($organisation);
+            return $organisation;
+        }
+
+        return null;
+    }
+
+    /**
      * @param String $type
      * @return null|string
      */
     private function getRole(Request $request) :?string
     {
-        if ($request->request->get('ROLE_VOLUNTEER') === 'on') {
+        if ($request->request->get(RoleConstants::ROLE_VOLUNTEER) === 'on') {
             return RoleConstants::ROLE_VOLUNTEER;
-        } elseif ($request->request->get('ROLE_ORGANISATION') === 'on') {
+        } elseif ($request->request->get(RoleConstants::ROLE_ORGANISATION) === 'on') {
             return RoleConstants::ROLE_ORGANISATION;
         }
         return null;
@@ -118,7 +148,7 @@ class SecurityController extends AbstractController
      */
     private function isRoleSelected(Request $request) :bool
     {
-        if ($request->request->get('ROLE_VOLUNTEER') === 'on' || $request->request->get('ROLE_ORGANISATION') === 'on') {
+        if ($request->request->get(RoleConstants::ROLE_VOLUNTEER) === 'on' || $request->request->get(RoleConstants::ROLE_ORGANISATION) === 'on') {
             return true;
         }
         return false;
@@ -135,5 +165,27 @@ class SecurityController extends AbstractController
     {
         $this->addFlash($msgType, $msg);
         return $this->redirectToRoute($route, [], $code);
+    }
+
+    /**
+     * Creates a Response object to send upon a successful logout.
+     *
+     * @param Request $request
+     * @return Response never null
+     */
+    public function onLogoutSuccess(Request $request)
+    {
+        $this->clearCookie('userId');
+        $this->clearCookie('role');
+        return new RedirectResponse('/', Response::HTTP_TEMPORARY_REDIRECT);
+    }
+
+
+    /**
+     * @param string $cookieName
+     */
+    private function clearCookie(string $cookieName) :void
+    {
+        setcookie($cookieName, '', time() - 3600);
     }
 }

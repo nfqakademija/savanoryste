@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Interfaces\BlankInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -10,7 +11,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 /**
  * @ORM\Entity(repositoryClass="App\Repository\VolunteerRepository")
  */
-class Volunteer
+class Volunteer implements BlankInterface
 {
     /**
      * @ORM\Id()
@@ -21,21 +22,45 @@ class Volunteer
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank()
+     * @Assert\Length(
+     *      min = 2,
+     *      max = 50,
+     *      minMessage = "Vardas turi būti ne trumpesnis nei {{ limit }} simboliai",
+     *      maxMessage = "Vardas negali būti ilgesnis nei {{ limit }} simbolių"
+     * )
      */
     private $firstname;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank()
+     * @Assert\Length(
+     *      min = 2,
+     *      max = 255,
+     *      minMessage = "Pavardė turi būti ne trumpesnis nei {{ limit }} simboliai",
+     *      maxMessage = "Pavardė negali būti ilgesnis nei {{ limit }} simboliai"
+     * )
      */
     private $lastname;
 
     /**
      * @ORM\Column(type="integer")
+     * @Assert\NotBlank()
+     * @Assert\Regex(
+     *     pattern="/[0-9]{8}/",
+     *     match=false,
+     *     message="Įveskite pilna numerį"
+     * )
      */
     private $phone;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank()
+     * @Assert\Email(
+     *     message="El.pašto formatas netinka"
+     * )
      */
     private $email;
 
@@ -52,16 +77,37 @@ class Volunteer
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank()
+     * @Assert\Length(
+     *      min = 2,
+     *      max = 80,
+     *      minMessage = "Miesto pavadinimas turi būti ne trumpesnis nei {{ limit }} simboliai",
+     *      maxMessage = "Miesto pavadinimas negali būti ilgesnis nei {{ limit }} simbolių"
+     * )
      */
     private $city;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank()
+     * @Assert\Length(
+     *      min = 2,
+     *      max = 80,
+     *      minMessage = "Valstybės pavadinimas turi būti ne trumpesnis nei {{ limit }} simboliai",
+     *      maxMessage = "Valstybės pavadinimas negali būti ilgesnis nei {{ limit }} simbolių"
+     * )
      */
     private $country;
 
     /**
      * @ORM\Column(type="text")
+     * @Assert\NotBlank()
+     * @Assert\Length(
+     *      min = 2,
+     *      max = 500,
+     *      minMessage = "Aprašymas turi būti ne trumpesnis nei {{ limit }} simboliai",
+     *      maxMessage = "Aprašymas negali būti ilgesnis nei {{ limit }} simbolių"
+     * )
      */
     private $description;
 
@@ -71,22 +117,30 @@ class Volunteer
     private $jobs;
 
     /**
-     * @ORM\Column(type="string", length=255, options={"default":"VolunteerPic.jpeg"})
-     * @Assert\NotBlank(message="Įkelkite profilio nuotrauka")
-     * @Assert\File(mimeTypes={ "image/jpeg", "image/png" })
+     * @ORM\Column(type="string", length=255, nullable=true, options={"default":"VolunteerPic.jpeg"})
      */
-    private $ProfilePic;
-
-    /**
-     * @ORM\Column(type="integer", nullable=true)
-     */
-    private $user_id;
+    private $ProfilePic = 'VolunteerPic.jpeg';
 
     public function __construct()
     {
         $this->reviews = new ArrayCollection();
         $this->events = new ArrayCollection();
         $this->jobs = new ArrayCollection();
+    }
+
+
+    /**
+     * @param object $volunteer
+     */
+    public function createEmpty(object $volunteer) :void
+    {
+        $volunteer->setFirstname('');
+        $volunteer->setLastname('');
+        $volunteer->setPhone(0);
+        $volunteer->setEmail('');
+        $volunteer->setCity('');
+        $volunteer->setCountry('');
+        $volunteer->setDescription('');
     }
 
     /**
@@ -318,21 +372,9 @@ class Volunteer
         return $this->ProfilePic;
     }
 
-    public function setProfilePic(string $ProfilePic): self
+    public function setProfilePic(?string $ProfilePic): self
     {
         $this->ProfilePic = $ProfilePic;
-
-        return $this;
-    }
-
-    public function getUserId(): ?int
-    {
-        return $this->user_id;
-    }
-
-    public function setUserId(?int $user_id): self
-    {
-        $this->user_id = $user_id;
 
         return $this;
     }

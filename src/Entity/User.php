@@ -56,6 +56,11 @@ class User implements UserInterface
      */
     private $password;
 
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $profile_id;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -127,5 +132,17 @@ class User implements UserInterface
     {
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
+    }
+
+    public function getProfileId(): ?int
+    {
+        return $this->profile_id;
+    }
+
+    public function setProfileId(int $profile_id): self
+    {
+        $this->profile_id = $profile_id;
+
+        return $this;
     }
 }

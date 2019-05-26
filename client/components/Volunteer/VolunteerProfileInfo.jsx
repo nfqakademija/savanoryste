@@ -21,7 +21,6 @@ class VolunteerProfileInfo extends React.Component {
 
   render() {
     const { volunteer } = this.props;
-    console.log(volunteer);
 
     return (
       <Container>
@@ -46,11 +45,18 @@ class VolunteerProfileInfo extends React.Component {
                 <tbody>
                   <tr>
                     <td>Phone</td>
-                    <td>{volunteer.phone}</td>
+                    <td>
+                      <a href={`tel:${volunteer.phone}`}>{volunteer.phone}</a>
+                    </td>
                   </tr>
                   <tr>
                     <td>Email</td>
-                    <td>{volunteer.email}</td>
+                    <td>
+                      {' '}
+                      <a href={`mailto:${volunteer.email}`}>
+                        {volunteer.email}
+                      </a>
+                    </td>
                   </tr>
                   <tr>
                     <td>City, Country</td>
