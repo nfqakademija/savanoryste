@@ -4,7 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Volunteer;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\ORM\Query\Expr\Join;
+use Doctrine\DBAL\DBALException;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
 /**
@@ -38,6 +38,24 @@ class VolunteerRepository extends ServiceEntityRepository
             ->orderBy('attendance_count','DESC')
             ->getQuery()
             ->getResult();
+    }
+
+
+    /**
+     * @return array|null
+     */
+    public function getParticipantCount() :?string
+    {
+        $conn = $this->getEntityManager()->getConnection();
+        try {
+            $stmt = $conn->prepare(
+                'SELECT COUNT(v.id) + (SELECT COUNT(o.id) from organisation o) AS partCount FROM volunteer v'
+            );
+        } catch (DBALException $e) {
+            return null;
+        }
+        $stmt->execute();
+        return $stmt->fetch(\PDO::FETCH_COLUMN);
     }
 
 }
