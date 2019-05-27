@@ -25,23 +25,23 @@ class VolunteerController extends AbstractController implements RepoInterface
      */
     public function update(Request $request, int $volunteerId) :Response
     {
-       $em = $this->getDoctrine()->getManager();
+        $em = $this->getDoctrine()->getManager();
 
-       $volunteer = $em->getRepository(Volunteer::class)->find($volunteerId);
-       if($volunteer === NULL){
-           return new Response('Tokio savanorio profilio nera!', Response::HTTP_BAD_REQUEST);
-       }
+        $volunteer = $em->getRepository(Volunteer::class)->find($volunteerId);
+        if ($volunteer === null) {
+            return new Response('Tokio savanorio profilio nera!', Response::HTTP_BAD_REQUEST);
+        }
 
-       $form = $this->createForm(VolunteerProfileType::class,$volunteer);
-       $form->handleRequest($request);
+        $form = $this->createForm(VolunteerProfileType::class, $volunteer);
+        $form->handleRequest($request);
 
-       if($form->isSubmitted() && $form->isValid()){
-           $em->persist($volunteer);
-           $em->flush();
-           return new Response(Response::HTTP_OK);
-       }
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em->persist($volunteer);
+            $em->flush();
+            return new Response(Response::HTTP_OK);
+        }
 
-       return new Response($form->getErrors(true)[0]->getMessage(), Response::HTTP_BAD_REQUEST);
+        return new Response($form->getErrors(true)[0]->getMessage(), Response::HTTP_BAD_REQUEST);
     }
 
     /**
@@ -57,11 +57,13 @@ class VolunteerController extends AbstractController implements RepoInterface
      * @param int $start
      * @param int $count
      * @return JsonResponse
-     * @Route("/api/volunteers/{start}/{count}", name="fetchVolunteerRange", requirements={"start"="\d+", "count"="\d+"})
+     * @Route(
+     *     "/api/volunteers/{start}/{count}", name="fetchVolunteerRange", requirements={"start"="\d+", "count"="\d+"}
+     *     )
      */
     public function fetchVolunteerInterval(int $start, int $count) :JsonResponse
     {
-        return ApiController::jsonResponse($this->getRepo()->findBy([],null,$count,$start));
+        return ApiController::jsonResponse($this->getRepo()->findBy([], null, $count, $start));
     }
 
     /**

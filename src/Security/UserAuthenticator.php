@@ -4,19 +4,19 @@ namespace App\Security;
 
 use App\Constants\RoleConstants;
 use App\Entity\User;
-use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\EntityManagerInterface as EntityManager;
 use Symfony\Component\HttpFoundation\Cookie;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface as UrlGenerator;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Exception\CustomUserMessageAuthenticationException;
-use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface as PasswordEncoder;
 use Symfony\Component\Security\Core\Security;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
 use Symfony\Component\Security\Csrf\CsrfToken;
-use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
+use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface as CsrfTokenManager;
 use Symfony\Component\Security\Guard\Authenticator\AbstractFormLoginAuthenticator;
 use Symfony\Component\Security\Http\Util\TargetPathTrait;
 
@@ -33,19 +33,20 @@ class UserAuthenticator extends AbstractFormLoginAuthenticator
     private $passwordEncoder;
     private $csrfTokenManager;
 
+
     /**
      * UserAuthenticator constructor.
-     * @param CsrfTokenManagerInterface $csrfTokenManager
-     * @param EntityManagerInterface $entityManager
-     * @param UrlGeneratorInterface $urlGenerator
-     * @param UserPasswordEncoderInterface $passwordEncoder
+     * @param CsrfTokenManager $token
+     * @param EntityManager $em
+     * @param UrlGenerator $url
+     * @param PasswordEncoder $encoder
      */
-    public function __construct(CsrfTokenManagerInterface $csrfTokenManager, EntityManagerInterface $entityManager, UrlGeneratorInterface $urlGenerator, UserPasswordEncoderInterface $passwordEncoder)
+    public function __construct(CsrfTokenManager $token, EntityManager $em, UrlGenerator $url, PasswordEncoder $encoder)
     {
-        $this->entityManager = $entityManager;
-        $this->urlGenerator = $urlGenerator;
-        $this->passwordEncoder = $passwordEncoder;
-        $this->csrfTokenManager = $csrfTokenManager;
+        $this->entityManager = $em;
+        $this->urlGenerator = $url;
+        $this->passwordEncoder = $encoder;
+        $this->csrfTokenManager = $token;
     }
 
     /**
@@ -144,16 +145,16 @@ class UserAuthenticator extends AbstractFormLoginAuthenticator
      */
     private function generateRedirectResponse(array $roles, int $profileId, User $user) :RedirectResponse
     {
-        if(in_array(RoleConstants::ROLE_ORGANISATION, $roles,true)){
+        if (in_array(RoleConstants::ROLE_ORGANISATION, $roles, true)) {
             $response = new RedirectResponse('/profile/organisation/'. $profileId);
-        }else if(in_array(RoleConstants::ROLE_VOLUNTEER, $roles,true)){
+        } elseif (in_array(RoleConstants::ROLE_VOLUNTEER, $roles, true)) {
             $response = new RedirectResponse('/profile/'. $profileId);
-        }else{
+        } else {
             $response = new RedirectResponse('/');
         }
 
         $response->headers->setCookie(new Cookie('userId', $user->getId(), time() + 3600, '/', null, false, false));
-        $response->headers->setCookie(new Cookie('role', $roles[0],time() + 3600, '/', null, false, false));
+        $response->headers->setCookie(new Cookie('role', $roles[0], time() + 3600, '/', null, false, false));
         return $response;
     }
 
@@ -172,6 +173,6 @@ class UserAuthenticator extends AbstractFormLoginAuthenticator
      */
     private function getCurrentRequestUri(Request $request) :string
     {
-        return ltrim($request->server->get('REQUEST_URI'),'/');
+        return ltrim($request->server->get('REQUEST_URI'), '/');
     }
 }

@@ -26,27 +26,30 @@ class EventController extends AbstractController implements RepoInterface
      * @param int $eventId
      * @return Response
      */
-    public function store(Request $request, int $eventId = 0, UrlGeneratorInterface $urlGenerator) :Response
+    public function store(Request $request, UrlGeneratorInterface $urlGenerator, int $eventId = 0) :Response
     {
-        if(!$this->isGranted(RoleConstants::ROLE_ORGANISATION)){
+        if (!$this->isGranted(RoleConstants::ROLE_ORGANISATION)) {
             return new RedirectResponse($urlGenerator->generate('app_login'));
         }
 
         $em = $this->getDoctrine()->getManager();
         $event = ($eventId === 0) ? new Event() : $em->getRepository(Event::class)->find($eventId);
-        if($event === NULL){
+        if ($event === null) {
             return new Response('Neteisingas renginio ID', Response::HTTP_BAD_REQUEST);
         }
+
+        $event->setStartDate(new \DateTime($request->request->get('event')['start_date']));
+        $event->setEndDate(new \DateTime($request->request->get('event')['end_date']));
 
         $form = $this->createForm(EventType::class, $event);
         $form->handleRequest($request);
 
-        if($form->isSubmitted() && $form->isValid()){
+        if ($form->isSubmitted() && $form->isValid()) {
             $em->persist($event);
             $em->flush();
             return new Response(Response::HTTP_OK);
         }
-        return new Response(Response::HTTP_BAD_REQUEST);
+        return new Response($form->getErrors(true)[0]->getMessage(), Response::HTTP_BAD_REQUEST);
     }
 
     /**
