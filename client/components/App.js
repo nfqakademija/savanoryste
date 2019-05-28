@@ -16,6 +16,8 @@ const App = () => (
       <Route path="/profile/:id" component={VolunteerProfile} />
       <Route path="/event" component={EventForm} />
       <Route path="/organisation" component={OrganisationForm} />
+      <Route path="/events/:id" />
+      <Route path="/reviews/:id" />
     </Switch>
   </div>
 );
