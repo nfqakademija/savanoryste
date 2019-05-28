@@ -19,6 +19,7 @@ class VolunteerProfile extends React.Component {
   constructor(props) {
     super(props);
     props.getVolunteer(props.match.params.id);
+    console.log(props.match.params);
 
     this.state = {
       isEditing: false
