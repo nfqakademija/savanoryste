@@ -12,14 +12,19 @@ import VolunteerReviewCard from './VolunteerReviewCard';
 import Button from 'react-bootstrap/Button';
 import { connect } from 'react-redux';
 import EventCard from '../Event/EventCard';
-
+import Cookies from 'js-cookie';
 import { getVolunteer } from '../../actions/volunteersActions';
+import { getVolunteerUser } from '../../actions/usersActions';
 
 class VolunteerProfile extends React.Component {
   constructor(props) {
     super(props);
     props.getVolunteer(props.match.params.id);
-    console.log(props.match.params);
+    if (Cookies.get('userdId') != undefined) {
+      props.getVolunteerUser(Cookies.get('userId'));
+    }
+
+    //console.log(props.match.params);
 
     this.state = {
       isEditing: false
@@ -76,7 +81,8 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  getVolunteer: id => dispatch(getVolunteer(id))
+  getVolunteer: id => dispatch(getVolunteer(id)),
+  getVolunteerUser: id => dispatch(getVolunteerUser(id))
 });
 
 export default connect(

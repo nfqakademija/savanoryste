@@ -10,7 +10,8 @@ import {
 const initialState = {
   volunteerUser: {},
   organisationUser: {},
-  loading: false
+  loading: false,
+  error: {}
 };
 
 const usersReducer = (state = initialState, action) => {
@@ -18,8 +19,10 @@ const usersReducer = (state = initialState, action) => {
     case VOLUNTEER_USER_CALL_REQUEST:
       return { ...state, loading: true, error: null };
     case VOLUNTEER_USER_CALL_SUCCESS:
-      return { ...state, loading: false, volunteerUser: action.volunteer[0] };
+      console.log(action);
+      return { ...state, loading: false, volunteerUser: action.user };
     case VOLUNTEER_USER_CALL_FAILURE:
+      console.log(action);
       return {
         ...state,
         loading: false,
