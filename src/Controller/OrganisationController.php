@@ -28,20 +28,20 @@ class OrganisationController extends AbstractController implements RepoInterface
         $em = $this->getDoctrine()->getManager();
         $organisation = $em->getRepository(Organisation::class)->find($orgId);
 
-        if($organisation === NULL){
+        if ($organisation === null) {
             return new Response('Neteisingas organisation ID', Response::HTTP_BAD_REQUEST);
         }
 
-        $form = $this->createForm(OrganisationProfileType::class,$organisation);
+        $form = $this->createForm(OrganisationProfileType::class, $organisation);
         $form->handleRequest($request);
 
-        if($form->isSubmitted() && $form->isValid()){
+        if ($form->isSubmitted() && $form->isValid()) {
             $em->persist($organisation);
             $em->flush();
             return new Response(Response::HTTP_OK);
         }
 
-        return new Response($form->getErrors(true)[0]->getMessage(),Response::HTTP_BAD_REQUEST);
+        return new Response($form->getErrors(true)[0]->getMessage(), Response::HTTP_BAD_REQUEST);
     }
 
     /**

@@ -22,8 +22,14 @@ class EventType extends AbstractType
     {
         $builder
             ->add('title', TextType::class)
-            ->add('start_date', DateTimeType::class, ['invalid_message' => 'start date blogai'])
-            ->add('end_date', DateTimeType::class)
+            ->add('start_date', DateTimeType::class, [
+                'widget'                => 'single_text',
+                'invalid_message'       => 'Įveskite pradžios datą'
+            ])
+            ->add('end_date', DateTimeType::class, [
+                'widget'                => 'single_text',
+                'invalid_message'       => 'Įveskite pabaigos datą'
+            ])
             ->add('description', TextType::class)
         ;
     }

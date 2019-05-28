@@ -38,7 +38,7 @@ class ApiController extends AbstractController
      * @param array $toSerialize
      * @return JsonResponse
      */
-    public static function jsonResponse( $toSerialize) :JsonResponse
+    public static function jsonResponse($toSerialize) :JsonResponse
     {
         $serialized = self::getSerializer()->serialize($toSerialize, 'json');
 

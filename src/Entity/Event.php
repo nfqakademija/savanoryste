@@ -33,11 +33,13 @@ class Event
 
     /**
      * @ORM\Column(type="datetime")
+     * @Assert\NotBlank()
      */
     private $start_date;
 
     /**
      * @ORM\Column(type="datetime")
+     * @Assert\NotBlank()
      */
     private $end_date;
 
@@ -97,42 +99,41 @@ class Event
     }
 
     /**
-     * @return \DateTimeInterface|null
+     * @return mixed
      */
-    public function getStartDate(): ?\DateTimeInterface
+    public function getStartDate()
     {
         return $this->start_date;
     }
 
     /**
-     * @param \DateTimeInterface $start_date
-     * @return Event
+     * @param mixed $start_date
      */
-    public function setStartDate(\DateTimeInterface $start_date): self
+    public function setStartDate($start_date): void
     {
         $this->start_date = $start_date;
-
-        return $this;
     }
 
     /**
-     * @return \DateTimeInterface|null
+     * @return mixed
      */
-    public function getEndDate(): ?\DateTimeInterface
+    public function getEndDate()
     {
         return $this->end_date;
     }
 
     /**
-     * @param \DateTimeInterface $end_date
-     * @return Event
+     * @param mixed $end_date
      */
-    public function setEndDate(\DateTimeInterface $end_date): self
+    public function setEndDate($end_date): void
     {
         $this->end_date = $end_date;
-
-        return $this;
     }
+
+
+
+
+
 
     /**
      * @return null|string
