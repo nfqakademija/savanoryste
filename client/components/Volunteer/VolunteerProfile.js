@@ -36,7 +36,7 @@ class VolunteerProfile extends React.Component {
 
     return Object.entries(volunteer).length === 0 &&
       volunteer.constructor === Object ? (
-      <h1>Loading</h1>
+      <h1>Kraunama...</h1>
     ) : (
       <Container style={{ margin: 'auto' }}>
         <Row>
@@ -56,11 +56,11 @@ class VolunteerProfile extends React.Component {
         </Row>
         <Row style={{ marginTop: '10px' }}>
           <Col lg={4}>
-            <h3>Latest review</h3>
+            <h3>Naujausias atsiliepimas</h3>
             <VolunteerReviewCard />
           </Col>
           <Col>
-            <h3>Latest event attended</h3>
+            <h3>Vėliausiai dalyvauta</h3>
 
             <EventCard />
           </Col>

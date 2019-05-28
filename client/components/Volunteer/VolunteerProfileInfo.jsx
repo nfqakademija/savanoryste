@@ -27,7 +27,7 @@ class VolunteerProfileInfo extends React.Component {
         <Row>
           <Col lg={12}>
             <Row>
-              <h3>Description</h3>
+              <h3>Aprašymas</h3>
               <p style={{ textAlign: 'justify' }}>
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer
                 tortor ante, scelerisque ac ultricies et, varius ut nisi. Orci
@@ -38,52 +38,51 @@ class VolunteerProfileInfo extends React.Component {
               </p>
             </Row>
             <Row>
-              <h3>Contact Info</h3>
+              <h3>Kontaktinė informacija</h3>
             </Row>
             <Row>
               <Table striped borderless hover>
                 <tbody>
                   <tr>
-                    <td>Phone</td>
+                    <td>Tel. nr.</td>
                     <td>
                       <a href={`tel:${volunteer.phone}`}>{volunteer.phone}</a>
                     </td>
                   </tr>
                   <tr>
-                    <td>Email</td>
+                    <td>El. paštas</td>
                     <td>
-                      {' '}
                       <a href={`mailto:${volunteer.email}`}>
                         {volunteer.email}
                       </a>
                     </td>
                   </tr>
                   <tr>
-                    <td>City, Country</td>
+                    <td>Miestas, Šalis</td>
                     <td> {`${volunteer.city}, ${volunteer.country}`}</td>
                   </tr>
                 </tbody>
               </Table>
             </Row>
             <Row>
-              <h3>Statistics</h3>
+              <h3>Statistika</h3>
             </Row>
             <Row>
               <Table striped borderless hover>
                 <tbody>
                   <tr>
-                    <td>Rating</td>
+                    <td>Reitingas</td>
                     <td>4.5/4 (36)</td>
                   </tr>
                   <tr>
                     <td>
-                      <a href="#">Reviews</a>
+                      <a href="#">Atsiliepimai</a>
                     </td>
                     <td>23</td>
                   </tr>
                   <tr>
                     <td>
-                      <a href="#">Events attended</a>
+                      <a href="#">Dalyvauta renginių</a>
                     </td>
                     <td> 9</td>
                   </tr>

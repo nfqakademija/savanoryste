@@ -13,26 +13,26 @@ class VolunteerProfileEdit extends React.Component {
     const { volunteer } = this.props;
     return (
       <React.Fragment>
-        <h3>Edit Profile</h3>
+        <h3>Redaguoti profilį</h3>
         <Form>
           <Row>
             <Col>
               <Form.Group controlId="formBasicEmail">
-                <Form.Label>First Name</Form.Label>
+                <Form.Label>Vardas</Form.Label>
 
                 <Form.Control
                   type="text"
-                  placeholder="Enter first name"
+                  placeholder="Įveskite vardą"
                   defaultValue={volunteer.firstname}
                 />
               </Form.Group>
             </Col>
             <Col>
               <Form.Group controlId="formBasicEmail">
-                <Form.Label>Last Name</Form.Label>
+                <Form.Label>Pavardė</Form.Label>
                 <Form.Control
                   type="text"
-                  placeholder="Enter last name"
+                  placeholder="Įveskite pavardę"
                   defaultValue={volunteer.lastname}
                 />
               </Form.Group>
@@ -40,43 +40,43 @@ class VolunteerProfileEdit extends React.Component {
           </Row>
 
           <Form.Group controlId="formBasicEmail">
-            <Form.Label>Phone</Form.Label>
+            <Form.Label>Tel. nr.</Form.Label>
             <InputGroup>
               <InputGroup.Prepend>
                 <InputGroup.Text id="basic-addon1">+370</InputGroup.Text>
               </InputGroup.Prepend>
               <Form.Control
                 type="tel"
-                placeholder="Enter phone number"
+                placeholder="Įveskite telefono numerį"
                 defaultValue={volunteer.phone}
               />
             </InputGroup>
           </Form.Group>
           <Form.Group controlId="formBasicEmail">
-            <Form.Label>Email address</Form.Label>
+            <Form.Label>El. paštas</Form.Label>
             <Form.Control
               type="email"
-              placeholder="Enter email"
+              placeholder="Įveskite el. pašto adresą"
               defaultValue={volunteer.email}
             />
           </Form.Group>
           <Row>
             <Col>
               <Form.Group controlId="formBasicEmail">
-                <Form.Label>City</Form.Label>
+                <Form.Label>Miestas</Form.Label>
                 <Form.Control
                   type="text"
-                  placeholder="Enter city"
+                  placeholder="Įveskite miestą"
                   defaultValue={volunteer.city}
                 />
               </Form.Group>
             </Col>
             <Col>
               <Form.Group controlId="formBasicEmail">
-                <Form.Label>Country</Form.Label>
+                <Form.Label>Šalis</Form.Label>
                 <Form.Control
                   type="text"
-                  placeholder="Enter country"
+                  placeholder="Įveskite šalį"
                   defaultValue={volunteer.country}
                 />
               </Form.Group>
@@ -84,17 +84,17 @@ class VolunteerProfileEdit extends React.Component {
           </Row>
 
           <Form.Group controlId="formBasicEmail">
-            <Form.Label>Description</Form.Label>
+            <Form.Label>Aprašymas</Form.Label>
             <Form.Control
               as="textarea"
               rows="2"
-              placeholder="Enter description"
+              placeholder="Įveskite aprašymą"
               defaultValue={volunteer.description}
             />
           </Form.Group>
 
           <Button variant="primary" type="submit">
-            Submit
+            Siųsti
           </Button>
         </Form>
       </React.Fragment>

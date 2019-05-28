@@ -32,7 +32,7 @@ class VolunteerProfileCard extends React.Component {
                 onClick={isEditing}
                 block
               >
-                Edit
+                Redaguoti
               </Button>
 
               <Button
