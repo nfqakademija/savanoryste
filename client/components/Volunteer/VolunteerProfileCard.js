@@ -13,7 +13,7 @@ class VolunteerProfileCard extends React.Component {
 
   render() {
     const { open } = this.state;
-    const { volunteer } = this.props;
+    const { volunteer, isEditing } = this.props;
 
     return (
       <Card>
@@ -27,6 +27,14 @@ class VolunteerProfileCard extends React.Component {
               <Button className="Card-profile-button btn btn-info" block>
                 {`Choose ${volunteer.firstname + ' ' + volunteer.lastname}`}
               </Button>
+              <Button
+                className="Card-profile-button btn btn-info"
+                onClick={isEditing}
+                block
+              >
+                Edit
+              </Button>
+
               <Button
                 className="Card-button-transparent Card-profile-button btn btn-info"
                 block

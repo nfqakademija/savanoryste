@@ -38,10 +38,12 @@ class VolunteerProfile extends React.Component {
       <h1>Loading</h1>
     ) : (
       <Container style={{ margin: 'auto' }}>
-        <Button onClick={this.onEditClick}>Edit</Button>
         <Row>
           <Col xs={8} sm={8} md={5} lg={4}>
-            <VolunteerProfileCard volunteer={volunteer} />
+            <VolunteerProfileCard
+              volunteer={volunteer}
+              isEditing={this.onEditClick}
+            />
           </Col>
           <Col xs={12} sm={12} md={7}>
             {!isEditing ? (
