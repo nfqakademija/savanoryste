@@ -4,5 +4,7 @@ export const endpoints = {
   volunteerList: (count, start) => `${hostUrl}/volunteers/${start}/${count}`,
   volunteer: id => `${hostUrl}/volunteer/${id}`,
   eventList: () => `${hostUrl}/events`,
-  event: id => `${hostUrl}/event/${id}`
+  event: id => `${hostUrl}/event/${id}`,
+  volunteerUser: id => `${hostUrl}/user/volunteer/${id}`,
+  organisationUser: id => `${hostUrl}/organisation/${id}`
 };
