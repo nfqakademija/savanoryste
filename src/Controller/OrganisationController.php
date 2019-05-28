@@ -2,7 +2,9 @@
 
 namespace App\Controller;
 
+use App\Constants\RoleConstants;
 use App\Entity\Organisation;
+use App\Entity\User;
 use App\Form\OrganisationProfileType;
 use App\Interfaces\RepoInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -60,6 +62,26 @@ class OrganisationController extends AbstractController implements RepoInterface
     public function fetchSingleOrganisation(int $id) :JsonResponse
     {
         return ApiController::jsonResponse($this->getRepo()->findBy(['id' => $id]));
+    }
+
+    /**
+     * @param int $userId
+     * @return JsonResponse
+     * @Route("/api/user/organisation/{userId}", name="fetchSingleOrganisationByUserId", methods={"GET"}, requirements={"userId"="\d+"})
+     */
+    public function fetchSingleOrganisationByUserId(int $userId) :JsonResponse
+    {
+        // TODO Refactor this mess
+        $user =  $this->getDoctrine()->getRepository(User::class)->find(['id' => $userId]);
+        if ($user === null){
+            return ApiController::jsonResponse(NULL);
+        }
+        if (in_array(RoleConstants::ROLE_ORGANISATION, $user->getRoles())){
+            return ApiController::jsonResponse(
+                $this->getDoctrine()->getRepository(User::class)->getOrganisationProfile($user->getProfileId())
+            );
+        }
+        return ApiController::jsonResponse(NULL);
     }
 
     /**

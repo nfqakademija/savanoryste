@@ -2,6 +2,8 @@
 
 namespace App\Controller;
 
+use App\Constants\RoleConstants;
+use App\Entity\User;
 use App\Entity\Volunteer;
 use App\Form\VolunteerProfileType;
 use App\Interfaces\RepoInterface;
@@ -83,6 +85,26 @@ class VolunteerController extends AbstractController implements RepoInterface
     public function volunteerFilterByAttendanceCount() :JsonResponse
     {
         return ApiController::jsonResponse($this->getRepo()->filterByEventTotalCount());
+    }
+
+    /**
+     * @param int $userId
+     * @return JsonResponse
+     * @Route("/api/user/volunteer/{userId}", name="fetchSingleVolunteerByUserId", methods={"GET"}, requirements={"userId"="\d+"})
+     */
+    public function fetchSingleVolunteerByUserId(int $userId) :JsonResponse
+    {
+        // TODO Refactor this mess
+        $user =  $this->getDoctrine()->getRepository(User::class)->find(['id' => $userId]);
+        if ($user === null){
+            return ApiController::jsonResponse(NULL);
+        }
+        if (in_array(RoleConstants::ROLE_VOLUNTEER,$user->getRoles())){
+            return ApiController::jsonResponse(
+                $this->getDoctrine()->getRepository(User::class)->getVolunteerProfile($user->getProfileId())
+            );
+        }
+        return ApiController::jsonResponse(NULL);
     }
 
     /**

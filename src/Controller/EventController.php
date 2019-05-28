@@ -28,6 +28,7 @@ class EventController extends AbstractController implements RepoInterface
      */
     public function store(Request $request, UrlGeneratorInterface $urlGenerator, int $eventId = 0) :Response
     {
+        // TODO add organisation id. when form ir fully set up from front-end side
         if (!$this->isGranted(RoleConstants::ROLE_ORGANISATION)) {
             return new RedirectResponse($urlGenerator->generate('app_login'));
         }
