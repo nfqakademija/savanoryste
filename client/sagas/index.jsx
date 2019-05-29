@@ -1,6 +1,10 @@
 import { all, fork } from 'redux-saga/effects';
 
-import { watcherSaga, volunteerWatcherSaga } from './volunteersSagas';
+import {
+  watcherSaga,
+  volunteerWatcherSaga,
+  editVolunteerWatcherSaga
+} from './volunteersSagas';
 import { eventWatcherSaga, eventsWatcherSaga } from './eventsSagas';
 import {
   volunteerUserWatcherSaga,
@@ -14,6 +18,7 @@ export default function* rootSaga() {
     fork(eventWatcherSaga),
     fork(eventsWatcherSaga),
     fork(volunteerUserWatcherSaga),
-    fork(organisationUserWatcherSaga)
+    fork(organisationUserWatcherSaga),
+    fork(editVolunteerWatcherSaga)
   ]);
 }

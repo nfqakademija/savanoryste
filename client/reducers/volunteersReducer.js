@@ -4,13 +4,17 @@ import {
   VOLUNTEERS_CALL_SUCCESS,
   VOLUNTEER_CALL_FAILURE,
   VOLUNTEER_CALL_REQUEST,
-  VOLUNTEER_CALL_SUCCESS
+  VOLUNTEER_CALL_SUCCESS,
+  EDIT_VOLUNTEER_FAILURE,
+  EDIT_VOLUNTEER_REQUEST,
+  EDIT_VOLUNTEER_SUCCESS
 } from '../actions/types';
 
 const initialState = {
   volunteers: [],
   volunteer: {},
   loading: false,
+  volunteerLoading: false,
   count: 10,
   start: 0
 };
@@ -41,7 +45,18 @@ const volunteersReducer = (state = initialState, action) => {
       return {
         ...state,
         loading: false,
-        volunteer: null,
+        volunteer: {},
+        error: action.error
+      };
+    case EDIT_VOLUNTEER_REQUEST:
+      return { ...state, volunteerLoading: true, error: null };
+    case EDIT_VOLUNTEER_SUCCESS:
+      return { ...state, volunteerLoading: false, volunteer: action };
+    case EDIT_VOLUNTEER_FAILURE:
+      return {
+        ...state,
+        volunteerLoading: false,
+        volunteer: {},
         error: action.error
       };
     default:

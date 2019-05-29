@@ -1,6 +1,7 @@
 import { takeLatest, call, put } from 'redux-saga/effects';
 import axios from 'axios';
 import { endpoints } from '../endpoints';
+import qs from 'qs';
 
 export function* watcherSaga() {
   yield takeLatest('VOLUNTEERS_CALL_REQUEST', workerSaga);
@@ -37,5 +38,50 @@ function* volunteerWorkerSaga(action) {
     yield put({ type: 'VOLUNTEER_CALL_SUCCESS', volunteer });
   } catch (error) {
     yield put({ type: 'VOLUNTEER_CALL_FAILURE', error });
+  }
+}
+
+export function* editVolunteerWatcherSaga() {
+  yield takeLatest('EDIT_VOLUNTEER_REQUEST', editVolunteerWorkerSaga);
+}
+
+function editVolunteer(action) {
+  let id = action.id;
+  let data = action.data;
+  let requestData = {
+    firstname: data.firstname,
+    lastname: data.lastname,
+    phone: data.phone,
+    email: data.email,
+    city: data.city,
+    country: data.country,
+    description: data.description
+  };
+  //var output = Object.entries(dataa).map(([key, value]) => ({ key, value }));
+
+  const config = {
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded'
+    }
+  };
+  console.log(id, requestData);
+  return axios.post(
+    endpoints.editVolunteer(id),
+    qs.stringify(requestData),
+    config
+  );
+}
+
+function* editVolunteerWorkerSaga(action) {
+  try {
+    console.log('worker req', action.id, action.data);
+    const response = yield call(editVolunteer, action);
+    console.log(response, 'resp');
+    const volunteer = response.data;
+    yield put({ type: 'EDIT_VOLUNTEER_SUCCESS', volunteer });
+  } catch (error) {
+    console.log(error);
+
+    yield put({ type: 'EDIT_VOLUNTEER_FAILURE', error });
   }
 }

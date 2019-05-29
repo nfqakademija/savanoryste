@@ -6,5 +6,7 @@ export const endpoints = {
   eventList: () => `${hostUrl}/events`,
   event: id => `${hostUrl}/event/${id}`,
   volunteerUser: id => `${hostUrl}/user/volunteer/${id}`,
-  organisationUser: id => `${hostUrl}/organisation/${id}`
+  organisationUser: id => `${hostUrl}/organisation/${id}`,
+  editVolunteer: id =>
+    `https://savanoryste.projektai.nfqakademija.lt/profile/update/${id}`
 };

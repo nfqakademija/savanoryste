@@ -6,6 +6,8 @@ import Button from 'react-bootstrap/Button';
 import InputGroup from 'react-bootstrap/InputGroup';
 import { Formik, Field } from 'formik';
 import { Form as FormikForm } from 'formik';
+import { connect } from 'react-redux';
+import { editVolunteer } from '../../actions/volunteersActions';
 
 const FieldInput = ({
   as,
@@ -13,7 +15,6 @@ const FieldInput = ({
   type,
   id,
   placeholder,
-  defaultValue,
   onChange,
   label,
   value
@@ -35,17 +36,7 @@ const FieldInput = ({
   );
 };
 
-const PhoneInput = ({
-  input,
-  meta,
-  type,
-  placeholder,
-  defaultValue,
-  label,
-  onChange,
-  id,
-  value
-}) => {
+const PhoneInput = ({ type, placeholder, label, onChange, id, value }) => {
   return (
     <Form.Group controlId="formBasicEmail">
       <Form.Label>{label}</Form.Label>
@@ -68,44 +59,20 @@ const PhoneInput = ({
 class VolunteerProfileEdit extends React.Component {
   constructor(props) {
     super(props);
-    console.log(props);
-    this.state = {
-      firstname: props.volunteer.firstname,
-      lastname: props.volunteer.lastname,
-      country: props.volunteer.country,
-      city: props.volunteer.city,
-      phone: props.volunteer.phone,
-      email: props.volunteer.email,
-      description: props.volunteer.description
-    };
-
-    this.handleChange = this.handleChange.bind(this);
   }
-
-  handleChange(event, name) {
-    // const target = event.target;
-    // const value = target.value;
-    // const namee = target.name;
-    // //console.log(event.target.value);
-    // console.log(event);
-    // console.log(namee);
-    // this.setState({
-    //   [name]: value
-    // });
-  }
-
   render() {
     const { volunteer } = this.props;
-    const { firstname } = this.state;
+    const { editVolunteer } = this.props;
     return (
       <React.Fragment>
         <h3>Redaguoti profilį</h3>
         <Formik
           initialValues={volunteer}
           onSubmit={(values, actions) => {
-            console.log(values, actions);
+            console.log(volunteer.id, values);
+            editVolunteer(volunteer.id, values);
           }}
-          handleChange={this.handleChange}
+          handleChange
           values={volunteer}
           render={({
             errors,
@@ -202,11 +169,7 @@ class VolunteerProfileEdit extends React.Component {
                 rows="2"
                 placeholder="Įveskite aprašymą"
               />
-              <Button
-                variant="primary"
-                type="submit"
-                //onClick={this.handleChange}
-              >
+              <Button variant="primary" type="submit">
                 Siųsti
               </Button>
             </FormikForm>
@@ -216,7 +179,21 @@ class VolunteerProfileEdit extends React.Component {
     );
   }
 }
-export default VolunteerProfileEdit;
+const mapStateToProps = state => ({
+  volunteers: state.volunteers.volunteers,
+  loading: state.volunteers.loading,
+  start: state.volunteers.start,
+  count: state.volunteers.count
+});
+
+const mapDispatchToProps = dispatch => ({
+  editVolunteer: (id, data) => dispatch(editVolunteer(id, data))
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(VolunteerProfileEdit);
 
 {
   /* <h3>Redaguoti profilį</h3>
