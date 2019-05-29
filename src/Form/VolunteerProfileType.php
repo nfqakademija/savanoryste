@@ -49,6 +49,6 @@ class VolunteerProfileType extends AbstractType
      */
     public function getBlockPrefix(): string
     {
-        return 'volunteer';
+        return '';
     }
 }

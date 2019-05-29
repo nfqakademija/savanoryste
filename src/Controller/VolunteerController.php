@@ -27,6 +27,7 @@ class VolunteerController extends AbstractController implements RepoInterface
      */
     public function update(Request $request, int $volunteerId) :Response
     {
+        //dd($request);
         $em = $this->getDoctrine()->getManager();
 
         $volunteer = $em->getRepository(Volunteer::class)->find($volunteerId);
