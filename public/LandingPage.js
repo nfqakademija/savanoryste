@@ -8,6 +8,7 @@ $("#button-volunteer, #button-organisation").click(function() {
 
 $('#role-organisation, #role-volunteer').click(function() {
     var checkDiv = $(this);
+
     if (checkDiv.attr("id") == "role-organisation") {
         $("#box").text("Organizacija");
     } else {
