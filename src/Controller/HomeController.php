@@ -7,6 +7,7 @@ use App\Entity\Volunteer;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
+use App\Form\RegisterType;
 
 /**
  * Class HomeController
@@ -29,6 +30,7 @@ class HomeController extends AbstractController
     public function index(EntityManagerInterface $em)
     {
         return $this->render('home/index.html.twig', [
+            'registerForm'      => $this->createForm(RegisterType::class)->createView(),
             'eventCount'        => $em->getRepository(Event::class)->getEventCount(),
             'participantCount'  => $em->getRepository(Volunteer::class)->getParticipantCount()
         ]);

@@ -4668,6 +4668,11 @@ javascript-serializer@^1.0.0:
     errio "^1.2.2"
     lodash.clonedeepwith "^4.5.0"
 
+jquery-countto@^1.2.0:
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/jquery-countto/-/jquery-countto-1.2.0.tgz#49f17fcb24a746a168b84321e50e9b7751819660"
+  integrity sha1-SfF/yySnRqFouEMh5Q6bd1GBlmA=
+
 jquery@>=1.10, jquery@^3.4.1:
   version "3.4.1"
   resolved "https://registry.yarnpkg.com/jquery/-/jquery-3.4.1.tgz#714f1f8d9dde4bdfa55764ba37ef214630d80ef2"
