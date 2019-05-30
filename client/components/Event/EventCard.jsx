@@ -8,7 +8,7 @@ class EventCard extends React.Component {
   render() {
     return (
       <div className="event-card">
-        <div>
+        <div className = "event-image">
           <img src="https://images.unsplash.com/photo-1498279898147-67f541d32b6a?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=af428042e69ac5152855548d8b4f7989&auto=format&fit=crop&w=667&q=80" />
         </div>
         <div className="event-info-container">

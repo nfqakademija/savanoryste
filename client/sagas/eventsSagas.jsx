@@ -3,7 +3,26 @@ import axios from 'axios';
 import { endpoints } from '../endpoints';
 
 export function* eventsWatcherSaga() {
-  yield takeLatest('EVENTS_CALL_REQUEST', eventsWorkerSaga);
+  console.log('events watching');
+  yield takeLatest('EVENTS_CALL_REQUEST', createEventWorkerSaga);
+}
+
+export function* eventWatcherSaga() {
+  yield takeLatest('EVENT_CALL_REQUEST', eventWorkerSaga);
+}
+
+export function* createEventWatcherSaga() {
+  yield takeLatest('CREATE_EVENT_REQUEST', createEventWorkerSaga);
+}
+
+function* createEventWorkerSaga(action) {
+  try {
+    const response = yield call(createEvent, action);
+    const event = response.data;
+    yield put({ type: 'CREATE_EVENT_SUCCESS', event });
+  } catch (error) {
+    yield put({ type: 'CREATE_EVENT_FAILURE', error });
+  }
 }
 
 function fetchEvents() {
@@ -21,10 +40,6 @@ function* eventsWorkerSaga(action) {
   }
 }
 
-export function* eventWatcherSaga() {
-  yield takeLatest('EVENT_CALL_REQUEST', eventWorkerSaga);
-}
-
 function fetchEvent(id) {
   return axios.get(endpoints.event(id));
 }
@@ -37,5 +52,31 @@ function* eventWorkerSaga(action) {
     yield put({ type: 'EVENT_CALL_SUCCESS', event });
   } catch (error) {
     yield put({ type: 'EVENT_CALL_FAILURE', error });
+  }
+
+  function createEvent(action) {
+    console.log('createEvent call');
+    let id = action.id;
+    let data = action.data;
+    let requestData = {
+      firstname: data.firstname,
+      lastname: data.lastname,
+      phone: data.phone,
+      email: data.email,
+      city: data.city,
+      country: data.country,
+      description: data.description
+    };
+  
+    const config = {
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded'
+      }
+    };
+    return axios.post(
+      endpoints.createEvent(data),
+      qs.stringify(requestData),
+      config
+    );
   }
 }

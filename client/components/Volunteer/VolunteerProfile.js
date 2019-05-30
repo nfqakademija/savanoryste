@@ -61,12 +61,15 @@ class VolunteerProfile extends React.Component {
         </Row>
         <Row style={{ marginTop: '10px' }}>
           <Col lg={4}>
-            <h3>Naujausias atsiliepimas</h3>
+            <h3 className="col-sm-12">Naujausias atsiliepimas</h3>
             <VolunteerReviewCard />
           </Col>
           <Col>
-            <h3>Vėliausiai dalyvauta</h3>
-
+            <Row>
+              <Col xs = {12} sm = {12}>
+                <h3 className="col-sm-12">Vėliausiai dalyvauta</h3>
+              </Col>
+            </Row>
             <EventCard />
           </Col>
         </Row>

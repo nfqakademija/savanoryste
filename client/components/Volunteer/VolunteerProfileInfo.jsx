@@ -27,7 +27,9 @@ class VolunteerProfileInfo extends React.Component {
         <Row>
           <Col xs={12} sm={12} lg={12}>
             <Row>
-              <h3>Aprašymas</h3>
+              <Col xs={12} sm={12}>
+                <h3>Aprašymas</h3>
+              </Col>
             </Row>
             <Row>
               <Col xs={12} sm={12}>
@@ -35,7 +37,9 @@ class VolunteerProfileInfo extends React.Component {
               </Col>
             </Row>
             <Row>
-              <h3>Kontaktinė informacija</h3>
+              <Col xs={12} sm={12}>
+                <h3>Kontaktinė informacija</h3>
+              </Col>
             </Row>
             <Row>
               <Col xs={12} sm={12}>
@@ -64,7 +68,9 @@ class VolunteerProfileInfo extends React.Component {
               </Col>
             </Row>
             <Row>
+              <Col xs = {12} sm = {12}>
               <h3>Statistika</h3>
+              </Col>
             </Row>
             <Row>
               <Col xs={12} sm={12}>

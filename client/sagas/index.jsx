@@ -5,7 +5,7 @@ import {
   volunteerWatcherSaga,
   editVolunteerWatcherSaga
 } from './volunteersSagas';
-import { eventWatcherSaga, eventsWatcherSaga } from './eventsSagas';
+import { eventWatcherSaga, eventsWatcherSaga, createEventWatcherSaga } from './eventsSagas';
 import {
   volunteerUserWatcherSaga,
   organisationUserWatcherSaga
@@ -19,6 +19,7 @@ export default function* rootSaga() {
     fork(eventsWatcherSaga),
     fork(volunteerUserWatcherSaga),
     fork(organisationUserWatcherSaga),
-    fork(editVolunteerWatcherSaga)
+    fork(editVolunteerWatcherSaga),
+    fork(createEventWatcherSaga)
   ]);
 }

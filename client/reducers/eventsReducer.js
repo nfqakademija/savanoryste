@@ -4,7 +4,10 @@ import {
   EVENTS_CALL_SUCCESS,
   EVENT_CALL_FAILURE,
   EVENT_CALL_REQUEST,
-  EVENT_CALL_SUCCESS
+  EVENT_CALL_SUCCESS,
+  CREATE_EVENT_REQUEST,
+  CREATE_EVENT_FAILURE,
+  CREATE_EVENT_SUCCESS
 } from '../actions/types';
 
 const initialState = {
@@ -39,6 +42,16 @@ const eventsReducer = (state = initialState, action) => {
         ...state,
         loading: false,
         event: null,
+        error: action.error
+      };
+    case CREATE_EVENT_REQUEST:
+      return { ...state, error: null };
+    case CREATE_EVENT_SUCCESS:
+      return { ...state, event: action.event };
+    case CREATE_EVENT_FAILURE:
+      return {
+        ...state,
+        event: {},
         error: action.error
       };
     default:

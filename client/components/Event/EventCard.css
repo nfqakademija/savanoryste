@@ -120,3 +120,19 @@
   margin-top: -0.09em;
   line-height: 1em;
 }
+
+@media screen and (max-width: 767px) {
+  .event-card {
+    display: flex;
+    overflow: hidden;
+    width: 100%;
+    position: relative;
+    background-color: #fff;
+    border-radius: 0.3em;
+    box-shadow: none;
+  }
+
+  .date-ribbon, .event-image, .desc, .location{
+    display: none;
+  }
+}
