@@ -300,11 +300,18 @@ class Volunteer implements BlankInterface
         return $this;
     }
 
+    /**
+     * @return null|string
+     */
     public function getCity(): ?string
     {
         return $this->city;
     }
 
+    /**
+     * @param string $city
+     * @return Volunteer
+     */
     public function setCity(string $city): self
     {
         $this->city = $city;
@@ -312,11 +319,18 @@ class Volunteer implements BlankInterface
         return $this;
     }
 
+    /**
+     * @return null|string
+     */
     public function getCountry(): ?string
     {
         return $this->country;
     }
 
+    /**
+     * @param string $country
+     * @return Volunteer
+     */
     public function setCountry(string $country): self
     {
         $this->country = $country;
@@ -324,11 +338,18 @@ class Volunteer implements BlankInterface
         return $this;
     }
 
+    /**
+     * @return null|string
+     */
     public function getDescription(): ?string
     {
         return $this->description;
     }
 
+    /**
+     * @param string $description
+     * @return Volunteer
+     */
     public function setDescription(string $description): self
     {
         $this->description = $description;
@@ -344,6 +365,10 @@ class Volunteer implements BlankInterface
         return $this->jobs;
     }
 
+    /**
+     * @param Job $job
+     * @return Volunteer
+     */
     public function addJob(Job $job): self
     {
         if (!$this->jobs->contains($job)) {
@@ -354,6 +379,10 @@ class Volunteer implements BlankInterface
         return $this;
     }
 
+    /**
+     * @param Job $job
+     * @return Volunteer
+     */
     public function removeJob(Job $job): self
     {
         if ($this->jobs->contains($job)) {
@@ -367,11 +396,18 @@ class Volunteer implements BlankInterface
         return $this;
     }
 
+    /**
+     * @return null|string
+     */
     public function getProfilePic(): ?string
     {
         return $this->ProfilePic;
     }
 
+    /**
+     * @param null|string $ProfilePic
+     * @return Volunteer
+     */
     public function setProfilePic(?string $ProfilePic): self
     {
         $this->ProfilePic = $ProfilePic;

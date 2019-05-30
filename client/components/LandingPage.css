@@ -1,0 +1,156 @@
+input[type="checkbox"][id^="cb"] {
+    display: none;
+}
+
+label:before {
+    display: none;
+}
+  
+:checked + label img {
+    transform: scale(0.9);
+    z-index: -1;
+    opacity: 0.2;
+  }
+
+.about-group {
+    margin: 48px;
+}
+
+#content {
+    overflow-x: hidden;
+}
+
+.header-button {
+    display: inline-block;
+}
+
+.header-group {
+    float: left;
+    margin: 70px;
+    padding: 50px;
+    -webkit-box-shadow: -6px -2px 100px 20px rgba(0, 0, 0, 0.1);
+    -moz-box-shadow: -6px -2px 100px 20px rgba(0, 0, 0, 0.1);
+    box-shadow: -6px -2px 100px 20px rgba(0, 0, 0, 0.1);
+}
+
+.header {
+    background-image: url("/background.jpg") !important;
+    background-position: right;
+    background-size: 50%;
+    background-repeat: no-repeat;
+    background-color: #70c5cd;
+    height: 600px;
+    clip-path: polygon(0 0, 100% 0%, 100% 92%, 0% 100%);
+}
+
+.fa-users,
+.fa-hands-helping,
+.fa-search,
+.fa-child,
+.fa-user-plus {
+    font-size: 50px;
+    margin-bottom: 8px;
+}
+
+.heading-text {
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.landing-card {
+    background: #70c4cc;
+}
+
+.landing-register {
+    margin: 48px;
+}
+
+.stats {
+    padding: 50px;
+}
+
+.text-transform {
+    -webkit-transform: rotate(-90deg);
+    -moz-transform: rotate(-90deg);
+    -ms-transform: rotate(-90deg);
+    -o-transform: rotate(-90deg);
+    filter: progid: DXImageTransform.Microsoft.BasicImage(rotation=3);
+    top: 180px;
+    position: absolute;
+    font-weight: bold;
+    padding-right: 15px;
+}
+
+.role-choose-box {
+    position: relative;
+    padding-left: 25px;
+    margin: 20px;
+    min-height: 120px;
+}
+
+.role-choose {
+    margin-bottom: 20px;
+}
+
+.footer {
+    height: 200px;
+    background-color: #70c5cd;
+    clip-path: polygon(0 8%, 100% 0%, 100% 100%, 0 100%);
+}
+
+.middle-card {
+    transform: scale(1.1);
+}
+
+
+/* Media rules */
+
+@media screen and (max-width: 767px) {
+    .header-group {
+        float: left;
+        margin: 0;
+        margin-top: 50px;
+        padding: 5px;
+        -webkit-box-shadow: none;
+        -moz-box-shadow: none;
+        box-shadow: none;
+    }
+    .header {
+        background-image: none !important;
+    }
+    .stats {
+        margin: 0;
+    }
+    .text-transform {
+        display: none;
+    }
+
+    .role-choose-box {
+        display: inline-flex;
+        justify-content: center;
+        padding: 0;
+        margin: 0;
+    }
+
+    .role-choose {
+        margin-right: 10px;
+    }
+}
+
+@media screen and (min-width: 1366px) and (max-width: 1439px) {
+    .header {
+        height: 450px;
+    }
+    .header-group {
+        margin: 40px;
+        padding: 30px;
+    }
+}
+
+@media screen and (min-width: 1440px) {
+    .stats {
+        padding: 150px 50px;
+        margin: 10px;
+    }
+}

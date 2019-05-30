@@ -23,37 +23,29 @@ class JobType
      */
     private $job_type;
 
-    public function __construct()
-    {
-        $this->jobs = new ArrayCollection();
-    }
-
+    /**
+     * @return int|null
+     */
     public function getId(): ?int
     {
         return $this->id;
     }
 
+    /**
+     * @return null|string
+     */
     public function getJobType(): ?string
     {
         return $this->job_type;
     }
 
+    /**
+     * @param string $job_type
+     * @return JobType
+     */
     public function setJobType(string $job_type): self
     {
         $this->job_type = $job_type;
-
-        return $this;
-    }
-
-    public function removeJob(Job $job): self
-    {
-        if ($this->jobs->contains($job)) {
-            $this->jobs->removeElement($job);
-            // set the owning side to null (unless already changed)
-            if ($job->getJobType() === $this) {
-                $job->setJobType(null);
-            }
-        }
 
         return $this;
     }

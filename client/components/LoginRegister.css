@@ -1,0 +1,56 @@
+.login-box {
+    border-style: solid;
+    border-width: 2px;
+    border-color: #f1f1f1;
+    background-color: #ffffff;
+}
+
+.label-text {
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-size: 12px;
+}
+
+.form-rounded {
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+}
+
+.checkbox-label {
+    background-color: #f1f1f1;
+    display: inline-block;
+    width: 45%;
+    height: 25px;
+}
+
+.checkbox-label:hover {
+    background-color: #c2c2c2;
+    display: inline-block;
+    width: 45%;
+    height: 25px;
+}
+
+.role-checkbox input[type='checkbox'] {
+    display: none;
+}
+
+@keyframes color-change {
+    from {
+        background-color: #f1f1f1;
+    }
+    to {
+        background-color: #1883b7;
+    }
+}
+
+.role-checkbox input[type='checkbox']:checked+.checkbox-label {
+    animation-name: color-change;
+    animation-duration: 0.5s;
+    animation-fill-mode: forwards;
+}
+
+#form-data {
+    display: none;
+}

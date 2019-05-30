@@ -13,6 +13,7 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Security\Guard\GuardAuthenticatorHandler;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
@@ -63,13 +64,12 @@ class SecurityController extends AbstractController implements LogoutSuccessHand
     }
 
     /**
-     * @param Request $request
-     * @param UserPasswordEncoderInterface $encoder
-     * @param string $type
-     * @return Response
      * @Route("/register", name="Register", methods={"GET", "POST"})
+     * @param Request $request
+     * @param UrlGeneratorInterface $urlGenerator
+     * @return Response
      */
-    public function register(Request $request) :Response
+    public function register(Request $request, UrlGeneratorInterface $urlGenerator) :Response
     {
         $user = new User();
 
@@ -111,10 +111,8 @@ class SecurityController extends AbstractController implements LogoutSuccessHand
             );
         }
 
-        return $this->render('security/register.html.twig', [
-            'registerForm'      => $form->createView(),
-            'validatorErrors'   => null
-        ]);
+        $this->addFlash('error', $form->getErrors(true)[0]->getMessage());
+        return new RedirectResponse($urlGenerator->generate('index'));
     }
 
     /**
@@ -150,7 +148,7 @@ class SecurityController extends AbstractController implements LogoutSuccessHand
     }
 
     /**
-     * @param String $type
+     * @param Request $request
      * @return null|string
      */
     private function getRole(Request $request) :?string

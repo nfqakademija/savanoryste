@@ -7,6 +7,7 @@ use App\Entity\Volunteer;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
+use App\Form\RegisterType;
 
 /**
  * Class HomeController
@@ -23,12 +24,14 @@ class HomeController extends AbstractController
      *      "reactRouting"="^(?!api|login|register|logout|invite|profile/update|organisation/store|admin).+"
      * },
      * defaults={"reactRouting": null})
-     * @param EntityManager $em
+     * @param EntityManagerInterface $em
      * @return \Symfony\Component\HttpFoundation\Response
+     * @throws \Doctrine\ORM\NonUniqueResultException
      */
     public function index(EntityManagerInterface $em)
     {
         return $this->render('home/index.html.twig', [
+            'registerForm'      => $this->createForm(RegisterType::class)->createView(),
             'eventCount'        => $em->getRepository(Event::class)->getEventCount(),
             'participantCount'  => $em->getRepository(Volunteer::class)->getParticipantCount()
         ]);
