@@ -1,8 +1,16 @@
 $('.counter').countTo();
 
-$("#button-volunteer, #button-organisation").click(function() {
+$("#button-volunteer").click(function() {
+    document.getElementById("event-list").style.display = "block";
     $('html, body').animate({
-        scrollTop: $(".landing-register").offset().top
+        scrollTop: $("#event-list").offset().top
+    }, 2000);
+});
+
+$("#button-organisation").click(function() {
+    document.getElementById("volunteer-list").style.display = "block";
+    $('html, body').animate({
+        scrollTop: $("#volunteer-list").offset().top
     }, 2000);
 });
 
