@@ -21,18 +21,24 @@ class EventForm extends React.Component {
     }
     
     startDateEvent(event, picker) {
-        let finalDate = picker.startDate._d.getFullYear() + '-' + picker.startDate._d.getMonth() + '-' + picker.startDate._d.getDate();
+        let finalDate = picker.startDate._d.getFullYear() + '-' + (picker.startDate._d.getMonth()+1) + '-' + picker.startDate._d.getDate();
 
         this.setState({
             startDate : finalDate,
         });
       }
     endDateEvent(event, picker) {
-        let finalDate = picker.startDate._d.getFullYear() + '-' + picker.startDate._d.getMonth() + '-' + picker.startDate._d.getDate();
+        let finalDate = picker.startDate._d.getFullYear() + '-' + (picker.startDate._d.getMonth()+1) + '-' + picker.startDate._d.getDate();
         
-        this.setState({
-            endDate : finalDate,
-        });
+        if(finalDate < this.state.startDate) {
+            this.setState({
+                endDate: '',
+            });
+        } else {
+            this.setState({
+                endDate : finalDate,
+            });
+        }
     }
 
     render() {
