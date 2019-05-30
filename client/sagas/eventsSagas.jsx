@@ -7,7 +7,7 @@ export function* eventsWatcherSaga() {
 }
 
 function fetchEvents() {
-  return axios.get(endpoints.eventList);
+  return axios.get(endpoints.eventList(action.count, action.start));
 }
 
 function* eventsWorkerSaga(action) {

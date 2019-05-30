@@ -5,7 +5,7 @@
 {% block body %} 
 
     {% if app.user %}
-        <div id="root" /> 
+        <div id="volunteer-list" /> 
     {% elseif not app.user %}
 
     <div id="content">
@@ -71,13 +71,12 @@
             </div>
         </div>
     </div>
-
+        
     <div class="row">
         <div class="col-md-12 text-center">
             <h2 class="heading-text">Registracija</h2>
         </div>
     </div>
-
     <div class="row landing-register justify-content-center">
         <div class="col-md-3">
             <div class="col-md-1 text-transform">
@@ -115,7 +114,9 @@
        
         </div>
     </div>
-
+    
+    <div id="volunteer-list"></div>
+    
     <div class="footer">
         <div class="row">
             <div class="col-md-12 mt-5">
@@ -145,6 +146,8 @@
             </div>
         </div>
     </div>
+
+
 </div>
 
 <script src="{{ asset('LandingPage.js') }}" type="text/javascript"></script>
