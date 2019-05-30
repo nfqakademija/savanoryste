@@ -16,14 +16,14 @@ class VolunteerCard extends React.Component {
   render() {
     const { open } = this.state;
     const { volunteer } = this.props;
-    return (
+
+      return (
       <Link to={`/profile/${volunteer.id}`} className="Cardd-button">
         <div className="cardd">
           <div
             className="cardd-header"
             style={{
-              backgroundImage:
-                'url(https://s3.eu-central-1.amazonaws.com/bootstrapbaymisc/blog/24_days_bootstrap/robert.jpg)'
+              backgroundImage: `url(http://savanoryste.projektai.nfqakademija.lt/uploads/volunteer/${volunteer.ProfilePic})`
             }}
           >
             <div className="cardd-header-slanted-edge">

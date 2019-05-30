@@ -25,7 +25,7 @@ class VolunteerProfileCard extends React.Component {
     console.log(volunteerUser);
     return (
       <Card>
-        <Card.Img src="https://images.pexels.com/photos/532220/pexels-photo-532220.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500" />
+        <Card.Img src={"http://savanoryste.projektai.nfqakademija.lt/uploads/volunteer/" + volunteer.ProfilePic} />
         <Card.ImgOverlay>
           <Card.Body className="Card-profile-wrapper">
             <Card.Title className="Card-profile-name">
@@ -46,7 +46,7 @@ class VolunteerProfileCard extends React.Component {
               ) : null}
 
               <Button
-                className="Card-button-transparent Card-profile-button btn btn-info"
+                className="Card-button Card-profile-button btn btn-info"
                 block
                 href="/"
               >
