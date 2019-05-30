@@ -1,20 +1,16 @@
 import React from 'react';
-import Tab from 'react-bootstrap/Tab';
-import Tabs from 'react-bootstrap/Tabs';
 import Container from 'react-bootstrap/Container';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
-import { Link } from 'react-router-dom';
 import VolunteerProfileEdit from './VolunteerProfileEdit';
 import VolunteerProfileCard from './VolunteerProfileCard';
 import VolunteerProfileInfo from './VolunteerProfileInfo';
 import VolunteerReviewCard from './VolunteerReviewCard';
-import Button from 'react-bootstrap/Button';
 import { connect } from 'react-redux';
-import EventCard from '../Event/EventCard';
 import Cookies from 'js-cookie';
 import { getVolunteer } from '../../actions/volunteersActions';
 import { getVolunteerUser } from '../../actions/usersActions';
+import EventCard from '../Event/EventCard';
 
 class VolunteerProfile extends React.Component {
   constructor(props) {
@@ -23,9 +19,6 @@ class VolunteerProfile extends React.Component {
     if (Cookies.get('userdId') != undefined) {
       props.getVolunteerUser(Cookies.get('userId'));
     }
-
-    //console.log(props.match.params);
-
     this.state = {
       isEditing: false
     };
@@ -66,8 +59,7 @@ class VolunteerProfile extends React.Component {
           </Col>
           <Col>
             <h3>Vėliausiai dalyvauta</h3>
-
-            <EventCard />
+            <EventCard event={this.props.events[0]} />
           </Col>
         </Row>
       </Container>
@@ -77,7 +69,8 @@ class VolunteerProfile extends React.Component {
 
 const mapStateToProps = state => ({
   volunteer: state.volunteers.volunteer,
-  loading: state.volunteers.loading
+  loading: state.volunteers.loading,
+  events: state.events.events
 });
 
 const mapDispatchToProps = dispatch => ({

@@ -6,13 +6,14 @@ export function* eventsWatcherSaga() {
   yield takeLatest('EVENTS_CALL_REQUEST', eventsWorkerSaga);
 }
 
-function fetchEvents() {
+function fetchEvents(action) {
   return axios.get(endpoints.eventList(action.count, action.start));
 }
 
 function* eventsWorkerSaga(action) {
   try {
     const response = yield call(fetchEvents, action);
+
     const events = response.data;
 
     yield put({ type: 'EVENTS_CALL_SUCCESS', events });

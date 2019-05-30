@@ -1,6 +1,4 @@
 import React from 'react';
-// import Button from 'react-bootstrap/Button';
-// import Card from 'react-bootstrap/Card';
 import { Link } from 'react-router-dom';
 import './VolunteerCard.css';
 
@@ -17,13 +15,15 @@ class VolunteerCard extends React.Component {
     const { open } = this.state;
     const { volunteer } = this.props;
 
-      return (
+    return (
       <Link to={`/profile/${volunteer.id}`} className="Cardd-button">
         <div className="cardd">
           <div
             className="cardd-header"
             style={{
-              backgroundImage: `url(http://savanoryste.projektai.nfqakademija.lt/uploads/volunteer/${volunteer.ProfilePic})`
+              backgroundImage: `url(http://savanoryste.projektai.nfqakademija.lt/uploads/volunteer/${
+                volunteer.ProfilePic
+              })`
             }}
           >
             <div className="cardd-header-slanted-edge">
