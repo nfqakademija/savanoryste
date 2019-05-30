@@ -20,14 +20,13 @@ use Symfony\Component\Routing\Annotation\Route;
 class VolunteerController extends AbstractController implements RepoInterface
 {
     /**
-     * @Route("/profile/update/{volunteerId}", methods={"POST", "GET"}, requirements={"volunteerId"="\d+"})
+     * @Route("/profile/update/{volunteerId}", methods={"POST"}, requirements={"volunteerId"="\d+"})
      * @param Request $request
      * @param int $volunteerId
      * @return Response
      */
     public function update(Request $request, int $volunteerId) :Response
     {
-        //dd($request);
         $em = $this->getDoctrine()->getManager();
 
         $volunteer = $em->getRepository(Volunteer::class)->find($volunteerId);
@@ -41,7 +40,7 @@ class VolunteerController extends AbstractController implements RepoInterface
         if ($form->isSubmitted() && $form->isValid()) {
             $em->persist($volunteer);
             $em->flush();
-            return new Response(Response::HTTP_OK);
+            return ApiController::jsonResponse($this->getRepo()->find($volunteer->getId()));
         }
 
         return new Response($form->getErrors(true)[0]->getMessage(), Response::HTTP_BAD_REQUEST);
@@ -91,7 +90,12 @@ class VolunteerController extends AbstractController implements RepoInterface
     /**
      * @param int $userId
      * @return JsonResponse
-     * @Route("/api/user/volunteer/{userId}", name="fetchSingleVolunteerByUserId", methods={"GET"}, requirements={"userId"="\d+"})
+     * @Route(
+     *     "/api/user/volunteer/{userId}",
+     *      name="fetchVolunteerByUser",
+     *      methods={"GET"},
+     *      requirements={"userId"="\d+"}
+     *     )
      */
     public function fetchSingleVolunteerByUserId(int $userId) :JsonResponse
     {
