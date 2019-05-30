@@ -14,14 +14,15 @@ class VolunteerProfileCard extends React.Component {
     };
 
     if (Cookies.get('userId') != undefined) {
-      getVolunteerUser(Cookies.get('userId'));
+      props.getVolunteerUser(Cookies.get('userId'));
+      console.log(Cookies.get('userId'));
     }
   }
 
   render() {
     const { open } = this.state;
-    const { volunteer, isEditing } = this.props;
-
+    const { volunteer, isEditing, volunteerUser } = this.props;
+    console.log(volunteerUser);
     return (
       <Card>
         <Card.Img src="https://images.pexels.com/photos/532220/pexels-photo-532220.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500" />
@@ -34,13 +35,15 @@ class VolunteerProfileCard extends React.Component {
               <Button className="Card-profile-button btn btn-info" block>
                 {`Choose ${volunteer.firstname + ' ' + volunteer.lastname}`}
               </Button>
-              <Button
-                className="Card-profile-button btn btn-info"
-                onClick={isEditing}
-                block
-              >
-                Redaguoti
-              </Button>
+              {volunteerUser.id === volunteer.id ? (
+                <Button
+                  className="Card-profile-button btn btn-info"
+                  onClick={isEditing}
+                  block
+                >
+                  Redaguoti
+                </Button>
+              ) : null}
 
               <Button
                 className="Card-button-transparent Card-profile-button btn btn-info"
@@ -57,16 +60,9 @@ class VolunteerProfileCard extends React.Component {
   }
 }
 
-const mapStateToProps = state => {
-  console.log(state);
-
-  return {
-    volunteers: state.volunteers.volunteers,
-    loading: state.volunteers.loading,
-    start: state.volunteers.start,
-    count: state.volunteers.count
-  };
-};
+const mapStateToProps = state => ({
+  volunteerUser: state.users.volunteerUser
+});
 
 const mapDispatchToProps = dispatch => ({
   getVolunteerUser: id => dispatch(getVolunteerUser(id))
