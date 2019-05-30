@@ -20,7 +20,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class VolunteerController extends AbstractController implements RepoInterface
 {
     /**
-     * @Route("/profile/update/{volunteerId}", methods={"POST", "GET"}, requirements={"volunteerId"="\d+"})
+     * @Route("/profile/update/{volunteerId}", methods={"POST"}, requirements={"volunteerId"="\d+"})
      * @param Request $request
      * @param int $volunteerId
      * @return Response
@@ -90,7 +90,12 @@ class VolunteerController extends AbstractController implements RepoInterface
     /**
      * @param int $userId
      * @return JsonResponse
-     * @Route("/api/user/volunteer/{userId}", name="fetchSingleVolunteerByUserId", methods={"GET"}, requirements={"userId"="\d+"})
+     * @Route(
+     *     "/api/user/volunteer/{userId}",
+     *      name="fetchVolunteerByUser",
+     *      methods={"GET"},
+     *      requirements={"userId"="\d+"}
+     *     )
      */
     public function fetchSingleVolunteerByUserId(int $userId) :JsonResponse
     {

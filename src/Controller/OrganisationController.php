@@ -40,7 +40,7 @@ class OrganisationController extends AbstractController implements RepoInterface
         if ($form->isSubmitted() && $form->isValid()) {
             $em->persist($organisation);
             $em->flush();
-            return new Response(Response::HTTP_OK);
+            return ApiController::jsonResponse($this->getRepo()->find($organisation->getId()));
         }
 
         return new Response($form->getErrors(true)[0]->getMessage(), Response::HTTP_BAD_REQUEST);
@@ -67,7 +67,12 @@ class OrganisationController extends AbstractController implements RepoInterface
     /**
      * @param int $userId
      * @return JsonResponse
-     * @Route("/api/user/organisation/{userId}", name="fetchSingleOrganisationByUserId", methods={"GET"}, requirements={"userId"="\d+"})
+     * @Route(
+     *     "/api/user/organisation/{userId}",
+     *      name="fetchSingleOrganisationByUserId",
+     *      methods={"GET"},
+     *      requirements={"userId"="\d+"}
+     *     )
      */
     public function fetchSingleOrganisationByUserId(int $userId) :JsonResponse
     {
