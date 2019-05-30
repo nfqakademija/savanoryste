@@ -57,14 +57,12 @@ function editVolunteer(action) {
     country: data.country,
     description: data.description
   };
-  //var output = Object.entries(dataa).map(([key, value]) => ({ key, value }));
 
   const config = {
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded'
     }
   };
-  console.log(id, requestData);
   return axios.post(
     endpoints.editVolunteer(id),
     qs.stringify(requestData),
@@ -74,14 +72,10 @@ function editVolunteer(action) {
 
 function* editVolunteerWorkerSaga(action) {
   try {
-    console.log('worker req', action.id, action.data);
     const response = yield call(editVolunteer, action);
-    console.log(response, 'resp');
     const volunteer = response.data;
     yield put({ type: 'EDIT_VOLUNTEER_SUCCESS', volunteer });
   } catch (error) {
-    console.log(error);
-
     yield put({ type: 'EDIT_VOLUNTEER_FAILURE', error });
   }
 }
