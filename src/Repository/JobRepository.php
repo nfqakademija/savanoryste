@@ -30,8 +30,8 @@ class JobRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('j')
             ->select('v')
-            ->innerJoin(JobType::class,'jt',Join::WITH,'jt.id = j.job_type')
-            ->innerJoin(Volunteer::class,'v', Join::WITH,'v.id = j.volunteer')
+            ->innerJoin(JobType::class, 'jt', Join::WITH, 'jt.id = j.job_type')
+            ->innerJoin(Volunteer::class, 'v', Join::WITH, 'v.id = j.volunteer')
             ->andWhere('jt.job_type = :job_type')
             ->setParameter('job_type', $job_type)
             ->getQuery()

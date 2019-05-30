@@ -26,13 +26,13 @@ class InviteController extends AbstractController
         $em = $this->getDoctrine()->getManager();
 
         $invite = ($inviteId === 0) ? new Invite() : $em->getRepository(Invite::class)->find($inviteId);
-        if($invite === NULL){
+        if ($invite === null) {
             return new Response('Neteisingas invite ID', Response::HTTP_BAD_REQUEST);
         }
         $form = $this->createForm(InviteType::class, $invite);
         $form->handleRequest($request);
 
-        if($form->isSubmitted() && $form->isValid()){
+        if ($form->isSubmitted() && $form->isValid()) {
             $em->persist($invite);
             $em->flush();
             return new Response(Response::HTTP_OK);
