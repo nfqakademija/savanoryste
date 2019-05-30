@@ -45,7 +45,7 @@ class VolunteerProfile extends React.Component {
     ) : (
       <Container style={{ margin: 'auto' }}>
         <Row>
-          <Col xs={8} sm={8} md={5} lg={4}>
+          <Col xs={11} sm={12} md={5} lg={4}>
             <VolunteerProfileCard
               volunteer={volunteer}
               isEditing={this.onEditClick}

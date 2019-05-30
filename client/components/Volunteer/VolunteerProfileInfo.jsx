@@ -25,17 +25,20 @@ class VolunteerProfileInfo extends React.Component {
     return (
       <Container>
         <Row>
-          <Col lg={12}>
+          <Col xs={12} sm={12} lg={12}>
             <Row>
               <h3>Aprašymas</h3>
             </Row>
             <Row>
+              <Col xs={12} sm={12}>
               <p style={{ textAlign: 'justify' }}>{volunteer.description}</p>
+              </Col>
             </Row>
             <Row>
               <h3>Kontaktinė informacija</h3>
             </Row>
             <Row>
+              <Col xs={12} sm={12}>
               <Table striped borderless hover>
                 <tbody>
                   <tr>
@@ -58,11 +61,13 @@ class VolunteerProfileInfo extends React.Component {
                   </tr>
                 </tbody>
               </Table>
+              </Col>
             </Row>
             <Row>
               <h3>Statistika</h3>
             </Row>
             <Row>
+              <Col xs={12} sm={12}>
               <Table striped borderless hover>
                 <tbody>
                   <tr>
@@ -85,6 +90,7 @@ class VolunteerProfileInfo extends React.Component {
                   </tr>
                 </tbody>
               </Table>
+              </Col>
             </Row>
           </Col>
         </Row>
