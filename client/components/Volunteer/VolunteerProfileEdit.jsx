@@ -4,10 +4,40 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Button from 'react-bootstrap/Button';
 import InputGroup from 'react-bootstrap/InputGroup';
-import { Formik, Field } from 'formik';
+import { Formik, Field, ErrorMessage } from 'formik';
 import { Form as FormikForm } from 'formik';
 import { connect } from 'react-redux';
 import { editVolunteer } from '../../actions/volunteersActions';
+import * as Yup from 'yup';
+
+const ProfileEditSchema = Yup.object().shape({
+  firstname: Yup.string()
+    .min(2, 'Too Short!')
+    .max(50, 'Too Long!')
+    .required('Required'),
+  lastname: Yup.string()
+    .min(2, 'Too Short!')
+    .max(50, 'Too Long!')
+    .required('Required'),
+  email: Yup.string()
+    .email('Invalid email')
+    .required('Required'),
+  phone: Yup.string()
+    .test('len', 'Numeris turi būti 8 skaitmenų', val => val.length === 8)
+    .required('Required'),
+  city: Yup.string()
+    .min(2, 'Too Short!')
+    .max(50, 'Too Long!')
+    .required('Required'),
+  country: Yup.string()
+    .min(2, 'Too Short!')
+    .max(50, 'Too Long!')
+    .required('Required'),
+  description: Yup.string()
+    .min(2, 'Too Short!')
+    .max(50, 'Too Long!')
+    .required('Required')
+});
 
 const FieldInput = ({
   as,
@@ -17,41 +47,67 @@ const FieldInput = ({
   placeholder,
   onChange,
   label,
-  value
+  value,
+  errors
 }) => {
   return (
     <Form.Group>
       <Form.Label>{label}</Form.Label>
 
-      <Form.Control
-        id={id}
-        value={value}
-        as={as}
-        rows={rows}
-        type={type}
-        placeholder={placeholder}
-        onChange={onChange}
-      />
+      {errors != undefined ? (
+        <div>
+          <Form.Control
+            id={id}
+            value={value}
+            as={as}
+            rows={rows}
+            type={type}
+            placeholder={placeholder}
+            onChange={onChange}
+            isInvalid={!!errors[id]}
+          />
+          <Form.Control.Feedback type="invalid">
+            {errors[id]}
+          </Form.Control.Feedback>
+        </div>
+      ) : null}
     </Form.Group>
   );
 };
 
-const PhoneInput = ({ type, placeholder, label, onChange, id, value }) => {
+const PhoneInput = ({
+  type,
+  placeholder,
+  label,
+  onChange,
+  id,
+  value,
+  errors
+}) => {
   return (
     <Form.Group controlId="formBasicEmail">
       <Form.Label>{label}</Form.Label>
-      <InputGroup>
-        <InputGroup.Prepend>
-          <InputGroup.Text id="basic-addon1">+370</InputGroup.Text>
-        </InputGroup.Prepend>
-        <Form.Control
-          id={id}
-          value={value}
-          type={type}
-          placeholder={placeholder}
-          onChange={onChange}
-        />
-      </InputGroup>
+
+      {errors != undefined ? (
+        <div>
+          <InputGroup>
+            <InputGroup.Prepend>
+              <InputGroup.Text id="basic-addon1">+370</InputGroup.Text>
+            </InputGroup.Prepend>
+            <Form.Control
+              id={id}
+              value={value}
+              type={type}
+              placeholder={placeholder}
+              onChange={onChange}
+              isInvalid={!!errors[id]}
+            />
+            <Form.Control.Feedback type="invalid">
+              {errors[id]}
+            </Form.Control.Feedback>
+          </InputGroup>
+        </div>
+      ) : null}
     </Form.Group>
   );
 };
@@ -67,11 +123,13 @@ class VolunteerProfileEdit extends React.Component {
       <React.Fragment>
         <h3>Redaguoti profilį</h3>
         <Formik
+          noValidate
           initialValues={volunteer}
           onSubmit={(values, actions) => {
             editVolunteer(volunteer.id, values);
           }}
           handleChange
+          validationSchema={ProfileEditSchema}
           values={volunteer}
           render={({
             errors,
@@ -79,6 +137,7 @@ class VolunteerProfileEdit extends React.Component {
             touched,
             isSubmitting,
             values,
+            isValid,
             handleChange
           }) => (
             <FormikForm>
@@ -93,6 +152,8 @@ class VolunteerProfileEdit extends React.Component {
                     label="Vardas"
                     value={values.firstname}
                     onChange={handleChange}
+                    errors={errors}
+                    touched={touched}
                   />
                 </Col>
 
@@ -106,6 +167,8 @@ class VolunteerProfileEdit extends React.Component {
                     label="Pavardė"
                     onChange={handleChange}
                     value={values.lastname}
+                    errors={errors}
+                    touched={touched}
                   />
                 </Col>
               </Row>
@@ -119,6 +182,8 @@ class VolunteerProfileEdit extends React.Component {
                 placeholder="Įveskite tel. nr."
                 label="Tel. nr."
                 value={values.phone}
+                errors={errors}
+                touched={touched}
               />
 
               <Field
@@ -130,7 +195,10 @@ class VolunteerProfileEdit extends React.Component {
                 label="El. paštas"
                 value={values.email}
                 placeholder="Įveskite el. pašto adresą"
+                errors={errors}
+                touched={touched}
               />
+              {errors.email && touched.email ? <div>{errors.email}</div> : null}
               <Row>
                 <Col>
                   <Field
@@ -142,6 +210,8 @@ class VolunteerProfileEdit extends React.Component {
                     value={values.city}
                     component={FieldInput}
                     placeholder="Įveskite miestą"
+                    errors={errors}
+                    touched={touched}
                   />
                 </Col>
                 <Col>
@@ -154,6 +224,8 @@ class VolunteerProfileEdit extends React.Component {
                     name="country"
                     component={FieldInput}
                     placeholder="Įveskite šalį"
+                    errors={errors}
+                    touched={touched}
                   />
                 </Col>
               </Row>
@@ -167,6 +239,8 @@ class VolunteerProfileEdit extends React.Component {
                 as="textarea"
                 rows="2"
                 placeholder="Įveskite aprašymą"
+                errors={errors}
+                touched={touched}
               />
               <Button variant="primary" type="submit">
                 Siųsti

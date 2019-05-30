@@ -8,6 +8,17 @@ import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import store from './store';
 import App from './components/App';
+import VolunteerList from './components/Volunteer/VolunteerList';
+import OrganisationForm from './components/Organisation/OrganisationForm';
+
+// ReactDOM.render(
+//   <BrowserRouter>
+//     <Provider store={store}>
+//       {window.renderId === 'volunteerList' ? <OrganisationForm /> : <App />}
+//     </Provider>
+//   </BrowserRouter>,
+//   document.getElementById('root')
+// );
 
 ReactDOM.render(
   <BrowserRouter>
@@ -15,5 +26,5 @@ ReactDOM.render(
       <App />
     </Provider>
   </BrowserRouter>,
-  document.getElementById('root')
+  document.getElementById('volunteer-list')
 );
