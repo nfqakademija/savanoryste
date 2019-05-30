@@ -3,41 +3,41 @@ import { connect } from 'react-redux';
 import Container from 'react-bootstrap/Container';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
-import VolunteerCard from './VolunteerCard';
 import InfiniteScroll from 'react-infinite-scroll-component';
-import { getVolunteers } from '../../actions/volunteersActions';
+import { getEvents } from '../../actions/eventActions';
 
 import '../App.css';
+import EventCard from './EventCard';
 
-class VolunteerList extends React.Component {
+class EventList extends React.Component {
   constructor(props) {
     super(props);
   }
 
   componentDidMount() {
-    this.fetchVolunteers();
+    this.fetchEvents();
   }
 
-  fetchVolunteers = () => {
-    const { count, start, getVolunteers } = this.props;
+  fetchEvents = () => {
+    const { count, start, getEvents } = this.props;
 
-    getVolunteers(start, count);
+    getEvents(start, count);
   };
 
   render() {
-    const { volunteers } = this.props;
+    const { events } = this.props;
     return (
       <InfiniteScroll
-        dataLength={this.props.volunteers.length}
+        dataLength={this.props.events.length}
         next={this.fetchVolunteers}
         hasMore={true}
         height={800}
       >
         <Container className="container">
           <Row>
-            {volunteers.map(volunteer => (
+            {events.map(event => (
               <Col xs={12} md={6} lg={4}>
-                <VolunteerCard volunteer={volunteer} />
+                <EventCard event={event} />
               </Col>
             ))}
           </Row>
@@ -48,17 +48,14 @@ class VolunteerList extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  volunteers: state.volunteers.volunteers,
-  loading: state.volunteers.loading,
-  start: state.volunteers.start,
-  count: state.volunteers.count
+  events: state.events.events
 });
 
 const mapDispatchToProps = dispatch => ({
-  getVolunteers: (count, start) => dispatch(getVolunteers(start, count))
+  getEvents: (count, start) => dispatch(getEvents(start, count))
 });
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(VolunteerList);
+)(EventList);

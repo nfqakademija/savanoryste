@@ -7,10 +7,11 @@ import EventForm from './Event/EventForm';
 import OrganisationForm from './Organisation/OrganisationForm';
 
 import './App.css';
+import EventList from './Event/EventList';
 
 const App = () => (
   <div>
-    <AppBar className="container" />
+    {/* <AppBar className="container" /> */}
     <Switch>
       <Route exact path="/" component={VolunteerList} />
       <Route path="/profile/:id" component={VolunteerProfile} />

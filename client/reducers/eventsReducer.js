@@ -10,7 +10,9 @@ import {
 const initialState = {
   events: [],
   event: {},
-  loading: false
+  loading: false,
+  count: 10,
+  start: 0
 };
 
 const eventsReducer = (state = initialState, action) => {
@@ -21,7 +23,8 @@ const eventsReducer = (state = initialState, action) => {
       return {
         ...state,
         loading: false,
-        events: [...state.events, ...action.events]
+        events: [...state.events, ...action.events],
+        start: state.start + 10
       };
     case EVENTS_CALL_FAILURE:
       return {
