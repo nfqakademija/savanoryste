@@ -26,30 +26,32 @@ class UserRepository extends ServiceEntityRepository
         parent::__construct($registry, User::class);
     }
 
+
     /**
      * @param int $userId
-     * @return mixed
+     * @return array|null
      */
     public function getVolunteerProfile(int $userId) :?array
     {
         return $this->createQueryBuilder('u')
             ->select('v')
-            ->innerJoin(Volunteer::class,'v', Join::WITH,'u.profile_id = v.id')
+            ->innerJoin(Volunteer::class, 'v', Join::WITH, 'u.profile_id = v.id')
             ->where('u.profile_id = :id')
             ->setParameter('id', $userId)
             ->getQuery()
             ->getResult();
     }
 
+
     /**
      * @param int $userId
-     * @return mixed
+     * @return array|null
      */
     public function getOrganisationProfile(int $userId) :?array
     {
         return $this->createQueryBuilder('u')
             ->select('v')
-            ->innerJoin(Organisation::class,'v', Join::WITH,'u.profile_id = v.id')
+            ->innerJoin(Organisation::class, 'v', Join::WITH, 'u.profile_id = v.id')
             ->where('u.profile_id = :id')
             ->setParameter('id', $userId)
             ->getQuery()

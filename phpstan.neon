@@ -1,0 +1,6 @@
+parameters:
+  paths:
+    - src
+  excludes_analyse:
+    - src/Migrations
+

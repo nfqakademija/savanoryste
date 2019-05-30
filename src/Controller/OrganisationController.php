@@ -78,15 +78,15 @@ class OrganisationController extends AbstractController implements RepoInterface
     {
         // TODO Refactor this mess
         $user =  $this->getDoctrine()->getRepository(User::class)->find(['id' => $userId]);
-        if ($user === null){
-            return ApiController::jsonResponse(NULL);
+        if ($user === null) {
+            return ApiController::jsonResponse(null);
         }
-        if (in_array(RoleConstants::ROLE_ORGANISATION, $user->getRoles())){
+        if (in_array(RoleConstants::ROLE_ORGANISATION, $user->getRoles())) {
             return ApiController::jsonResponse(
                 $this->getDoctrine()->getRepository(User::class)->getOrganisationProfile($user->getProfileId())
             );
         }
-        return ApiController::jsonResponse(NULL);
+        return ApiController::jsonResponse(null);
     }
 
     /**

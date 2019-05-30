@@ -28,17 +28,26 @@ class Job
     private $job_type;
 
 
-
+    /**
+     * @return int|null
+     */
     public function getId(): ?int
     {
         return $this->id;
     }
 
+    /**
+     * @return Volunteer|null
+     */
     public function getVolunteer(): ?Volunteer
     {
         return $this->volunteer;
     }
 
+    /**
+     * @param Volunteer|null $volunteer
+     * @return Job
+     */
     public function setVolunteer(?Volunteer $volunteer): self
     {
         $this->volunteer = $volunteer;
@@ -46,11 +55,18 @@ class Job
         return $this;
     }
 
+    /**
+     * @return JobType|null
+     */
     public function getJobType(): ?JobType
     {
         return $this->job_type;
     }
 
+    /**
+     * @param JobType|null $job_type
+     * @return Job
+     */
     public function setJobType(?JobType $job_type): self
     {
         $this->job_type = $job_type;

@@ -22,7 +22,7 @@ class ApiController extends AbstractController
     private static function getSerializer() :Serializer
     {
         $encoder = new JsonEncoder();
-        $callback = function ($innerObject, $outerObject, string $attributeName, string $format = null, array $context = []) {
+        $callback = function ($innerObject) {
             return $innerObject instanceof \DateTime ? $innerObject->format('Y-m-d H:i:s') : '';
         };
         $defaultContext = [
@@ -44,7 +44,7 @@ class ApiController extends AbstractController
      */
     public static function jsonResponse($toSerialize) :JsonResponse
     {
-        $serialized = self::getSerializer()->serialize($toSerialize, 'json',[
+        $serialized = self::getSerializer()->serialize($toSerialize, 'json', [
             'circular_reference_handler' => function ($object) {
                 return $object;
             }
@@ -55,10 +55,11 @@ class ApiController extends AbstractController
         );
     }
 
+
     /**
-     * @param array $data
+     * @param string $data
      * @param int $code
-     * @param array|null $headers
+     * @param array $headers
      * @return JsonResponse
      */
     private static function response(string $data, int $code = 200, array $headers = []) : JsonResponse

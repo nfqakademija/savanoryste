@@ -42,7 +42,7 @@ class VolunteerRepository extends ServiceEntityRepository
 
 
     /**
-     * @return array|null
+     * @return null|string
      */
     public function getParticipantCount() :?string
     {

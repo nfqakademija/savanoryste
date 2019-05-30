@@ -64,11 +64,10 @@ class SecurityController extends AbstractController implements LogoutSuccessHand
     }
 
     /**
-     * @param Request $request
-     * @param UserPasswordEncoderInterface $encoder
-     * @param string $type
-     * @return Response
      * @Route("/register", name="Register", methods={"GET", "POST"})
+     * @param Request $request
+     * @param UrlGeneratorInterface $urlGenerator
+     * @return Response
      */
     public function register(Request $request, UrlGeneratorInterface $urlGenerator) :Response
     {
@@ -149,7 +148,7 @@ class SecurityController extends AbstractController implements LogoutSuccessHand
     }
 
     /**
-     * @param String $type
+     * @param Request $request
      * @return null|string
      */
     private function getRole(Request $request) :?string

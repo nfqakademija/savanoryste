@@ -130,11 +130,6 @@ class Event
         $this->end_date = $end_date;
     }
 
-
-
-
-
-
     /**
      * @return null|string
      */

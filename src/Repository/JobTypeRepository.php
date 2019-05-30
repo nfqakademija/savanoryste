@@ -14,37 +14,12 @@ use Symfony\Bridge\Doctrine\RegistryInterface;
  */
 class JobTypeRepository extends ServiceEntityRepository
 {
+    /**
+     * JobTypeRepository constructor.
+     * @param RegistryInterface $registry
+     */
     public function __construct(RegistryInterface $registry)
     {
         parent::__construct($registry, JobType::class);
     }
-
-    // /**
-    //  * @return JobType[] Returns an array of JobType objects
-    //  */
-    /*
-    public function findByExampleField($value)
-    {
-        return $this->createQueryBuilder('j')
-            ->andWhere('j.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('j.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
-
-    /*
-    public function findOneBySomeField($value): ?JobType
-    {
-        return $this->createQueryBuilder('j')
-            ->andWhere('j.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
 }

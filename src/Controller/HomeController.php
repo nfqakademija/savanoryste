@@ -24,8 +24,9 @@ class HomeController extends AbstractController
      *      "reactRouting"="^(?!api|login|register|logout|invite|profile/update|organisation/store|admin).+"
      * },
      * defaults={"reactRouting": null})
-     * @param EntityManager $em
+     * @param EntityManagerInterface $em
      * @return \Symfony\Component\HttpFoundation\Response
+     * @throws \Doctrine\ORM\NonUniqueResultException
      */
     public function index(EntityManagerInterface $em)
     {

@@ -8,9 +8,9 @@ namespace App\Interfaces;
  */
 interface BlankInterface
 {
+
     /**
      * @param object $object
-     * @return mixed
      */
     public function createEmpty(object $object) :void;
 }

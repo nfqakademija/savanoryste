@@ -61,6 +61,9 @@ class User implements UserInterface
      */
     private $profile_id;
 
+    /**
+     * @return int|null
+     */
     public function getId(): ?int
     {
         return $this->id;
@@ -76,6 +79,10 @@ class User implements UserInterface
         return (string) $this->username;
     }
 
+    /**
+     * @param string $username
+     * @return User
+     */
     public function setUsername(string $username): self
     {
         $this->username = $username;
@@ -95,6 +102,10 @@ class User implements UserInterface
         return array_unique($roles);
     }
 
+    /**
+     * @param array $roles
+     * @return User
+     */
     public function setRoles(array $roles): self
     {
         $this->roles = $roles;
@@ -110,6 +121,10 @@ class User implements UserInterface
         return (string) $this->password;
     }
 
+    /**
+     * @param string $password
+     * @return User
+     */
     public function setPassword(string $password): self
     {
         $this->password = $password;
@@ -134,11 +149,18 @@ class User implements UserInterface
         // $this->plainPassword = null;
     }
 
+    /**
+     * @return int|null
+     */
     public function getProfileId(): ?int
     {
         return $this->profile_id;
     }
 
+    /**
+     * @param int $profile_id
+     * @return User
+     */
     public function setProfileId(int $profile_id): self
     {
         $this->profile_id = $profile_id;

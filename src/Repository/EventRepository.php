@@ -24,8 +24,9 @@ class EventRepository extends ServiceEntityRepository
         parent::__construct($registry, Event::class);
     }
 
+
     /**
-     * @return mixed
+     * @return null|string
      * @throws \Doctrine\ORM\NonUniqueResultException
      */
     public function getEventCount() :?string

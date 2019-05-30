@@ -30,7 +30,8 @@ class EventController extends AbstractController implements RepoInterface
      * @param int $eventId
      * @return Response
      */
-    public function store(Request $request, UrlGeneratorInterface $urlGenerator, Security $security, int $eventId = 0) :Response
+    public function store(Request $request, UrlGeneratorInterface $urlGenerator, Security $security, int $eventId = 0)
+    :Response
     {
         if (!$this->isGranted(RoleConstants::ROLE_ORGANISATION)) {
             return new RedirectResponse($urlGenerator->generate('app_login'));

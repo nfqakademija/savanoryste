@@ -202,11 +202,18 @@ class Organisation implements BlankInterface
         return $this;
     }
 
+    /**
+     * @return null|string
+     */
     public function getProfilePic(): ?string
     {
         return $this->ProfilePic;
     }
 
+    /**
+     * @param null|string $ProfilePic
+     * @return Organisation
+     */
     public function setProfilePic(?string $ProfilePic): self
     {
         $this->ProfilePic = $ProfilePic;
@@ -214,9 +221,9 @@ class Organisation implements BlankInterface
         return $this;
     }
 
+
     /**
      * @param object $organisation
-     * @return mixed
      */
     public function createEmpty(object $organisation) :void
     {

@@ -102,11 +102,18 @@ class Review
         return $this;
     }
 
+    /**
+     * @return int|null
+     */
     public function getVolunteerId(): ?int
     {
         return $this->volunteer_id;
     }
 
+    /**
+     * @param int $volunteer_id
+     * @return Review
+     */
     public function setVolunteerId(int $volunteer_id): self
     {
         $this->volunteer_id = $volunteer_id;
