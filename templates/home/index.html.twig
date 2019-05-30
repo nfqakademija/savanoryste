@@ -4,12 +4,6 @@
 
 {% block body %} 
 
-    {% for message in app.flashes('success') %}
-        <div class="alert alert-success" role="alert">
-            {{ message }}
-        </div>
-    {% endfor %} 
-    
     {% if app.user %}
         <div id="root" /> 
     {% elseif not app.user %}
@@ -87,7 +81,7 @@
     <div class="row landing-register justify-content-center">
         <div class="col-md-3">
             <div class="col-md-1 text-transform">
-                <h3 id="box">Pasirinkimas</h3>
+                <h3 id="box">Savanoris</h3>
             </div>
 
                 {{ form_start(registerForm, {'action': path('Register'), 'method': 'POST'}) }}
@@ -98,14 +92,19 @@
                         <label for = "cb1"><img src="group.png" width="100px" height="100px"></label>
                     </div>
                     <div class="role-choose" id="role-volunteer">
-                        <input type="checkbox" name="ROLE_VOLUNTEER" id = "cb2" />
+                        <input type="checkbox" name="ROLE_VOLUNTEER" id = "cb2" checked/>
                         <label for="cb2"><img src="charity.png" width="100px" height="100px"></label>
                     </div>
                 </div>
         </div>
 
         <div class="col-md-6">
-                
+            {% for message in app.flashes('error') %}
+                <div class="alert alert-danger" role="alert">
+                    <script>$('html, body').animate({scrollTop: $(".landing-register").offset().top}, 2000);</script>
+                    {{ message }}
+                </div>
+            {% endfor %}   
             {{ form_widget(registerForm) }}
 
             <div class="form-group">

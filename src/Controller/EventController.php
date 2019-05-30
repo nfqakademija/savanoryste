@@ -25,6 +25,8 @@ class EventController extends AbstractController implements RepoInterface
     /**
      * @Route("/event/store/{eventId}", name="event", methods={"POST"}, requirements={"eventId"="\d+"})
      * @param Request $request
+     * @param UrlGeneratorInterface $urlGenerator
+     * @param Security $security
      * @param int $eventId
      * @return Response
      */

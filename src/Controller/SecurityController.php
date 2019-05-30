@@ -13,6 +13,7 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Security\Guard\GuardAuthenticatorHandler;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
@@ -69,7 +70,7 @@ class SecurityController extends AbstractController implements LogoutSuccessHand
      * @return Response
      * @Route("/register", name="Register", methods={"GET", "POST"})
      */
-    public function register(Request $request) :Response
+    public function register(Request $request, UrlGeneratorInterface $urlGenerator) :Response
     {
         $user = new User();
 
@@ -111,10 +112,8 @@ class SecurityController extends AbstractController implements LogoutSuccessHand
             );
         }
 
-        return $this->render('security/register.html.twig', [
-            'registerForm'      => $form->createView(),
-            'validatorErrors'   => null
-        ]);
+        $this->addFlash('error', $form->getErrors(true)[0]->getMessage());
+        return new RedirectResponse($urlGenerator->generate('index'));
     }
 
     /**
