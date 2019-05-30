@@ -13,7 +13,7 @@ function fetchVolunteerUser(id) {
 function* volunteerUserWorkerSaga(action) {
   try {
     const response = yield call(fetchVolunteerUser, action.id);
-
+    console.log(response);
     const user = response.data;
     yield put({ type: 'VOLUNTEER_USER_CALL_SUCCESS', user });
   } catch (error) {

@@ -51,7 +51,7 @@ const volunteersReducer = (state = initialState, action) => {
     case EDIT_VOLUNTEER_REQUEST:
       return { ...state, volunteerLoading: true, error: null };
     case EDIT_VOLUNTEER_SUCCESS:
-      return { ...state, volunteerLoading: false, volunteer: action };
+      return { ...state, volunteerLoading: false, volunteer: action.volunteer };
     case EDIT_VOLUNTEER_FAILURE:
       return {
         ...state,

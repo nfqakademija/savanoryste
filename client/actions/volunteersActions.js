@@ -10,7 +10,6 @@ export const getVolunteer = id => ({
 });
 
 export const editVolunteer = (id, data) => {
-  console.log(id, data, 'actionas');
   return {
     type: 'EDIT_VOLUNTEER_REQUEST',
     id,
