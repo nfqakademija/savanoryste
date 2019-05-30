@@ -12,7 +12,6 @@ const AppBar = props => {
     <Navbar expand="sm" className="Navbar">
       <Link to="/" className="Navbar-brand">
         Savanorystė
-        {console.log(Cookies.get('userId'))}
       </Link>
 
       {Cookies.get('userId') === undefined ? (
