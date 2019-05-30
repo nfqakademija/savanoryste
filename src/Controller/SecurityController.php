@@ -25,6 +25,24 @@ use Symfony\Component\Security\Http\Logout\LogoutSuccessHandlerInterface;
  */
 class SecurityController extends AbstractController implements LogoutSuccessHandlerInterface
 {
+
+    private $encoder;
+    private $guardHandler;
+    private $authenticator;
+
+    /**
+     * SecurityController constructor.
+     * @param UserPasswordEncoderInterface $e
+     * @param GuardAuthenticatorHandler $g
+     * @param UserAuthenticator $auth
+     */
+    public function __construct(UserPasswordEncoderInterface $e, GuardAuthenticatorHandler $g, UserAuthenticator $auth)
+    {
+        $this->encoder = $e;
+        $this->guardHandler = $g;
+        $this->authenticator = $auth;
+    }
+
     /**
      * @Route("/login", name="app_login", methods={"GET", "POST"})
      * @param AuthenticationUtils $authenticationUtils
@@ -51,7 +69,7 @@ class SecurityController extends AbstractController implements LogoutSuccessHand
      * @return Response
      * @Route("/register", name="Register", methods={"GET", "POST"})
      */
-    public function register(Request $request, UserPasswordEncoderInterface $encoder, GuardAuthenticatorHandler $guardHandler, UserAuthenticator $authenticator) :Response
+    public function register(Request $request) :Response
     {
         $user = new User();
 
@@ -67,11 +85,16 @@ class SecurityController extends AbstractController implements LogoutSuccessHand
             $user = $form->getData();
 
             if (!$this->isRoleSelected($request)) {
-                return $this->redirectOnError('Register', 'Pasirinkite role');
+                return $this->redirectOnError(
+                    'Register',
+                    'Pasirinkite role',
+                    'error',
+                    Response::HTTP_TEMPORARY_REDIRECT
+                );
             }
 
             $user->setPassword(
-                $encoder->encodePassword($user, $form->getData()->getPassword())
+                $this->encoder->encodePassword($user, $form->getData()->getPassword())
             );
 
             $user->setRoles([$this->getRole($request)]);
@@ -80,10 +103,10 @@ class SecurityController extends AbstractController implements LogoutSuccessHand
             $em->persist($user);
             $em->flush();
 
-            return $guardHandler->authenticateUserAndHandleSuccess(
+            return $this->guardHandler->authenticateUserAndHandleSuccess(
                 $user,
                 $request,
-                $authenticator,
+                $this->authenticator,
                 'main' // firewall name
             );
         }
@@ -113,13 +136,11 @@ class SecurityController extends AbstractController implements LogoutSuccessHand
     private function createProfileByRole(Request $request) :?object
     {
         // TODO MOVE IF LOGIC TO SEPARATE METHOD
-        if($request->request->get(RoleConstants::ROLE_VOLUNTEER) === 'on')
-        {
+        if ($request->request->get(RoleConstants::ROLE_VOLUNTEER) === 'on') {
             $volunteer = new Volunteer();
             $volunteer->createEmpty($volunteer);
             return $volunteer;
-        }else if($request->request->get(RoleConstants::ROLE_ORGANISATION) === 'on')
-        {
+        } elseif ($request->request->get(RoleConstants::ROLE_ORGANISATION) === 'on') {
             $organisation = new Organisation();
             $organisation->createEmpty($organisation);
             return $organisation;
@@ -148,7 +169,9 @@ class SecurityController extends AbstractController implements LogoutSuccessHand
      */
     private function isRoleSelected(Request $request) :bool
     {
-        if ($request->request->get(RoleConstants::ROLE_VOLUNTEER) === 'on' || $request->request->get(RoleConstants::ROLE_ORGANISATION) === 'on') {
+        $roleVolunteer = $request->request->get(RoleConstants::ROLE_VOLUNTEER);
+        $roleOrganisation = $request->request->get(RoleConstants::ROLE_ORGANISATION);
+        if ($roleVolunteer === 'on' || $roleOrganisation === 'on') {
             return true;
         }
         return false;
@@ -161,7 +184,7 @@ class SecurityController extends AbstractController implements LogoutSuccessHand
      * @param int $code
      * @return Response
      */
-    private function redirectOnError(string $route, string $msg, $msgType = 'error', int $code = Response::HTTP_FOUND) :Response
+    private function redirectOnError(string $route, string $msg, $msgType = 'error', int $code = 307) :Response
     {
         $this->addFlash($msgType, $msg);
         return $this->redirectToRoute($route, [], $code);

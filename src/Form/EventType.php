@@ -22,8 +22,14 @@ class EventType extends AbstractType
     {
         $builder
             ->add('title', TextType::class)
-            ->add('start_date', TextType::class)
-            ->add('end_date', TextType::class)
+            ->add('start_date', DateTimeType::class, [
+                'widget'                => 'single_text',
+                'invalid_message'       => 'Įveskite pradžios datą'
+            ])
+            ->add('end_date', DateTimeType::class, [
+                'widget'                => 'single_text',
+                'invalid_message'       => 'Įveskite pabaigos datą'
+            ])
             ->add('description', TextType::class)
         ;
     }
@@ -44,6 +50,6 @@ class EventType extends AbstractType
      */
     public function getBlockPrefix(): string
     {
-        return 'event';
+        return '';
     }
 }

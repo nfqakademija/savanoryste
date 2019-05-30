@@ -32,13 +32,13 @@ class Event
     private $title;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="datetime")
      * @Assert\NotBlank()
      */
     private $start_date;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="datetime")
      * @Assert\NotBlank()
      */
     private $end_date;
@@ -129,6 +129,8 @@ class Event
     {
         $this->end_date = $end_date;
     }
+
+
 
 
 

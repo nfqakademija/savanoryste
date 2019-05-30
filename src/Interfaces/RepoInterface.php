@@ -5,7 +5,8 @@ namespace App\Interfaces;
 /**
  * @package App\Controller
  */
-interface RepoInterface{
+interface RepoInterface
+{
     /**
      * @return null|object
      */

@@ -27,8 +27,8 @@ class ReviewRepository extends ServiceEntityRepository
     public function filterByRating() :?array
     {
         return $this->createQueryBuilder('r')
-            ->select('r','AVG(r.review_rating) AS rating_average')
-            ->leftJoin(Volunteer::class,'v', Join::WITH, 'v.id = r.volunteer_id')
+            ->select('r', 'AVG(r.review_rating) AS rating_average')
+            ->leftJoin(Volunteer::class, 'v', Join::WITH, 'v.id = r.volunteer_id')
             ->having('rating_average > 8')
             ->groupBy('v')
             ->orderBy('rating_average', 'DESC')

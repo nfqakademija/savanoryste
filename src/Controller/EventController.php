@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Constants\RoleConstants;
 use App\Entity\Event;
+use App\Entity\Organisation;
 use App\Form\EventType;
 use App\Interfaces\RepoInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -13,6 +14,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Symfony\Component\Security\Core\Security;
 
 /**
  * Class EventController
@@ -26,27 +28,30 @@ class EventController extends AbstractController implements RepoInterface
      * @param int $eventId
      * @return Response
      */
-    public function store(Request $request, int $eventId = 0, UrlGeneratorInterface $urlGenerator) :Response
+    public function store(Request $request, UrlGeneratorInterface $urlGenerator, Security $security, int $eventId = 0) :Response
     {
-        if(!$this->isGranted(RoleConstants::ROLE_ORGANISATION)){
+        if (!$this->isGranted(RoleConstants::ROLE_ORGANISATION)) {
             return new RedirectResponse($urlGenerator->generate('app_login'));
         }
 
         $em = $this->getDoctrine()->getManager();
         $event = ($eventId === 0) ? new Event() : $em->getRepository(Event::class)->find($eventId);
-        if($event === NULL){
+        if ($event === null) {
             return new Response('Neteisingas renginio ID', Response::HTTP_BAD_REQUEST);
         }
 
         $form = $this->createForm(EventType::class, $event);
         $form->handleRequest($request);
 
-        if($form->isSubmitted() && $form->isValid()){
+        if ($form->isSubmitted() && $form->isValid()) {
+            $profileId = $security->getUser()->getProfileId();
+            $organisation = $this->getDoctrine()->getRepository(Organisation::class)->find(['id' => $profileId]);
+            $event->setOrganisation($organisation);
             $em->persist($event);
             $em->flush();
-            return new Response(Response::HTTP_OK);
+            return ApiController::jsonResponse($this->getRepo()->find($event->getId()));
         }
-        return new Response(Response::HTTP_BAD_REQUEST);
+        return new Response($form->getErrors(true)[0]->getMessage(), Response::HTTP_BAD_REQUEST);
     }
 
     /**

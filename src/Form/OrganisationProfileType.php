@@ -47,6 +47,6 @@ class OrganisationProfileType extends AbstractType
      */
     public function getBlockPrefix(): string
     {
-        return 'organisation';
+        return '';
     }
 }

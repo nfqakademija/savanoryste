@@ -30,12 +30,12 @@ class VolunteerRepository extends ServiceEntityRepository
      */
     public function filterByEventTotalCount() :?array
     {
-        return $this->getEntityManager()->getRepository(Volunteer::class,'v')
+        return $this->getEntityManager()->getRepository(Volunteer::class, 'v')
             ->createQueryBuilder('e')
             ->addSelect('COUNT(v.id) AS attendance_count')
             ->innerJoin('e.events', 'v')
             ->groupBy('e')
-            ->orderBy('attendance_count','DESC')
+            ->orderBy('attendance_count', 'DESC')
             ->getQuery()
             ->getResult();
     }
@@ -57,5 +57,4 @@ class VolunteerRepository extends ServiceEntityRepository
         $stmt->execute();
         return $stmt->fetch(\PDO::FETCH_COLUMN);
     }
-
 }
