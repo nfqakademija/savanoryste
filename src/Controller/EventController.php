@@ -77,6 +77,19 @@ class EventController extends AbstractController implements RepoInterface
     }
 
     /**
+     * @param int $start
+     * @param int $count
+     * @return JsonResponse
+     * @Route(
+     *     "/api/events/{start}/{count}", name="fetchEventRange", requirements={"start"="\d+", "count"="\d+"}
+     *     )
+     */
+    public function fetchEventInterval(int $start, int $count) :JsonResponse
+    {
+        return ApiController::jsonResponse($this->getRepo()->findBy([], null, $count, $start));
+    }
+
+    /**
      * @return null|object
      */
     public function getRepo(): ?object

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: May 30, 2019 at 08:56 AM
+-- Generation Time: May 30, 2019 at 11:07 PM
 -- Server version: 5.7.26-0ubuntu0.18.04.1
 -- PHP Version: 7.2.17-0ubuntu0.18.04.1
 
@@ -75,7 +75,7 @@ CREATE TABLE `job` (
 --
 
 INSERT INTO `job` (`id`, `volunteer_id`, `job_type_id`) VALUES
-(54, 1, 1),
+(54, 4, 1),
 (55, 2, 3),
 (56, 3, 7);
 
@@ -101,7 +101,7 @@ INSERT INTO `job_type` (`id`, `job_type`) VALUES
 (4, 'Žiniasklaida ir komunikacija'),
 (5, 'IT technologijos'),
 (6, 'Sporto'),
-(7, 'Gybūnų globa'),
+(7, 'Gyvūnų globa'),
 (8, 'Sveikatos'),
 (9, 'Švietimo'),
 (10, 'Prevencinė');
@@ -161,7 +161,16 @@ INSERT INTO `organisation` (`id`, `name`, `email`, `phone`, `address`, `profile_
 (59, 'Darom 2019', 'info@darom.lt', 2932562, 'Naujininkų 5a', 'OrganisationPic.jpeg'),
 (60, 'Jaunimo linija ', 'jaunimolinija@gmail.com', 1253476, 'Kauno 2', 'OrganisationPic.jpeg'),
 (61, 'Maltiečiai', 'info@maltieciai.lt', 5487269, 'Tiltų 81', 'OrganisationPic.jpeg'),
-(62, 'Raudonasis kryžius', 'raudonasiskryzius@gmail.com', 5421798, 'Gedimino pr.2', 'OrganisationPic.jpeg');
+(62, 'Raudonasis kryžius', 'raudonasiskryzius@gmail.com', 5421798, 'Gedimino pr.2', 'OrganisationPic.jpeg'),
+(65, '', '', 0, '', 'OrganisationPic.jpeg'),
+(66, '', '', 0, '', 'OrganisationPic.jpeg'),
+(67, '', '', 0, '', 'OrganisationPic.jpeg'),
+(68, '', '', 0, '', 'OrganisationPic.jpeg'),
+(69, '', '', 0, '', 'OrganisationPic.jpeg'),
+(70, '', '', 0, '', 'OrganisationPic.jpeg'),
+(71, '', '', 0, '', 'OrganisationPic.jpeg'),
+(72, '', '', 0, '', 'OrganisationPic.jpeg'),
+(73, '', '', 0, '', 'OrganisationPic.jpeg');
 
 -- --------------------------------------------------------
 
@@ -181,11 +190,11 @@ CREATE TABLE `review` (
 --
 
 INSERT INTO `review` (`id`, `volunteer_id`, `review_body`, `review_rating`) VALUES
-(51, 1, 'Atliko paskirtas užduotis pukiai.Rekomenduojam!', 10),
+(51, 5, 'Atliko paskirtas užduotis pukiai.Rekomenduojam!', 10),
 (52, 2, 'Labai punktualus ir draugiška asmenybė', 10),
 (53, 3, 'Rekomenduoju!', 10),
 (54, 3, 'Labai draugiška asmenybė, rekomenduočiau didesnio pobudžio savanorystės projektui', 10),
-(55, 1, 'Likomi patenkinti, Galite drąsiai rinktis', 9);
+(55, 9, 'Likomi patenkinti, Galite drąsiai rinktis', 9);
 
 -- --------------------------------------------------------
 
@@ -206,7 +215,6 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`id`, `username`, `roles`, `password`, `profile_id`) VALUES
-(9, 'Dovydas', '[\"ROLE_VOLUNTEER\"]', '$argon2i$v=19$m=1024,t=2,p=2$U3U0dWZkTjFNbTJJUlNlaA$j+7pq0RPQjOKSWUvYRqNABDNLoxWYDAXRiMox+Xi8a8', 1),
 (10, 'Deivis', '[\"ROLE_ORGANISATION\"]', '$argon2i$v=19$m=1024,t=2,p=2$cmNBZm9IU1llZlgwWm4uMw$kkpVndqm7JS7mUr0xILmE3CST1wj2fcVzjhV+70+Bpg', 59),
 (11, 'Papa', '[\"ROLE_VOLUNTEER\"]', '$argon2i$v=19$m=1024,t=2,p=2$dWpTWFFCd1g4Qkl1ODFCVg$ecxLOEfinS+61XuJbcus+2AWApLQrGBIcXZ6NbJ2p+8', 2),
 (12, 'Youtube', '[\"ROLE_ORGANISATION\"]', '$argon2i$v=19$m=1024,t=2,p=2$djA2cHlOaGZOZmp6ZnFVMg$cXHt/7NgXW/3xA97hkCGuu034vhY8psMmRws2JF8M1Q', 61),
@@ -224,7 +232,21 @@ INSERT INTO `user` (`id`, `username`, `roles`, `password`, `profile_id`) VALUES
 (24, 'Jonaitis', '[\"ROLE_VOLUNTEER\"]', '$argon2i$v=19$m=1024,t=2,p=2$MlBTLy5vSUxQMnZKdGhIeA$dXo6FN8bH2YxR/UONg1g8ncZwY55iMjITC8ZdtvMXhA', 14),
 (25, 'asdIta', '[\"ROLE_VOLUNTEER\"]', '$argon2i$v=19$m=1024,t=2,p=2$aXl2OGRxLmNEd2tLazFuOA$f2Kq15yp31C9h2MMCxlW/40vqvRDqRwU776kSmLGiM8', 15),
 (26, 'PaXY123', '[\"ROLE_ORGANISATION\"]', '$argon2i$v=19$m=1024,t=2,p=2$SXc5elBMaXlZZ3JNcmouSQ$XeECulLLnVExVXGrHmAyDjemgZ52vsFDc9IB9mCvDqw', 60),
-(27, 'MaltViko', '[\"ROLE_ORGANISATION\"]', '$argon2i$v=19$m=1024,t=2,p=2$NlhKdVVxR01qMmdnZHBnNg$9hmu7zUWJzJ/SES9EDhFcvMuZilp3kCX8fwlc5M6/WY', 62);
+(27, 'MaltViko', '[\"ROLE_ORGANISATION\"]', '$argon2i$v=19$m=1024,t=2,p=2$NlhKdVVxR01qMmdnZHBnNg$9hmu7zUWJzJ/SES9EDhFcvMuZilp3kCX8fwlc5M6/WY', 62),
+(28, 'Dovydas2', '[\"ROLE_VOLUNTEER\"]', '$argon2i$v=19$m=1024,t=2,p=2$b0ZRNUd1d0ZLZzJvdi9Saw$66gsyWo5b0vg35+Wk9XEWQ3SkVVVfu8wxH55Jcv/A10', 72),
+(29, 'OmervitaAts', '[\"ROLE_ORGANISATION\"]', '$argon2i$v=19$m=1024,t=2,p=2$dWM5MVRuRXNyMDFBa3FQQQ$DNYgrJBz08LWTX7e4guk+YMOB3E8f9QmVmAac/rZg7Q', 65),
+(30, 'LivitaKon8', '[\"ROLE_ORGANISATION\"]', '$argon2i$v=19$m=1024,t=2,p=2$U3h3Y002QnVJSURtVlJtbw$7d2+XPxXTQ+3Fw3qF6cw9k6+BhMDyBOv5wBkGhOM/zs', 66),
+(31, 'Karolux11', '[\"ROLE_VOLUNTEER\"]', '$argon2i$v=19$m=1024,t=2,p=2$bk9iLkdzbDBsU0M5cHlkUw$gnwWtF80paBDpSlWJywo8wVkmRKFrVRiqZS0fTYmIT8', 73),
+(32, 'Pajarskis', '[\"ROLE_VOLUNTEER\"]', '$argon2i$v=19$m=1024,t=2,p=2$MTFxaC81dGQyVWpybG9VcQ$DnqF4xJr+2JBXnKfCKQ5y6BBtAeibKAw/r10N8vYuwY', 74),
+(33, 'IO23!', '[\"ROLE_ORGANISATION\"]', '$argon2i$v=19$m=1024,t=2,p=2$RDJZZnlIWHBsTEVhTm5HeQ$jHWFiC8hrb7CIhAyeYmIVr2FnDJ2EiqmMYF5v3es3jA', 67),
+(34, 'ipaStipri', '[\"ROLE_ORGANISATION\"]', '$argon2i$v=19$m=1024,t=2,p=2$NFI5ZFF6a0Z6YzFnUXdxNw$/wlN9UBx+FzbLX6nco+MTJSPiVM++FDNxHLZe2Wmhn4', 68),
+(35, 'TaipMesYra', '[\"ROLE_ORGANISATION\"]', '$argon2i$v=19$m=1024,t=2,p=2$Wm9hTGxFOU1SdGxldmJOVw$Sf0c/pvLcmH6kEt/fVwlgyGMJHVc3cInKCLmw8aAOK4', 69),
+(36, 'Tadelis78', '[\"ROLE_ORGANISATION\"]', '$argon2i$v=19$m=1024,t=2,p=2$YXVQOHpMdFdlSXNmUEpHUw$eNwGbFIeexjjAysMdrWUq5Njvm7CV4jts72TWbqE6/I', 70),
+(37, 'labas', '[\"ROLE_VOLUNTEER\"]', '$argon2i$v=19$m=1024,t=2,p=2$SzM1Wkdna0dpVFd0cGJHQg$o1IyAxXHXQ2EPZqzrBGomCXIjq3jEXB3SKaTmaS7qQ4', 75),
+(38, 'Dovis', '[\"ROLE_ORGANISATION\"]', '$argon2i$v=19$m=1024,t=2,p=2$Y2JyWTA5NVlpNy9heGFoSg$qN/Z/95qCDFMz5p9XYXVEpkCEivNfrKyW5n+KampVQM', 71),
+(39, 'test11213123', '[\"ROLE_ORGANISATION\"]', '$argon2i$v=19$m=1024,t=2,p=2$d1Q3UUdXQ29oZXZNRGFqbA$4UARSiKCXfpgLz+SLncYnDOadhTqXg1pZWIx2IiiBB8', 72),
+(40, 'labas77', '[\"ROLE_ORGANISATION\"]', '$argon2i$v=19$m=1024,t=2,p=2$RU5zdWFveWdhaFByQnhsaw$uTdDzqAWZs4h6FQ9eZr1WJ7lpWNrXYp+w5HSPLjzMQE', 73),
+(41, 'Papa123', '[\"ROLE_VOLUNTEER\"]', '$argon2i$v=19$m=1024,t=2,p=2$RHI4YzgxLmJNYkVBN0JoVA$BIr44HMhnRN2WM6AkFPgeRmkXI2VjKOwtl/vhLI4dos', 76);
 
 -- --------------------------------------------------------
 
@@ -249,8 +271,7 @@ CREATE TABLE `volunteer` (
 --
 
 INSERT INTO `volunteer` (`id`, `firstname`, `lastname`, `phone`, `email`, `city`, `country`, `description`, `profile_pic`) VALUES
-(1, 'Dovydas', 'Radzys', 2932042, 'radzysdovydas2@gmail.com', 'Vilnius', 'Lietuva', 'Turiu patirties savanoriaujant, preita vasarą teko dirbti gyvūnų prieglaudoje.Šiais metais taip pat norėčiau pasavanoriauti.', 'VolunteerPic.jpeg'),
-(2, 'Ignas', 'Milašauskas', 1013653, 'sangis@gmail.com', 'Šiauliai', 'Lietuva', 'Savanoriauti dar neteko, tačiau labai norėčiau išbandyti savo jėgas', 'VolunteerPic.jpeg'),
+(2, 'Ignas', 'Milašauskas', 1013653, 'sangis@gmail.com', 'Šiauliai', 'Lietuva', 'Savanoriauti dar neteko, tačiau labai norėčiau išbandyti savo jėgas', 'pexels-photo-220453.jpeg'),
 (3, 'Povilas', 'Kamarauskas', 7927233, 'pofke25@hotmail.com', 'Prienai', 'Lietuva', '', 'VolunteerPic.jpeg'),
 (4, 'Tomas', 'Mikalauskas', 2115442, 'tomas.mik@gmail.com', 'Elektrėnai', 'Lietuva', 'Domintų savanorystė \"Darom renginuose\" ir panašaus tipo.', 'VolunteerPic.jpeg'),
 (5, 'Evelina', 'Šimonytė', 2276534, 'simonyte.evelina@gmail.com', 'Panevežys', 'Lietuva', 'Labai norėčiau įgyti patirties gyvnūnėlių priežiūroje.Šiuo metu studijuoti veterinarija.', 'VolunteerPic.jpeg'),
@@ -263,7 +284,12 @@ INSERT INTO `volunteer` (`id`, `firstname`, `lastname`, `phone`, `email`, `city`
 (12, 'Ugne', 'Usaitė', 4476803, 'ugneusaite@gmail.com', 'Vilnius', 'Lietuva', 'Jau savanoriauti trečius metus išeilės, domina didesni renginiai Vilniuje ir Vilniaus rajone', 'VolunteerPic.jpeg'),
 (13, 'Jonas', 'Jarmalavičius', 5331070, 'paperseal@gmail.com', 'Vilnius', 'Lietuva', '', 'VolunteerPic.jpeg'),
 (14, 'Saulius', 'Petkauskas', 7161899, 'Opetkis@yandex.ru', 'Palanga', 'Lietuva', 'Pasavanoriaučiau už simbolinį mokestį', 'VolunteerPic.jpeg'),
-(15, 'Ona', 'Romaitė', 2023931, 'ona123@inbox.lt', 'Plunge', 'Lietuva', '', 'VolunteerPic.jpeg');
+(15, 'Ona', 'Romaitė', 2023931, 'ona123@inbox.lt', 'Plunge', 'Lietuva', '', 'VolunteerPic.jpeg'),
+(72, '', '', 0, '', '', '', '', 'VolunteerPic.jpeg'),
+(73, '', '', 0, '', '', '', '', 'VolunteerPic.jpeg'),
+(74, '', '', 0, '', '', '', '', 'VolunteerPic.jpeg'),
+(75, '', '', 0, '', '', '', '', 'VolunteerPic.jpeg'),
+(76, '', '', 0, '', '', '', '', 'VolunteerPic.jpeg');
 
 -- --------------------------------------------------------
 
@@ -281,7 +307,6 @@ CREATE TABLE `volunteer_event` (
 --
 
 INSERT INTO `volunteer_event` (`volunteer_id`, `event_id`) VALUES
-(1, 53),
 (2, 54),
 (3, 55);
 
@@ -384,7 +409,7 @@ ALTER TABLE `job_type`
 -- AUTO_INCREMENT for table `organisation`
 --
 ALTER TABLE `organisation`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=65;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=74;
 --
 -- AUTO_INCREMENT for table `review`
 --
@@ -394,12 +419,12 @@ ALTER TABLE `review`
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=42;
 --
 -- AUTO_INCREMENT for table `volunteer`
 --
 ALTER TABLE `volunteer`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=72;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=77;
 --
 -- Constraints for dumped tables
 --
