@@ -3,20 +3,16 @@ import axios from 'axios';
 import { endpoints } from '../endpoints';
 
 export function* volunteerUserWatcherSaga() {
-  console.log('watching');
   yield takeLatest('VOLUNTEER_USER_CALL_REQUEST', volunteerUserWorkerSaga);
 }
 
 function fetchVolunteerUser(id) {
-  console.log('fetching user');
   return axios.get(endpoints.volunteerUser(id));
 }
 
 function* volunteerUserWorkerSaga(action) {
-  console.log(action, 'action');
   try {
     const response = yield call(fetchVolunteerUser, action.id);
-    console.log(response, 'resp');
     const user = response.data;
     yield put({ type: 'VOLUNTEER_USER_CALL_SUCCESS', user });
   } catch (error) {

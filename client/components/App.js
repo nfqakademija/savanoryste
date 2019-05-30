@@ -9,11 +9,16 @@ import OrganisationForm from './Organisation/OrganisationForm';
 import './App.css';
 import EventList from './Event/EventList';
 
-const App = () => (
+const App = props => (
   <div>
     {/* <AppBar className="container" /> */}
+
     <Switch>
-      <Route exact path="/" component={VolunteerList} />
+      {props.main === 'volunteerlist' ? (
+        <Route exact path="/" component={VolunteerList} />
+      ) : (
+        <Route exact path="/" component={EventList} />
+      )}
       <Route path="/profile/:id" component={VolunteerProfile} />
       <Route path="/event" component={EventForm} />
       <Route path="/organisation" component={OrganisationForm} />

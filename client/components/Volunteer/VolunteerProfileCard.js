@@ -9,23 +9,21 @@ class VolunteerProfileCard extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = {
-      open: false
-    };
-
     if (Cookies.get('userId') != undefined) {
       props.getVolunteerUser(Cookies.get('userId'));
-      console.log(Cookies.get('userId'));
     }
   }
 
   render() {
-    const { open } = this.state;
     const { volunteer, isEditing, volunteerUser } = this.props;
-    console.log(volunteerUser);
     return (
       <Card>
-        <Card.Img src={"http://savanoryste.projektai.nfqakademija.lt/uploads/volunteer/" + volunteer.ProfilePic} />
+        <Card.Img
+          src={
+            'http://savanoryste.projektai.nfqakademija.lt/uploads/volunteer/' +
+            volunteer.ProfilePic
+          }
+        />
         <Card.ImgOverlay>
           <Card.Body className="Card-profile-wrapper">
             <Card.Title className="Card-profile-name">

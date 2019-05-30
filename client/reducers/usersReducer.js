@@ -19,10 +19,8 @@ const usersReducer = (state = initialState, action) => {
     case VOLUNTEER_USER_CALL_REQUEST:
       return { ...state, loading: true, error: null };
     case VOLUNTEER_USER_CALL_SUCCESS:
-      console.log(action, 'actionas');
       return { ...state, loading: false, volunteerUser: action.user[0] };
     case VOLUNTEER_USER_CALL_FAILURE:
-      console.log(action);
       return {
         ...state,
         loading: false,

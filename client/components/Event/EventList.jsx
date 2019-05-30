@@ -20,11 +20,12 @@ class EventList extends React.Component {
 
   fetchEvents = () => {
     const { count, start, getEvents } = this.props;
-
+    console.log(this.props);
     getEvents(start, count);
   };
 
   render() {
+    console.log(this.props);
     const { events } = this.props;
     return (
       <InfiniteScroll
@@ -36,7 +37,7 @@ class EventList extends React.Component {
         <Container className="container">
           <Row>
             {events.map(event => (
-              <Col xs={12} md={6} lg={4}>
+              <Col xs={12} md={12} lg={12}>
                 <EventCard event={event} />
               </Col>
             ))}
@@ -48,7 +49,9 @@ class EventList extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  events: state.events.events
+  events: state.events.events,
+  start: state.events.start,
+  count: state.events.count
 });
 
 const mapDispatchToProps = dispatch => ({

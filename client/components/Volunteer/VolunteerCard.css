@@ -7,8 +7,8 @@
 .cardd {
   position: relative;
   top: 0px;
-  width: 315px; /* Remove for full width */
-  height: 380px; /* Remove for full width */
+  width: 315px;
+  height: 380px;
   margin: 30px auto;
   text-decoration: none;
   z-index: 0;
@@ -48,35 +48,6 @@
   width: 100%;
 }
 
-.sr-only {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  clip: rect(0, 0, 0, 0);
-  border: none;
-  overflow: hidden;
-}
-.btn-message {
-  display: inline-block;
-  background: url(https://res.cloudinary.com/dj14cmwoz/image/upload/v1491077483/profile-card/images/message.svg)
-    no-repeat;
-  width: 19.37px;
-  height: 16.99px;
-  margin-right: 10px;
-  margin-top: 10px;
-  float: right;
-}
-.btn-menu {
-  display: inline-block;
-  background: url(https://res.cloudinary.com/dj14cmwoz/image/upload/v1491077483/profile-card/images/menu.svg)
-    no-repeat;
-  width: 19px;
-  height: 12.16px;
-  margin-left: 10px;
-  margin-top: 10px;
-  float: left;
-}
-
 svg .polygon {
   fill: #fff;
 }
@@ -87,29 +58,6 @@ svg .polygon {
   width: 100%;
   right: 0;
   left: 0;
-}
-
-.btn-follow {
-  position: absolute;
-  top: -15px;
-  right: 25px;
-  width: 45px;
-  height: 45px;
-  background: linear-gradient(to left, #2d77c1, #68fac2);
-  border-radius: 100%;
-  box-shadow: 0 10px 15px rgba(110, 221, 235, 0.53);
-}
-
-.btn-follow:after {
-  content: '';
-  position: absolute;
-  background: url(https://res.cloudinary.com/dj14cmwoz/image/upload/v1491077480/profile-card/images/add.svg)
-    no-repeat;
-  width: 17px;
-  height: 17px;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
 }
 
 .cardd-body {
@@ -139,44 +87,10 @@ svg .polygon {
   line-height: 20px;
 }
 
-.social-accounts img {
-  width: 15px;
-}
-
-.social-accounts a {
-  margin-left: 10px;
-}
-.social-accounts a:first-child {
-  margin-left: 0;
-}
-
 .cardd-footer {
-  /*position:fixed; /* Full card width/height */
-  position: absolute; /* Fixed card width/height */
+  position: absolute;
 
   left: 0;
   width: 100%;
   bottom: 0px;
-}
-.stat {
-  box-sizing: border-box;
-  width: calc(100% / 3);
-  float: left;
-  text-align: center;
-  border-left: 1px solid #ebebeb;
-}
-.stat .label {
-  display: block;
-  text-transform: uppercase;
-  font-weight: 300;
-  font-size: 11px;
-  letter-spacing: 1px;
-  color: #95989a;
-}
-
-.stat .value {
-  display: block;
-  font-weight: 700;
-  font-size: 20px;
-  margin-top: 5px;
 }
