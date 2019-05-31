@@ -30,9 +30,6 @@ class VolunteerProfileCard extends React.Component {
               {volunteer.firstname + ' ' + volunteer.lastname}
             </Card.Title>
             <div className="Card-profile-buttons">
-              <Button className="Card-profile-button btn btn-info" block>
-                {`Choose ${volunteer.firstname + ' ' + volunteer.lastname}`}
-              </Button>
               {volunteerUser.id === volunteer.id ? (
                 <Button
                   className="Card-profile-button btn btn-info"

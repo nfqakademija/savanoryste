@@ -12,31 +12,31 @@ import * as Yup from 'yup';
 
 const ProfileEditSchema = Yup.object().shape({
   firstname: Yup.string()
-    .min(2, 'Too Short!')
-    .max(50, 'Too Long!')
-    .required('Required'),
+    .min(2, 'Per trumpas!')
+    .max(50, 'Per ilgas!')
+    .required('Būtinas'),
   lastname: Yup.string()
-    .min(2, 'Too Short!')
-    .max(50, 'Too Long!')
-    .required('Required'),
+    .min(2, 'Per trumpas!')
+    .max(50, 'Per ilgas!')
+    .required('Būtinas'),
   email: Yup.string()
-    .email('Invalid email')
-    .required('Required'),
+    .email('Neteisingas el. pašto adresas')
+    .required('Būtinas'),
   phone: Yup.string()
-    .test('len', 'Numeris turi būti 8 skaitmenų', val => val.length === 8)
-    .required('Required'),
+    .test('len', 'Per trumpas numeris', val => val.length > 5)
+    .required('Būtinas'),
   city: Yup.string()
-    .min(2, 'Too Short!')
-    .max(50, 'Too Long!')
-    .required('Required'),
+    .min(2, 'Per trumpas!')
+    .max(50, 'Per ilgas!')
+    .required('Būtinas'),
   country: Yup.string()
-    .min(2, 'Too Short!')
-    .max(50, 'Too Long!')
-    .required('Required'),
+    .min(2, 'Per trumpas!')
+    .max(50, 'Per ilgas!')
+    .required('Būtinas'),
   description: Yup.string()
-    .min(2, 'Too Short!')
-    .max(50, 'Too Long!')
-    .required('Required')
+    .min(2, 'Per trumpas!')
+    .max(200, 'Per ilgas!')
+    .required('Būtinas')
 });
 
 const FieldInput = ({

@@ -31,7 +31,7 @@ class VolunteerProfileInfo extends React.Component {
             </Row>
             <Row>
               <Col xs={12} sm={12}>
-              <p style={{ textAlign: 'justify' }}>{volunteer.description}</p>
+                <p style={{ textAlign: 'justify' }}>{volunteer.description}</p>
               </Col>
             </Row>
             <Row>
@@ -39,28 +39,28 @@ class VolunteerProfileInfo extends React.Component {
             </Row>
             <Row>
               <Col xs={12} sm={12}>
-              <Table striped borderless hover>
-                <tbody>
-                  <tr>
-                    <td>Tel. nr.</td>
-                    <td>
-                      <a href={`tel:${volunteer.phone}`}>{volunteer.phone}</a>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>El. paštas</td>
-                    <td>
-                      <a href={`mailto:${volunteer.email}`}>
-                        {volunteer.email}
-                      </a>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>Miestas, Šalis</td>
-                    <td> {`${volunteer.city}, ${volunteer.country}`}</td>
-                  </tr>
-                </tbody>
-              </Table>
+                <Table striped borderless hover>
+                  <tbody>
+                    <tr>
+                      <td>Tel. nr.</td>
+                      <td>
+                        <a href={`tel:${volunteer.phone}`}>{volunteer.phone}</a>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>El. paštas</td>
+                      <td>
+                        <a href={`mailto:${volunteer.email}`}>
+                          {volunteer.email}
+                        </a>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>Miestas, Šalis</td>
+                      <td> {`${volunteer.city}, ${volunteer.country}`}</td>
+                    </tr>
+                  </tbody>
+                </Table>
               </Col>
             </Row>
             <Row>
@@ -68,28 +68,26 @@ class VolunteerProfileInfo extends React.Component {
             </Row>
             <Row>
               <Col xs={12} sm={12}>
-              <Table striped borderless hover>
-                <tbody>
-                  <tr>
-                    <td>Reitingas</td>
-                    <td>4.5/4 (36)</td>
-                  </tr>
-                  <tr>
-                    <td>
-                      <Link to={`/reviews/${volunteer.id}`}>Atsiliepimai</Link>
-                    </td>
-                    <td>23</td>
-                  </tr>
-                  <tr>
-                    <td>
-                      <Link to={`/events/${volunteer.id}`}>
-                        Dalyvauta renginių
-                      </Link>
-                    </td>
-                    <td> 9</td>
-                  </tr>
-                </tbody>
-              </Table>
+                <Table striped borderless hover>
+                  <tbody>
+                    <tr>
+                      <td>Reitingas</td>
+                      <td>Nėra</td>
+                    </tr>
+                    <tr>
+                      <td>Atsiliepimai</td>
+                      <td>Nėra</td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <Link to={`/events/${volunteer.id}`}>
+                          Dalyvauta renginių
+                        </Link>
+                      </td>
+                      <td>0</td>
+                    </tr>
+                  </tbody>
+                </Table>
               </Col>
             </Row>
           </Col>
