@@ -122,12 +122,16 @@
         <div class="row">
             <div class="col-md-12 mt-5">
                 <ul class="nav form-inline justify-content-center mr-auto">
-                    <li class="nav-item">
-                        <a class="label-text text-white m-2" href="/register">Registracija<span class="sr-only">(current)</span></a>
+                   {% if app.user %}
+                         <li class="nav-item">
+                        <a class="label-text text-white m-2" href="/logout">Atsijungti</a>
                     </li>
+                {% elseif not app.user %}
                     <li class="nav-item">
                         <a class="label-text text-white m-2" href="/login">Prisijungimas</a>
                     </li>
+
+                {% endif %}
                     <li class="nav-item">
                         <a class="label-text text-white m-2" href="#">D.U.K</a>
                     </li>
@@ -136,7 +140,7 @@
         </div>
         <div class="row">
             <div class="col-md-12">
-                <p class="text-center text-white m-2">© Savanortystė. 2019.</p>
+                <p class="text-center text-white m-2">© Savanorystė. 2019.</p>
             </div>
         </div>
         <div class="row">
