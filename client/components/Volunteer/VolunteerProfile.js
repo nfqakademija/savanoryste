@@ -10,7 +10,6 @@ import { connect } from 'react-redux';
 import Cookies from 'js-cookie';
 import { getVolunteer } from '../../actions/volunteersActions';
 import { getVolunteerUser } from '../../actions/usersActions';
-import EventCard from '../Event/EventCard';
 
 class VolunteerProfile extends React.Component {
   constructor(props) {
@@ -56,10 +55,6 @@ class VolunteerProfile extends React.Component {
           <Col lg={4}>
             <h3>Naujausias atsiliepimas</h3>
             <VolunteerReviewCard />
-          </Col>
-          <Col>
-            <h3>Vėliausiai dalyvauta</h3>
-            <EventCard event={this.props.events[0]} />
           </Col>
         </Row>
       </Container>
