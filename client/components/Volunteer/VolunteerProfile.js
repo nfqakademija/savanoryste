@@ -51,12 +51,6 @@ class VolunteerProfile extends React.Component {
             )}
           </Col>
         </Row>
-        <Row style={{ marginTop: '10px' }}>
-          <Col lg={4}>
-            <h3>Naujausias atsiliepimas</h3>
-            <VolunteerReviewCard />
-          </Col>
-        </Row>
       </Container>
     );
   }

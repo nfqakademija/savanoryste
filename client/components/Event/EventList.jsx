@@ -20,12 +20,10 @@ class EventList extends React.Component {
 
   fetchEvents = () => {
     const { count, start, getEvents } = this.props;
-    console.log(this.props);
     getEvents(start, count);
   };
 
   render() {
-    console.log(this.props);
     const { events } = this.props;
     return (
       <InfiniteScroll
